@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fotografía, de cero a control total</title>
+<meta name="description" content="Guía interactiva de fotografía: exposición, composición y luz, con simuladores y quiz final.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#13110E;
+    --bg-elevated:#1B1814;
+    --bg-elevated-2:#221E19;
+    --line:#3A342B;
+    --line-soft:#27231D;
+    --text:#F3EDE0;
+    --text-muted:#AFA391;
+    --text-faint:#7D7262;
+    --amber:#E8AE5C;
+    --amber-soft:#8A6B3A;
+    --amber-wash:rgba(232,174,92,0.10);
+    --blue:#8AAAC6;
+    --blue-soft:#46607A;
+    --blue-wash:rgba(138,170,198,0.10);
+    --radius:14px;
+    --radius-sm:8px;
+    --shadow:0 1px 0 rgba(255,255,255,0.03) inset, 0 18px 40px -24px rgba(0,0,0,0.7);
+    --font-display:'Fraunces', Georgia, serif;
+    --font-body:'IBM Plex Sans', -apple-system, 'Segoe UI', sans-serif;
+    --font-mono:'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
+    --maxw:980px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:auto; scroll-padding-top:72px; }
+  @media (prefers-reduced-motion: no-preference){ html{ scroll-behavior:smooth; } }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(232,174,92,0.07), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, rgba(138,170,198,0.05), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* grano de película sutil sobre toda la página */
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:100;
+    opacity:.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection{ background:var(--amber); color:#13110E; }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--amber); outline-offset:3px; border-radius:4px; }
+
+  h1,h2,h3{ font-family:var(--font-display); font-weight:500; margin:0; letter-spacing:-0.015em; }
+  p{ margin:0; }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 24px; }
+
+  /* ---------- NAV ---------- */
+  .topnav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(19,17,14,0.82);
+    backdrop-filter:blur(12px) saturate(140%);
+    -webkit-backdrop-filter:blur(12px) saturate(140%);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .topnav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:12px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .brandmark{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.12em;
+    color:var(--text-muted); white-space:nowrap; text-decoration:none;
+    display:flex; align-items:center; gap:8px;
+  }
+  .brandmark .dot{ width:8px; height:8px; border-radius:50%; background:var(--amber); box-shadow:0 0 10px rgba(232,174,92,.7); }
+  .navlinks{ display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; }
+  .navlinks::-webkit-scrollbar{ display:none; }
+  .navlinks a{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.03em;
+    text-decoration:none; color:var(--text-faint);
+    padding:6px 12px; border-radius:999px; white-space:nowrap;
+    transition:color .2s ease, background .2s ease;
+  }
+  .navlinks a span{ opacity:.55; margin-right:4px; }
+  .navlinks a:hover{ color:var(--text); background:rgba(255,255,255,0.04); }
+  .navlinks a.active{ color:#13110E; background:var(--amber); }
+  .navlinks a.active span{ opacity:.6; }
+  .progress{
+    position:absolute; left:0; bottom:-1px; height:2px; width:100%;
+    background:linear-gradient(90deg, var(--amber-soft), var(--amber));
+    transform-origin:left; transform:scaleX(0);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:88px 24px 72px;
+    display:grid; grid-template-columns:1.25fr 0.75fr; gap:48px; align-items:center;
+  }
+  .hero-kicker{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.14em;
+    color:var(--amber); margin-bottom:20px; display:flex; align-items:center; gap:10px;
+  }
+  .hero-kicker::before{ content:""; width:28px; height:1px; background:var(--amber); }
+  .hero h1{ font-size:clamp(38px,6vw,64px); line-height:1.02; font-weight:400; }
+  .hero h1 em{ font-style:italic; color:var(--amber); font-weight:400; }
+  .hero-sub{ margin-top:22px; color:var(--text-muted); font-size:17px; max-width:46ch; }
+  .hero-stats{
+    margin-top:32px; display:flex; flex-wrap:wrap; gap:0;
+    border:1px solid var(--line-soft); border-radius:var(--radius);
+    background:rgba(27,24,20,.6); width:fit-content; max-width:100%;
+  }
+  .hero-stats div{ padding:12px 18px; border-left:1px solid var(--line-soft); }
+  .hero-stats div:first-child{ border-left:none; }
+  .hero-stats b{ display:block; font-family:var(--font-display); font-size:22px; font-weight:500; color:var(--text); line-height:1.1; }
+  .hero-stats span{ font-family:var(--font-mono); font-size:11px; color:var(--text-faint); letter-spacing:.05em; }
+  .hero-note{
+    margin-top:24px; font-size:13px; color:var(--text-faint);
+    border-left:2px solid var(--line); padding-left:12px; max-width:52ch;
+  }
+  .hero-cta{
+    margin-top:28px; display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.04em;
+    color:#13110E; background:var(--amber); text-decoration:none;
+    padding:11px 18px; border-radius:999px; transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .hero-cta:hover{ transform:translateY(-1px); box-shadow:0 10px 24px -10px rgba(232,174,92,.6); }
+  .hero-iris-box{ display:flex; align-items:center; justify-content:center; position:relative; }
+  .hero-iris-box::before{
+    content:""; position:absolute; width:260px; height:260px; border-radius:50%;
+    background:radial-gradient(circle, rgba(232,174,92,.16), transparent 65%);
+  }
+  .hero-iris-box svg{ position:relative; max-width:100%; height:auto; }
+  .iris-label{
+    position:absolute; bottom:-6px; left:50%; transform:translateX(-50%);
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint); letter-spacing:.1em; white-space:nowrap;
+  }
+
+  /* ---------- MODULE STRUCTURE ---------- */
+  .module{ padding:104px 24px; border-top:1px solid var(--line-soft); position:relative; }
+  .module-num{
+    position:absolute; right:24px; top:72px;
+    font-family:var(--font-display); font-style:italic; font-size:clamp(90px,14vw,160px);
+    line-height:1; color:transparent; -webkit-text-stroke:1px var(--line); pointer-events:none; user-select:none;
+  }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.14em;
+    color:var(--amber); margin-bottom:16px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:""; width:28px; height:1px; background:var(--amber); }
+  .module h2{ font-size:clamp(30px,4.5vw,44px); max-width:20ch; line-height:1.1; position:relative; }
+  .module-intro{ margin-top:18px; color:var(--text-muted); max-width:62ch; font-size:16px; position:relative; }
+  .sub-intro{ margin-top:10px; color:var(--text-muted); max-width:62ch; font-size:15px; }
+
+  /* ---------- CARDS ---------- */
+  .cardgrid{ margin-top:40px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .cardgrid-2col{ grid-template-columns:repeat(2,1fr); }
+  .card{
+    background:linear-gradient(180deg, var(--bg-elevated-2), var(--bg-elevated));
+    border:1px solid var(--line-soft); border-radius:var(--radius);
+    padding:22px; box-shadow:var(--shadow);
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .card:hover{ border-color:var(--line); transform:translateY(-2px); }
+  .card-icon{
+    width:36px; height:36px; border-radius:10px; display:grid; place-items:center;
+    background:var(--amber-wash); color:var(--amber); margin-bottom:14px;
+  }
+  .card h3{ font-family:var(--font-body); font-weight:600; font-size:15px; }
+  .card p{ margin-top:8px; font-size:14px; color:var(--text-muted); }
+  .card .rule{
+    margin-top:14px; padding-top:12px; border-top:1px dashed var(--line-soft);
+    font-family:var(--font-mono); font-size:11.5px; color:var(--text-faint); display:flex; justify-content:space-between; gap:8px;
+  }
+  .card .rule b{ color:var(--amber); font-weight:500; }
+
+  /* ---------- TIP ---------- */
+  .tip{
+    margin-top:28px; display:flex; gap:14px; align-items:flex-start;
+    padding:16px 18px; border-radius:var(--radius);
+    background:var(--amber-wash); border:1px solid rgba(232,174,92,.22);
+    font-size:14px; color:var(--text); max-width:72ch;
+  }
+  .tip-tag{
+    flex:none; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.12em;
+    color:#13110E; background:var(--amber); border-radius:4px; padding:3px 7px; margin-top:2px;
+  }
+  .tip p{ color:var(--text-muted); }
+  .tip p b{ color:var(--text); font-weight:600; }
+
+  /* ---------- PANELS / SIM ---------- */
+  .simhead{
+    margin-top:64px; display:flex; align-items:baseline; justify-content:space-between;
+    gap:12px; flex-wrap:wrap;
+  }
+  .simhead h3{ font-family:var(--font-display); font-size:24px; font-weight:500; }
+  .simhead .chip{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:var(--text-faint);
+    border:1px solid var(--line-soft); border-radius:999px; padding:4px 10px;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .simhead .chip::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--amber); }
+
+  .panel{
+    margin-top:20px; padding:20px;
+    background:rgba(27,24,20,.55); border:1px solid var(--line-soft);
+    border-radius:calc(var(--radius) + 4px); box-shadow:var(--shadow);
+  }
+
+  .simulator{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:22px; align-items:start; }
+
+  .scene{
+    position:relative; aspect-ratio:4/3; border-radius:var(--radius); overflow:hidden;
+    border:1px solid var(--line-soft);
+    background:linear-gradient(180deg,#2a3a45 0%,#46606f 40%,#5c6f5a 41%,#41513f 100%);
+  }
+  .scene-sun{
+    position:absolute; top:12%; right:16%; width:14%; aspect-ratio:1; border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #fff2cf, var(--amber) 70%);
+    box-shadow:0 0 40px 8px rgba(232,174,92,.25);
+  }
+  .scene-mountains{ position:absolute; left:0; right:0; bottom:32%; height:40%; transition:filter .15s ease-out; }
+  .scene-mountains svg{ width:100%; height:100%; display:block; }
+  .scene-ground{ position:absolute; left:0; right:0; bottom:0; height:33%;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.25) 100%); }
+  .scene-subject{ position:absolute; left:18%; bottom:6%; width:11%; aspect-ratio:1/2.6; filter:drop-shadow(0 4px 6px rgba(0,0,0,.4)); }
+  .scene-mover{
+    position:absolute; left:40%; bottom:36%; width:16px; height:16px; border-radius:50%;
+    background:var(--amber);
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .scene-mover{ animation:mover 4.5s linear infinite; }
+    @keyframes mover{ 0%{ left:32%; } 100%{ left:92%; } }
+  }
+  .scene-overlay-light, .scene-overlay-dark, .scene-grain{ position:absolute; inset:0; pointer-events:none; }
+  .scene-overlay-light{ background:#fff; opacity:0; transition:opacity .15s ease; }
+  .scene-overlay-dark{ background:#000; opacity:0; transition:opacity .15s ease; }
+  .scene-grain{ opacity:0; mix-blend-mode:overlay; }
+  .scene-hud{
+    position:absolute; left:10px; right:10px; bottom:10px;
+    display:flex; justify-content:space-between; pointer-events:none;
+    font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,.85);
+    text-shadow:0 1px 2px rgba(0,0,0,.6);
+  }
+  .scene-corners{ position:absolute; inset:10px; pointer-events:none; }
+  .scene-corners i{ position:absolute; width:14px; height:14px; border-color:rgba(255,255,255,.55); border-style:solid; }
+  .scene-corners i:nth-child(1){ left:0; top:0; border-width:1px 0 0 1px; }
+  .scene-corners i:nth-child(2){ right:0; top:0; border-width:1px 1px 0 0; }
+  .scene-corners i:nth-child(3){ left:0; bottom:18px; border-width:0 0 1px 1px; }
+  .scene-corners i:nth-child(4){ right:0; bottom:18px; border-width:0 1px 1px 0; }
+  .scene-caption{ margin-top:12px; font-size:13px; color:var(--text-faint); }
+
+  /* medidor de exposición tipo cámara */
+  .meter{ margin-top:16px; }
+  .meter-scale{
+    position:relative; height:30px; display:flex; justify-content:space-between; align-items:flex-end;
+    font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint);
+    border-bottom:1px solid var(--line);
+  }
+  .meter-scale span{ width:20px; text-align:center; position:relative; padding-bottom:6px; }
+  .meter-scale span::after{ content:""; position:absolute; left:50%; bottom:-1px; width:1px; height:5px; background:var(--line); }
+  .meter-scale span.zero{ color:var(--text); }
+  .meter-needle{
+    position:absolute; bottom:-7px; width:2px; height:12px; background:var(--amber);
+    left:50%; transform:translateX(-1px); transition:left .2s cubic-bezier(.2,.7,.3,1), background .2s;
+    box-shadow:0 0 8px rgba(232,174,92,.7);
+  }
+  .meter-needle.warn{ background:var(--blue); box-shadow:0 0 8px rgba(138,170,198,.7); }
+
+  .controls{ display:flex; flex-direction:column; gap:12px; }
+  .control{
+    background:var(--bg-elevated); border:1px solid var(--line-soft);
+    border-radius:var(--radius); padding:14px 16px 12px;
+  }
+  .control-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .control-label{ font-size:13.5px; font-weight:600; display:flex; align-items:center; gap:8px; }
+  .control-label small{ font-weight:400; color:var(--text-faint); font-size:12px; }
+  .control-value{
+    font-family:var(--font-mono); font-size:14px; color:var(--amber);
+    background:var(--amber-wash); padding:2px 8px; border-radius:6px; min-width:74px; text-align:center;
+  }
+  .ticks{
+    display:flex; justify-content:space-between; margin-top:6px;
+    font-family:var(--font-mono); font-size:10px; color:var(--text-faint);
+  }
+
+  input[type="range"]{
+    --p:50%;
+    width:100%; margin-top:14px; -webkit-appearance:none; appearance:none;
+    height:4px; border-radius:4px; cursor:pointer;
+    background:linear-gradient(to right, var(--amber) 0 var(--p), var(--line) var(--p) 100%);
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
+    background:var(--text); border:3px solid var(--bg);
+    box-shadow:0 0 0 1px var(--amber), 0 2px 6px rgba(0,0,0,.5);
+    cursor:grab; transition:transform .15s ease;
+  }
+  input[type="range"]:active::-webkit-slider-thumb{ transform:scale(1.15); cursor:grabbing; }
+  input[type="range"]::-moz-range-thumb{
+    width:14px; height:14px; border-radius:50%; background:var(--text);
+    border:3px solid var(--bg); box-shadow:0 0 0 1px var(--amber); cursor:grab;
+  }
+  input[type="range"].kelvin{
+    height:8px;
+    background:linear-gradient(to right, rgb(255,147,41), rgb(255,197,143) 12%, rgb(255,228,206) 38%, rgb(250,247,255) 56%, rgb(214,225,255) 75%, rgb(172,196,255));
+  }
+
+  .iris-mini{ flex:none; }
+
+  .readout{
+    background:var(--bg-elevated-2); border:1px solid var(--line-soft);
+    border-radius:var(--radius); padding:14px 16px; font-family:var(--font-mono);
+  }
+  .readout-status{ font-size:13.5px; display:flex; align-items:center; gap:8px; }
+  .readout-status::before{ content:""; width:8px; height:8px; border-radius:50%; background:currentColor; flex:none; }
+  .readout-hint{ margin-top:6px; font-family:var(--font-body); font-size:12.5px; color:var(--text-faint); }
+  .status-ok{ color:var(--amber); }
+  .status-warn{ color:var(--blue); }
+  .row-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text);
+    background:var(--bg-elevated); border:1px solid var(--line);
+    border-radius:999px; padding:9px 16px; cursor:pointer;
+    transition:border-color .2s ease, color .2s ease, background .2s ease;
+  }
+  .btn:hover{ border-color:var(--amber-soft); }
+  .btn.is-active{ border-color:var(--amber); color:var(--amber); background:var(--amber-wash); }
+  .btn-primary{ background:var(--amber); color:#13110E; border-color:var(--amber); }
+  .btn-primary:hover{ background:#f0bb70; }
+  .btn-ghost{ background:transparent; color:var(--text-muted); font-weight:500; }
+
+  /* ---------- COMPOSITION ---------- */
+  .thirds-wrap{ display:grid; grid-template-columns:1fr 260px; gap:22px; align-items:start; }
+  .thirds-scene{
+    position:relative; aspect-ratio:4/3; border-radius:var(--radius); overflow:hidden;
+    border:1px solid var(--line-soft); touch-action:none;
+    background:linear-gradient(180deg,#2b3542 0%, #45546a 52%, #2a3326 53%, #1b2117 100%);
+  }
+  .thirds-scene .hills{ position:absolute; left:0; right:0; top:34%; height:22%; }
+  .thirds-scene .hills svg{ width:100%; height:100%; display:block; }
+  .thirds-grid{ position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .25s ease; }
+  .thirds-grid.show{ opacity:1; }
+  .thirds-grid .gl{ position:absolute; background:rgba(243,237,224,0.4); }
+  .thirds-grid .v1{ left:33.333%; top:0; bottom:0; width:1px; }
+  .thirds-grid .v2{ left:66.666%; top:0; bottom:0; width:1px; }
+  .thirds-grid .h1{ top:33.333%; left:0; right:0; height:1px; }
+  .thirds-grid .h2{ top:66.666%; left:0; right:0; height:1px; }
+  .thirds-grid .pt{
+    position:absolute; width:10px; height:10px; border-radius:50%;
+    border:1px solid rgba(243,237,224,.7); transform:translate(-50%,-50%);
+  }
+  .thirds-subject{
+    position:absolute; width:13%; aspect-ratio:1; border-radius:50%;
+    left:50%; top:50%; transform:translate(-50%,-50%);
+    background:radial-gradient(circle at 38% 32%, #ffe2b0, var(--amber) 60%, #b57b33);
+    cursor:grab; box-shadow:0 0 0 4px rgba(232,174,92,0.18), 0 10px 24px rgba(0,0,0,.45);
+    transition:box-shadow .2s ease;
+  }
+  .thirds-subject.hit{ box-shadow:0 0 0 6px rgba(232,174,92,0.35), 0 0 30px rgba(232,174,92,.55); }
+  .thirds-subject:active{ cursor:grabbing; }
+  .thirds-side{ display:flex; flex-direction:column; gap:14px; }
+  .thirds-feedback{
+    font-size:14px; color:var(--text-muted); min-height:64px;
+    padding:14px; border-radius:var(--radius); background:var(--bg-elevated); border:1px solid var(--line-soft);
+    transition:color .2s, border-color .2s;
+  }
+  .thirds-feedback.hit{ color:var(--amber); border-color:rgba(232,174,92,.35); }
+  .hint{ font-size:12.5px; color:var(--text-faint); }
+  .hint kbd{
+    font-family:var(--font-mono); font-size:11px; border:1px solid var(--line);
+    border-bottom-width:2px; border-radius:4px; padding:0 5px; color:var(--text-muted);
+  }
+
+  .quiz-scenes{ margin-top:8px; }
+  .qs-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px; }
+  .qs-item{
+    background:var(--bg-elevated); border:1px solid var(--line-soft);
+    border-radius:var(--radius); padding:14px; box-shadow:var(--shadow);
+    transition:border-color .2s;
+  }
+  .qs-item.done-ok{ border-color:rgba(232,174,92,.35); }
+  .qs-illust{
+    width:100%; aspect-ratio:16/9; border-radius:var(--radius-sm);
+    border:1px solid var(--line-soft); overflow:hidden; background:#1c2119;
+  }
+  .qs-illust svg{ width:100%; height:100%; display:block; }
+  .qs-num{ font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin-top:14px; letter-spacing:.06em; }
+  .qs-question{ font-size:14.5px; font-weight:600; margin:4px 0 12px; }
+  .qs-options{ display:flex; flex-wrap:wrap; gap:6px; }
+  .qs-opt{
+    font-family:var(--font-body); font-size:12.5px; padding:6px 12px; border-radius:999px;
+    border:1px solid var(--line); background:transparent; color:var(--text-muted); cursor:pointer;
+    transition:border-color .2s, color .2s, background .2s;
+  }
+  .qs-opt:hover:not(:disabled){ border-color:var(--amber-soft); color:var(--text); }
+  .qs-opt:disabled{ cursor:default; opacity:.55; }
+  .qs-opt.correct{ border-color:var(--amber); color:var(--amber); background:var(--amber-wash); opacity:1; }
+  .qs-opt.wrong{ border-color:var(--blue-soft); color:var(--blue); background:var(--blue-wash); opacity:1; }
+  .qs-explain{ margin-top:10px; font-size:13px; color:var(--text-muted); }
+  .qs-explain:empty{ display:none; }
+  .qs-score{ font-family:var(--font-mono); font-size:12px; color:var(--text-faint); }
+  .qs-score b{ color:var(--amber); font-weight:500; }
+
+  /* ---------- LIGHT ---------- */
+  .light-wrap{ display:grid; grid-template-columns:280px 1fr; gap:32px; align-items:center; }
+  .dial-box{ display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .dial{
+    position:relative; width:240px; height:240px; border-radius:50%;
+    border:1px solid var(--line);
+    background:radial-gradient(circle, #26211b 0%, var(--bg-elevated) 70%);
+    touch-action:none;
+  }
+  .dial-ring{ position:absolute; inset:14px; border-radius:50%; border:1px dashed var(--line); }
+  .dial-ring.inner{ inset:60px; opacity:.6; }
+  .dial-glow{ position:absolute; inset:0; border-radius:50%; pointer-events:none; transition:background .1s; }
+  .dial-tag{
+    position:absolute; left:50%; transform:translateX(-50%);
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.12em; color:var(--text-faint);
+  }
+  .dial-tag.top{ top:-20px; }
+  .dial-tag.bottom{ bottom:-20px; color:var(--text-muted); }
+  .dial-subject{ position:absolute; left:50%; top:50%; width:38px; height:52px; transform:translate(-50%,-50%); }
+  .dial-shadow{
+    position:absolute; left:50%; top:50%; width:34px; height:14px; border-radius:50%;
+    background:rgba(0,0,0,0.6); filter:blur(2px); transform-origin:center;
+  }
+  .dial-handle{
+    position:absolute; width:28px; height:28px; border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #fff2cf, var(--amber) 65%);
+    left:50%; top:8%; transform:translate(-50%,-50%);
+    cursor:grab; box-shadow:0 0 0 6px rgba(232,174,92,.15), 0 0 22px rgba(232,174,92,0.6);
+  }
+  .dial-handle:active{ cursor:grabbing; }
+  .dial-caption{ margin-top:14px; font-size:12px; color:var(--text-faint); text-align:center; max-width:240px; }
+  .light-desc{
+    background:var(--bg-elevated); border:1px solid var(--line-soft);
+    border-radius:var(--radius); padding:24px; min-height:150px;
+  }
+  .light-desc-kicker{ font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; color:var(--text-faint); }
+  .light-desc-title{ margin-top:6px; font-family:var(--font-display); font-size:26px; color:var(--amber); line-height:1.15; }
+  .light-desc-body{ margin-top:10px; font-size:14.5px; color:var(--text-muted); }
+  .light-elev{
+    margin-top:16px; display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:11.5px; color:var(--text);
+    border:1px solid var(--line); border-radius:999px; padding:4px 10px;
+  }
+  .presets{ margin-top:16px; display:flex; flex-wrap:wrap; gap:6px; }
+
+  .kelvin-preview{ display:grid; grid-template-columns:220px 1fr; gap:22px; align-items:center; }
+  .kelvin-swatch{
+    width:100%; aspect-ratio:4/3; border-radius:var(--radius); border:1px solid var(--line-soft);
+    position:relative; overflow:hidden; transition:background .1s;
+  }
+  .kelvin-swatch svg{ position:absolute; inset:0; width:100%; height:100%; mix-blend-mode:multiply; }
+  .kelvin-readout{ font-family:var(--font-display); font-size:40px; color:var(--text); line-height:1; }
+  .kelvin-readout small{ font-family:var(--font-mono); font-size:16px; color:var(--text-faint); margin-left:4px; }
+  .kelvin-name{ font-size:14.5px; color:var(--text-muted); margin-top:8px; }
+  .kelvin-ends{ display:flex; justify-content:space-between; margin-top:8px; font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); }
+
+  /* ---------- REPASO ---------- */
+  .cheat-grid{ margin-top:36px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .cheat-col h4{
+    margin:0 0 10px; font-family:var(--font-mono); font-weight:500; font-size:11.5px;
+    letter-spacing:.12em; color:var(--text-faint); padding-bottom:8px; border-bottom:1px solid var(--line-soft);
+  }
+  .cheat-card{
+    display:flex; justify-content:space-between; gap:10px; align-items:baseline;
+    padding:9px 0; border-bottom:1px dashed var(--line-soft);
+  }
+  .cheat-card b{ font-size:13.5px; color:var(--text); font-weight:600; white-space:nowrap; }
+  .cheat-card span{ font-size:13px; color:var(--text-muted); text-align:right; }
+
+  .final-quiz{
+    margin-top:64px; position:relative; overflow:hidden;
+    background:linear-gradient(180deg, var(--bg-elevated-2), var(--bg-elevated));
+    border:1px solid var(--line); border-radius:calc(var(--radius) + 4px);
+    padding:32px; box-shadow:var(--shadow);
+  }
+  .fq-top{ display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+  .fq-label{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; color:var(--amber); }
+  .fq-dots{ display:flex; gap:6px; }
+  .fq-dots i{ width:22px; height:4px; border-radius:4px; background:var(--line); transition:background .2s; }
+  .fq-dots i.cur{ background:var(--text-muted); }
+  .fq-dots i.ok{ background:var(--amber); }
+  .fq-dots i.bad{ background:var(--blue-soft); }
+  .fq-progress{ margin-top:18px; font-family:var(--font-mono); font-size:12px; color:var(--text-faint); }
+  .fq-question{ margin-top:6px; font-family:var(--font-display); font-size:24px; font-weight:500; max-width:40ch; line-height:1.25; }
+  .fq-options{ margin-top:22px; display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .fq-opt{
+    text-align:left; font-family:var(--font-body); font-size:14px; padding:14px 16px;
+    border-radius:var(--radius-sm); border:1px solid var(--line-soft);
+    background:var(--bg); color:var(--text); cursor:pointer;
+    display:flex; gap:12px; align-items:flex-start;
+    transition:border-color .2s, background .2s;
+  }
+  .fq-opt .k{ font-family:var(--font-mono); font-size:11px; color:var(--text-faint); border:1px solid var(--line); border-radius:4px; padding:1px 6px; flex:none; margin-top:1px; }
+  .fq-opt:hover:not(:disabled){ border-color:var(--amber-soft); }
+  .fq-opt.correct{ border-color:var(--amber); background:var(--amber-wash); }
+  .fq-opt.correct .k{ color:var(--amber); border-color:var(--amber); }
+  .fq-opt.wrong{ border-color:var(--blue-soft); background:var(--blue-wash); }
+  .fq-opt:disabled{ cursor:default; }
+  .fq-explain{ margin-top:18px; font-size:14px; color:var(--text-muted); min-height:22px; max-width:70ch; }
+  .fq-next{ margin-top:18px; }
+  .fq-result{ display:none; text-align:center; padding:12px 0; }
+  .fq-result-score{ font-family:var(--font-display); font-size:72px; color:var(--amber); line-height:1; }
+  .fq-result-score small{ font-size:28px; color:var(--text-faint); }
+  .fq-result-title{ margin-top:12px; font-family:var(--font-display); font-size:24px; }
+  .fq-result-note{ margin:10px auto 0; font-size:15px; color:var(--text-muted); max-width:50ch; }
+
+  footer{
+    padding:56px 24px 72px; border-top:1px solid var(--line-soft);
+    display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
+    font-size:13px; color:var(--text-faint);
+  }
+  footer .brandmark{ font-size:11.5px; }
+  footer a{ color:var(--text-muted); text-decoration:none; font-family:var(--font-mono); font-size:12px; }
+  footer a:hover{ color:var(--amber); }
+  .footer-credit{
+    width:100%;
+    text-align:center;
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px solid var(--line-soft);
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.08em;
+    color:var(--text-faint);
+  }
+
+  /* ---------- REVEAL ---------- */
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{ opacity:0; transform:translateY(16px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1); }
+    .reveal.in{ opacity:1; transform:none; }
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:880px){
+    .hero{ grid-template-columns:1fr; gap:32px; padding-top:48px; padding-bottom:56px; }
+    .hero-iris-box{ order:-1; }
+    .hero-iris-box svg{ width:170px; }
+    .cardgrid{ grid-template-columns:1fr; }
+    .simulator{ grid-template-columns:1fr; }
+    .thirds-wrap{ grid-template-columns:1fr; }
+    .qs-grid{ grid-template-columns:1fr; }
+    .light-wrap{ grid-template-columns:1fr; justify-items:center; }
+    .light-desc{ width:100%; }
+    .kelvin-preview{ grid-template-columns:1fr; }
+    .kelvin-swatch{ max-width:320px; }
+    .cheat-grid{ grid-template-columns:1fr; gap:28px; }
+    .fq-options{ grid-template-columns:1fr; }
+    .module{ padding:72px 16px; }
+    .module-num{ top:48px; right:16px; }
+    .wrap{ padding:0 16px; }
+    .hero{ padding-left:16px; padding-right:16px; }
+    .topnav-inner{ padding:10px 16px; }
+    .navlinks a{ font-size:11px; padding:5px 9px; }
+    .navlinks a span{ display:none; }
+    .panel{ padding:14px; }
+    .final-quiz{ padding:22px; }
+    footer{ padding-left:16px; padding-right:16px; }
+  }
+  @media (max-width:520px){
+    .brandmark .txt{ display:none; }
+    .hero-stats div{ padding:10px 14px; }
+    .hero-stats b{ font-size:18px; }
+  }
+
+  @media print{
+    body{ background:#fff; color:#111; }
+    body::before, .topnav, .hero-iris-box, .final-quiz, .panel{ display:none !important; }
+    .module{ padding:32px 0; border-color:#ddd; }
+    .module-intro, .card p, .cheat-card span{ color:#333; }
+    .card{ background:#fff; border-color:#ddd; box-shadow:none; }
+    .reveal{ opacity:1 !important; transform:none !important; }
+  }
+  .tl{ margin-top:32px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .tl div{ background:var(--bg-elevated); border:1px solid var(--line-soft); border-radius:10px; padding:16px; font-size:13.5px; color:var(--text-muted); }
+  .tl b{ display:block; font-family:var(--font-mono); color:var(--amber); font-size:15px; margin-bottom:4px; }
+  .modebtns{ display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .modebtns button.on{ border-color:var(--amber); color:var(--amber); }
+  .eqcalc{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:14px; }
+  .eqcalc select, .eqcalc input{ background:var(--bg-elevated); color:var(--text); border:1px solid var(--line); border-radius:6px; padding:8px 10px; font:inherit; }
+  .eqres{ font-family:var(--font-mono); color:var(--amber); font-size:18px; margin-top:12px; }
+  @media (max-width:860px){ .tl{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="topnav" aria-label="Secciones">
+  <div class="topnav-inner">
+    <a class="brandmark" href="#top"><span class="dot"></span><span class="txt">GUÍA · FOTO 101</span></a>
+    <div class="navlinks" id="navlinks">
+      <a href="#equipo" data-nav><span>00</span>Equipo</a>
+      <a href="#exposicion" data-nav><span>01</span>Exposición</a>
+      <a href="#composicion" data-nav><span>02</span>Composición</a>
+      <a href="#luz" data-nav><span>03</span>Luz</a>
+      <a href="#practica" data-nav><span>04</span>Repaso</a>
+    </div>
+  </div>
+  <div class="progress" id="progress"></div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <div>
+    <p class="hero-kicker">GUÍA INTERACTIVA</p>
+    <h1>Fotografía: de cero a <em>control total</em></h1>
+    <p class="hero-sub">Entiende exposición, composición y luz jugando con simuladores — y empieza a decidir tú, en vez de dejarlo en modo automático.</p>
+    <div class="hero-stats" aria-label="Contenido de la guía">
+      <div><b>4</b><span>MÓDULOS</span></div>
+      <div><b>5</b><span>SIMULADORES</span></div>
+      <div><b>9</b><span>PREGUNTAS</span></div>
+      <div><b>~15</b><span>MINUTOS</span></div>
+    </div>
+    <a class="hero-cta" href="#exposicion">Empezar por la exposición ↓</a>
+    <p class="hero-note">Asume que ya tienes una cámara o un celular con modo manual/pro. No cubre qué equipo comprar.</p>
+  </div>
+  <div class="hero-iris-box">
+    <svg id="heroIris" width="240" height="240" viewBox="0 0 220 220" aria-hidden="true">
+      <circle cx="110" cy="110" r="104" fill="none" stroke="#3A342B" stroke-width="1"/>
+      <circle cx="110" cy="110" r="96" fill="none" stroke="#27231D" stroke-width="6"/>
+      <circle id="heroIrisHole" cx="110" cy="110" r="2" fill="#13110E" stroke="#E8AE5C" stroke-width="1.5"/>
+      <g id="heroIrisBlades" stroke="#3A342B" stroke-width="1"></g>
+    </svg>
+    <span class="iris-label" id="heroIrisLabel">f/22</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ MÓDULO 0: EQUIPO E HISTORIA ============ -->
+  <section class="module wrap" id="equipo">
+    <span class="module-num" aria-hidden="true">00</span>
+    <p class="eyebrow reveal">F.00 — ANTES DE DISPARAR</p>
+    <h2 class="reveal">De la cámara oscura al sensor</h2>
+    <p class="module-intro reveal">Siempre es lo mismo: luz entrando por una abertura y quedando registrada. Cambió el soporte, no el principio.</p>
+    <div class="tl reveal">
+      <div><b>s. XI</b>Cámara oscura (estenopeica): un agujero proyecta la escena invertida en la pared. Todavía no guarda nada.</div>
+      <div><b>1826</b>Niépce obtiene la primera foto permanente, con horas de exposición.</div>
+      <div><b>1839</b>Daguerre presenta el daguerrotipo: la exposición baja a minutos.</div>
+      <div><b>1888</b>Kodak populariza el rollo de película: fotografiar ya no es cosa de expertos.</div>
+      <div><b>1975</b>Primera cámara digital (Kodak): 0,01 megapíxeles.</div>
+      <div><b>Hoy</b>El celular: sensor diminuto, software potente, miles de fotos al día.</div>
+    </div>
+    <div class="cardgrid">
+      <div class="card reveal"><h3>Cuerpo</h3><p><b>Sensor:</b> registra la luz (más grande = mejor con poca luz). <b>Obturador:</b> cuánto tiempo entra. <b>Visor/pantalla:</b> donde encuadras.</p></div>
+      <div class="card reveal"><h3>Lente (objetivo)</h3><p><b>Diafragma:</b> cuánta luz pasa (f/). <b>Distancia focal:</b> gran angular 14–35 mm, normal 50 mm, tele 85–200 mm. Fijo = más luz y nitidez; zoom = versatilidad.</p></div>
+      <div class="card reveal"><h3>Celular vs cámara</h3><p>El celular tiene sensor pequeño y diafragma casi fijo; compensa con software. Una cámara te da control físico de cada parte.</p></div>
+    </div>
+    <div class="simhead"><h3>Modos de la cámara</h3><span class="chip">INTERACTIVO · elige un modo</span></div>
+    <div class="modebtns" id="modeBtns"></div>
+    <p class="sub-intro" id="modeInfo"></p>
+    <div class="simhead"><h3>Factor de recorte</h3><span class="chip">CALCULADORA</span></div>
+    <p class="sub-intro">Factor = diagonal del full frame (43,3 mm) ÷ diagonal de tu sensor. Un APS-C mide ≈ 28,3 mm → 43,3 ÷ 28,3 ≈ 1,5. Se multiplica la distancia focal porque el sensor pequeño solo capta el centro de la imagen que proyecta el lente: el mismo lente se ve más "cerrado", como si fuera un tele más largo. No cambia el lente, cambia el encuadre.</p>
+    <div class="eqcalc">
+      <select id="cropSel"><option value="1">Full frame (×1)</option><option value="1.5" selected>APS-C Sony/Nikon (×1,5)</option><option value="1.6">APS-C Canon (×1,6)</option><option value="2">Micro 4/3 (×2)</option></select>
+      <input id="cropMm" type="number" min="8" max="800" value="50" aria-label="Distancia focal en mm"> mm
+    </div>
+    <p class="eqres" id="cropRes"></p>
+  </section>
+
+  <!-- ============ MÓDULO 1: EXPOSICIÓN ============ -->
+  <section class="module wrap" id="exposicion">
+    <span class="module-num" aria-hidden="true">01</span>
+    <p class="eyebrow reveal">F.01 — EXPOSICIÓN</p>
+    <h2 class="reveal">El triángulo de exposición</h2>
+    <p class="module-intro reveal">Toda foto es una negociación entre tres controles. Cada uno deja entrar más o menos luz, pero cada uno también cambia otra cosa en la imagen. Ese es el trato que hay que aprender a hacer.</p>
+
+    <div class="cardgrid">
+      <div class="card reveal">
+        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/></svg></div>
+        <h3>Apertura (f/stop)</h3>
+        <p>Cuánta luz entra por el lente y qué tan desenfocado se ve el fondo.</p>
+        <div class="rule"><span><b>f/1.8</b> más luz, fondo borroso</span></div>
+        <div class="rule" style="margin-top:0;border-top:none;padding-top:4px;"><span><b>f/16</b> menos luz, todo nítido</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
+        <h3>Velocidad de obturación</h3>
+        <p>Cuánto tiempo recibe luz el sensor, y si el movimiento se congela o deja estela.</p>
+        <div class="rule"><span><b>1/1000</b> congela la acción</span></div>
+        <div class="rule" style="margin-top:0;border-top:none;padding-top:4px;"><span><b>1/15</b> arrastra el movimiento</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 20v-5M10 20v-9M15 20V6M20 20V3"/></svg></div>
+        <h3>ISO</h3>
+        <p>La sensibilidad del sensor. Sube el brillo en poca luz, pero agrega ruido. Es el último recurso, no el primero.</p>
+        <div class="rule"><span><b>100</b> imagen limpia</span></div>
+        <div class="rule" style="margin-top:0;border-top:none;padding-top:4px;"><span><b>6400</b> más brillo, más grano</span></div>
+      </div>
+    </div>
+
+    <div class="tip reveal">
+      <span class="tip-tag">CLAVE</span>
+      <p><b>Cada paso es un “stop”:</b> duplica o reduce a la mitad la luz. Si abres un paso la apertura (f/4 → f/2.8), puedes compensar cerrando un paso el obturador (1/125 → 1/250) y la foto quedará igual de clara, pero con otro aspecto.</p>
+    </div>
+
+    <div class="simhead">
+      <h3>Pruébalo tú mismo</h3>
+      <span class="chip">SIMULADOR · mueve los tres controles</span>
+    </div>
+
+    <div class="panel reveal">
+      <div class="simulator">
+        <div>
+          <div class="scene" id="scene">
+            <div class="scene-sun"></div>
+            <div class="scene-mountains" id="sceneMountains">
+              <svg viewBox="0 0 300 100" preserveAspectRatio="none">
+                <polygon points="0,100 40,35 90,100" fill="#3a4a3f"/>
+                <polygon points="60,100 120,18 190,100" fill="#334438"/>
+                <polygon points="110,100 120,18 128,34 116,100" fill="#3d5044" opacity=".6"/>
+                <polygon points="160,100 220,45 300,100" fill="#3a4a3f"/>
+              </svg>
+            </div>
+            <div class="scene-ground"></div>
+            <svg class="scene-subject" viewBox="0 0 20 52" aria-hidden="true">
+              <ellipse cx="10" cy="8" rx="6" ry="7" fill="#100d0a"/>
+              <path d="M2 52 L4 22 Q10 16 16 22 L18 52 Z" fill="#100d0a"/>
+            </svg>
+            <div class="scene-mover" id="sceneMover"></div>
+            <div class="scene-overlay-light" id="overlayLight"></div>
+            <div class="scene-overlay-dark" id="overlayDark"></div>
+            <div class="scene-grain" id="sceneGrain"></div>
+            <div class="scene-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <div class="scene-hud" aria-hidden="true"><span id="hudLeft">f/2.8 · 1/125</span><span id="hudRight">ISO 100</span></div>
+          </div>
+          <div class="meter" aria-hidden="true">
+            <div class="meter-scale">
+              <span>−3</span><span>−2</span><span>−1</span><span class="zero">0</span><span>+1</span><span>+2</span><span>+3</span>
+              <div class="meter-needle" id="meterNeedle"></div>
+            </div>
+          </div>
+          <p class="scene-caption">El punto ámbar es un objeto en movimiento. La montaña es el fondo; la figura oscura es tu sujeto enfocado. La escala de abajo es el fotómetro de tu cámara.</p>
+        </div>
+
+        <div class="controls">
+          <div class="control">
+            <div class="control-top">
+              <span class="control-label">
+                <svg class="iris-mini" width="20" height="20" viewBox="0 0 40 40" aria-hidden="true">
+                  <circle cx="20" cy="20" r="17" fill="none" stroke="#3A342B" stroke-width="1.2"/>
+                  <circle id="apMiniHole" cx="20" cy="20" r="8" fill="#13110E" stroke="#E8AE5C" stroke-width="1.4"/>
+                </svg>
+                Apertura <small>· desenfoque</small>
+              </span>
+              <span class="control-value" id="apVal">f/2.8</span>
+            </div>
+            <input type="range" id="apRange" min="0" max="8" step="1" value="2" aria-label="Apertura">
+            <div class="ticks"><span>f/1.4</span><span>f/5.6</span><span>f/22</span></div>
+          </div>
+
+          <div class="control">
+            <div class="control-top">
+              <span class="control-label">Obturador <small>· movimiento</small></span>
+              <span class="control-value" id="shVal">1/125 s</span>
+            </div>
+            <input type="range" id="shRange" min="0" max="11" step="1" value="4" aria-label="Velocidad de obturación">
+            <div class="ticks"><span>1/2000</span><span>1/30</span><span>1 s</span></div>
+          </div>
+
+          <div class="control">
+            <div class="control-top">
+              <span class="control-label">ISO <small>· ruido</small></span>
+              <span class="control-value" id="isoVal">100</span>
+            </div>
+            <input type="range" id="isoRange" min="0" max="6" step="1" value="0" aria-label="ISO">
+            <div class="ticks"><span>100</span><span>800</span><span>6400</span></div>
+          </div>
+
+          <div class="readout" aria-live="polite">
+            <div class="readout-status status-ok" id="roStatus">Exposición equilibrada</div>
+            <p class="readout-hint" id="roHint">Punto de partida: f/2.8 · 1/125 s · ISO 100.</p>
+          </div>
+          <div class="row-actions">
+            <button class="btn btn-ghost" id="expReset">Restablecer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MÓDULO 2: COMPOSICIÓN ============ -->
+  <section class="module wrap" id="composicion">
+    <span class="module-num" aria-hidden="true">02</span>
+    <p class="eyebrow reveal">F.02 — COMPOSICIÓN</p>
+    <h2 class="reveal">Dónde poner las cosas</h2>
+    <p class="module-intro reveal">La composición es decidir qué entra en el cuadro y en qué lugar. Estas son las reglas que más rápido mejoran una foto — y también cuándo tiene sentido romperlas.</p>
+
+    <div class="cardgrid cardgrid-2col">
+      <div class="card reveal">
+        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20L12 4L20 20"/></svg></div>
+        <h3>Líneas guía</h3>
+        <p>Caminos, rieles o bordes que convergen y llevan la mirada hacia el sujeto.</p>
+        <div class="rule"><span><b>Busca:</b> líneas que apuntan hacia el punto de interés</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg></div>
+        <h3>Encuadre natural</h3>
+        <p>Un elemento en primer plano — un arco, una ventana, ramas — que rodea al sujeto como un marco dentro del marco.</p>
+        <div class="rule"><span><b>Busca:</b> algo que "abraza" al sujeto desde los bordes</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v18M4 12l5-4v8z"/><path d="M20 12l-5-4v8z"/></svg></div>
+        <h3>Simetría</h3>
+        <p>Equilibrio visual: mitades que se reflejan o patrones que se repiten a ambos lados del cuadro.</p>
+        <div class="rule"><span><b>Busca:</b> un eje central con dos mitades parecidas</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="7.5" cy="15.5" r="1.5" fill="currentColor" stroke="none"/></svg></div>
+        <h3>Espacio negativo</h3>
+        <p>El área vacía alrededor del sujeto. No es un descuido: le da lugar para "respirar" y refuerza el contraste y la escala.</p>
+        <div class="rule"><span><b>Busca:</b> mucho vacío, un sujeto pequeño</span></div>
+      </div>
+    </div>
+
+    <div class="simhead">
+      <h3>Regla de tercios</h3>
+      <span class="chip">SIMULADOR · arrastra el sujeto</span>
+    </div>
+    <p class="sub-intro">Divide el cuadro en 9 partes con dos líneas horizontales y dos verticales. Los cuatro puntos donde se cruzan atraen más la mirada que el centro geométrico.</p>
+
+    <div class="panel reveal">
+      <div class="thirds-wrap">
+        <div class="thirds-scene" id="thirdsScene">
+          <div class="hills" aria-hidden="true">
+            <svg viewBox="0 0 300 60" preserveAspectRatio="none">
+              <path d="M0 60 L0 38 Q40 18 80 32 T160 26 T240 34 T300 22 L300 60 Z" fill="#344231"/>
+            </svg>
+          </div>
+          <div class="thirds-grid" id="thirdsGrid">
+            <div class="gl v1"></div><div class="gl v2"></div>
+            <div class="gl h1"></div><div class="gl h2"></div>
+            <div class="pt" style="left:33.333%;top:33.333%"></div>
+            <div class="pt" style="left:66.666%;top:33.333%"></div>
+            <div class="pt" style="left:33.333%;top:66.666%"></div>
+            <div class="pt" style="left:66.666%;top:66.666%"></div>
+          </div>
+          <div class="thirds-subject" id="thirdsSubject" tabindex="0" role="slider" aria-label="Sujeto — arrastra o usa las flechas" aria-valuetext="centro"></div>
+        </div>
+        <div class="thirds-side">
+          <button class="btn" id="thirdsToggle">Mostrar cuadrícula</button>
+          <p class="thirds-feedback" id="thirdsFeedback" aria-live="polite">Arrastra el punto ámbar sobre la escena.</p>
+          <p class="hint">También puedes seleccionar el punto y moverlo con <kbd>←</kbd> <kbd>↑</kbd> <kbd>→</kbd> <kbd>↓</kbd>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip reveal">
+      <span class="tip-tag">CONSEJO</span>
+      <p><b>Activa la cuadrícula en tu cámara o celular.</b> Casi todos la traen en los ajustes de cámara. Pon el horizonte sobre una línea, no en el medio, y los ojos del retratado en el tercio superior.</p>
+    </div>
+  </section>
+
+  <!-- ============ MÓDULO 3: LUZ ============ -->
+  <section class="module wrap" id="luz">
+    <span class="module-num" aria-hidden="true">03</span>
+    <p class="eyebrow reveal">F.03 — LUZ</p>
+    <h2 class="reveal">La luz manda</h2>
+    <p class="module-intro reveal">La cámara solo registra luz. De dónde viene y qué tan alta o rasante es determina el volumen, las sombras y el ánimo de la foto — más que cualquier ajuste de exposición.</p>
+
+    <div class="simhead"><h3>Dirección de la luz</h3><span class="chip">SIMULADOR · arrastra el sol</span></div>
+    <p class="sub-intro">Vista desde arriba. Cerca del centro = luz alta, tipo mediodía. Cerca del borde = luz rasante, tipo hora dorada.</p>
+
+    <div class="panel reveal">
+      <div class="light-wrap">
+        <div class="dial-box">
+          <div class="dial" id="lightDial">
+            <span class="dial-tag top">FONDO</span>
+            <div class="dial-ring"></div>
+            <div class="dial-ring inner"></div>
+            <div class="dial-glow" id="dialGlow"></div>
+            <div class="dial-shadow" id="dialShadow"></div>
+            <svg class="dial-subject" viewBox="0 0 38 52" aria-hidden="true">
+              <ellipse cx="19" cy="10" rx="8" ry="9" fill="#0c0a08"/>
+              <path d="M4 52 L7 26 Q19 18 31 26 L34 52 Z" fill="#0c0a08"/>
+            </svg>
+            <div class="dial-handle" id="dialHandle" tabindex="0" role="slider" aria-label="Posición de la luz — arrastra o usa las flechas"></div>
+            <span class="dial-tag bottom">▲ CÁMARA</span>
+          </div>
+          <p class="dial-caption">La cámara siempre está abajo, mirando hacia el sujeto.</p>
+        </div>
+        <div class="light-desc" aria-live="polite">
+          <p class="light-desc-kicker">TIPO DE LUZ</p>
+          <p class="light-desc-title" id="lightTitle">Luz frontal</p>
+          <p class="light-desc-body" id="lightBody">La luz viene del mismo lado que la cámara. Aplana el rostro y elimina casi todas las sombras — segura, pero poco dramática.</p>
+          <span class="light-elev" id="lightElev">Altura: media</span>
+          <div class="presets" aria-label="Posiciones rápidas">
+            <button class="btn btn-ghost" data-light="0,80">Frontal</button>
+            <button class="btn btn-ghost" data-light="85,0">Lateral</button>
+            <button class="btn btn-ghost" data-light="0,-85">Contraluz</button>
+            <button class="btn btn-ghost" data-light="0,10">Mediodía</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="simhead"><h3>Temperatura de color</h3><span class="chip">SIMULADOR · Kelvin</span></div>
+    <p class="sub-intro">La misma escena se ve distinta según la fuente de luz: cálida y naranja o fría y azulada. El balance de blancos existe para corregir (o aprovechar) esto.</p>
+
+    <div class="panel reveal">
+      <div class="kelvin-preview">
+        <div class="kelvin-swatch" id="kelvinSwatch">
+          <svg viewBox="0 0 220 165" preserveAspectRatio="none" aria-hidden="true">
+            <rect y="100" width="220" height="65" fill="#9a9a9a"/>
+            <rect x="30" y="50" width="60" height="70" fill="#b9b9b9"/>
+            <rect x="120" y="30" width="70" height="90" fill="#8c8c8c"/>
+            <circle cx="95" cy="118" r="16" fill="#6e6e6e"/>
+          </svg>
+        </div>
+        <div>
+          <p class="kelvin-readout" id="kelvinReadout">3200<small>K</small></p>
+          <p class="kelvin-name" id="kelvinName">Bombilla de tungsteno — interior cálido</p>
+          <input type="range" class="kelvin" id="kelvinRange" min="2000" max="10000" step="100" value="3200" style="margin-top:22px;" aria-label="Temperatura de color en Kelvin">
+          <div class="kelvin-ends"><span>2000 K · cálido</span><span>frío · 10 000 K</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip reveal">
+      <span class="tip-tag">CONSEJO</span>
+      <p><b>¿Los tonos de piel salen naranjas en interiores?</b> Cambia el balance de blancos a “Tungsteno” (≈3200 K). ¿Salen azulados a la sombra? Usa “Sombra” (≈7500 K). En RAW puedes corregirlo después sin perder calidad.</p>
+    </div>
+  </section>
+
+  <!-- ============ MÓDULO 4: REPASO ============ -->
+  <section class="module wrap" id="practica">
+    <span class="module-num" aria-hidden="true">04</span>
+    <p class="eyebrow reveal">F.04 — REPASO</p>
+    <h2 class="reveal">Apuntes rápidos</h2>
+    <p class="module-intro reveal">Para tener a mano antes de salir a disparar. Captura de pantalla y listo.</p>
+
+    <div class="cheat-grid reveal">
+      <div class="cheat-col">
+        <h4>EXPOSICIÓN</h4>
+        <div class="cheat-card"><b>f/1.8</b><span>+ luz, fondo desenfocado</span></div>
+        <div class="cheat-card"><b>f/16</b><span>− luz, todo nítido</span></div>
+        <div class="cheat-card"><b>Obturador rápido</b><span>congela el movimiento</span></div>
+        <div class="cheat-card"><b>Obturador lento</b><span>estela — usa trípode</span></div>
+        <div class="cheat-card"><b>ISO alto</b><span>+ luz, + ruido</span></div>
+        <div class="cheat-card"><b>ISO bajo</b><span>imagen limpia</span></div>
+      </div>
+      <div class="cheat-col">
+        <h4>COMPOSICIÓN</h4>
+        <div class="cheat-card"><b>Regla de tercios</b><span>sujeto en las intersecciones</span></div>
+        <div class="cheat-card"><b>Líneas guía</b><span>llevan la mirada al sujeto</span></div>
+        <div class="cheat-card"><b>Encuadre natural</b><span>un marco dentro del marco</span></div>
+        <div class="cheat-card"><b>Simetría</b><span>equilibrio, reflejos, patrones</span></div>
+        <div class="cheat-card"><b>Espacio negativo</b><span>vacío que deja "respirar" al sujeto</span></div>
+      </div>
+      <div class="cheat-col">
+        <h4>LUZ</h4>
+        <div class="cheat-card"><b>Frontal</b><span>aplana, casi sin sombras</span></div>
+        <div class="cheat-card"><b>Lateral</b><span>textura y volumen</span></div>
+        <div class="cheat-card"><b>Contraluz</b><span>siluetas y halos</span></div>
+        <div class="cheat-card"><b>Hora dorada</b><span>rasante, cálida, sombras largas</span></div>
+        <div class="cheat-card"><b>3200 K / 5600 K</b><span>interior / luz de día</span></div>
+      </div>
+    </div>
+
+    <div class="quiz-scenes">
+      <div class="simhead">
+        <h3>¿Qué técnica ves aquí?</h3>
+        <span class="qs-score" id="qsScore"><b>0</b> / 5 correctas</span>
+      </div>
+
+      <div class="qs-grid">
+        <div class="qs-item reveal">
+          <div class="qs-illust">
+            <svg viewBox="0 0 200 112" preserveAspectRatio="xMidYMid slice"><rect width="200" height="112" fill="#1c2119"/>
+              <rect width="200" height="44" fill="#26303a"/>
+              <polygon points="60,112 140,112 102,44 98,44" fill="#3a4a3f"/>
+              <line x1="0" y1="112" x2="98" y2="44" stroke="#E8AE5C" stroke-width="1"/>
+              <line x1="200" y1="112" x2="102" y2="44" stroke="#E8AE5C" stroke-width="1"/>
+              <line x1="100" y1="104" x2="100" y2="96" stroke="#E8AE5C" stroke-width="1.2"/>
+              <line x1="100" y1="84" x2="100" y2="78" stroke="#E8AE5C" stroke-width="1"/>
+              <line x1="100" y1="68" x2="100" y2="64" stroke="#E8AE5C" stroke-width=".8"/>
+            </svg>
+          </div>
+          <p class="qs-num">ESCENA 1</p>
+          <p class="qs-question">Un camino que se estrecha hacia el horizonte.</p>
+          <div class="qs-options" data-q="1" data-answer="Líneas guía">
+            <button class="qs-opt">Líneas guía</button>
+            <button class="qs-opt">Simetría</button>
+            <button class="qs-opt">Encuadre natural</button>
+            <button class="qs-opt">Regla de tercios</button>
+          </div>
+          <p class="qs-explain" data-explain="1"></p>
+        </div>
+
+        <div class="qs-item reveal">
+          <div class="qs-illust">
+            <svg viewBox="0 0 200 112" preserveAspectRatio="xMidYMid slice"><rect width="200" height="112" fill="#2b3542"/>
+              <rect y="70" width="200" height="42" fill="#1f271c"/>
+              <path d="M0 0 H200 V112 H160 V50 Q160 20 100 20 Q40 20 40 50 V112 H0 Z" fill="#221E19"/>
+              <circle cx="100" cy="66" r="10" fill="#E8AE5C"/>
+            </svg>
+          </div>
+          <p class="qs-num">ESCENA 2</p>
+          <p class="qs-question">Un arco en primer plano rodea al sujeto del fondo.</p>
+          <div class="qs-options" data-q="2" data-answer="Encuadre natural">
+            <button class="qs-opt">Líneas guía</button>
+            <button class="qs-opt">Encuadre natural</button>
+            <button class="qs-opt">Simetría</button>
+            <button class="qs-opt">Regla de tercios</button>
+          </div>
+          <p class="qs-explain" data-explain="2"></p>
+        </div>
+
+        <div class="qs-item reveal">
+          <div class="qs-illust">
+            <svg viewBox="0 0 200 112" preserveAspectRatio="xMidYMid slice"><rect width="200" height="56" fill="#26303a"/>
+              <rect y="56" width="200" height="56" fill="#1d2833"/>
+              <rect x="78" y="14" width="44" height="42" fill="#3a4a3f"/>
+              <polygon points="74,14 100,2 126,14" fill="#3a4a3f"/>
+              <rect x="86" y="24" width="8" height="10" fill="#E8AE5C" opacity=".8"/><rect x="106" y="24" width="8" height="10" fill="#E8AE5C" opacity=".8"/>
+              <g opacity=".45">
+                <rect x="78" y="56" width="44" height="42" fill="#3a4a3f"/>
+                <polygon points="74,98 100,110 126,98" fill="#3a4a3f"/>
+                <rect x="86" y="78" width="8" height="10" fill="#E8AE5C"/><rect x="106" y="78" width="8" height="10" fill="#E8AE5C"/>
+              </g>
+              <line x1="0" y1="56" x2="200" y2="56" stroke="#8AAAC6" stroke-width="0.6"/>
+              <line x1="60" y1="70" x2="90" y2="70" stroke="#8AAAC6" stroke-width=".5" opacity=".6"/>
+              <line x1="110" y1="88" x2="150" y2="88" stroke="#8AAAC6" stroke-width=".5" opacity=".6"/>
+            </svg>
+          </div>
+          <p class="qs-num">ESCENA 3</p>
+          <p class="qs-question">Un edificio que se refleja en el agua, mitad y mitad.</p>
+          <div class="qs-options" data-q="3" data-answer="Simetría">
+            <button class="qs-opt">Encuadre natural</button>
+            <button class="qs-opt">Regla de tercios</button>
+            <button class="qs-opt">Simetría</button>
+            <button class="qs-opt">Líneas guía</button>
+          </div>
+          <p class="qs-explain" data-explain="3"></p>
+        </div>
+
+        <div class="qs-item reveal">
+          <div class="qs-illust">
+            <svg viewBox="0 0 200 112" preserveAspectRatio="xMidYMid slice"><rect width="200" height="112" fill="#2b3542"/>
+              <rect y="75" width="200" height="37" fill="#1f271c"/>
+              <g stroke="#F3EDE0" stroke-opacity=".25" stroke-width=".8">
+                <line x1="66.6" y1="0" x2="66.6" y2="112"/><line x1="133.3" y1="0" x2="133.3" y2="112"/>
+                <line x1="0" y1="37.3" x2="200" y2="37.3"/><line x1="0" y1="74.6" x2="200" y2="74.6"/>
+              </g>
+              <circle cx="133.3" cy="37.3" r="9" fill="#E8AE5C"/>
+            </svg>
+          </div>
+          <p class="qs-num">ESCENA 4</p>
+          <p class="qs-question">El sujeto está justo sobre un cruce de la cuadrícula.</p>
+          <div class="qs-options" data-q="4" data-answer="Regla de tercios">
+            <button class="qs-opt">Simetría</button>
+            <button class="qs-opt">Líneas guía</button>
+            <button class="qs-opt">Regla de tercios</button>
+            <button class="qs-opt">Encuadre natural</button>
+          </div>
+          <p class="qs-explain" data-explain="4"></p>
+        </div>
+        <div class="qs-item reveal">
+          <div class="qs-illust">
+            <svg viewBox="0 0 200 112" preserveAspectRatio="xMidYMid slice"><rect width="200" height="112" fill="#232920"/>
+              <rect y="88" width="200" height="24" fill="#1a2016" opacity=".7"/>
+              <circle cx="46" cy="83" r="5" fill="#E8AE5C"/>
+            </svg>
+          </div>
+          <p class="qs-num">ESCENA 5</p>
+          <p class="qs-question">El sujeto es diminuto y el resto del cuadro está casi vacío.</p>
+          <div class="qs-options" data-q="5" data-answer="Espacio negativo">
+            <button class="qs-opt">Simetría</button>
+            <button class="qs-opt">Espacio negativo</button>
+            <button class="qs-opt">Líneas guía</button>
+            <button class="qs-opt">Encuadre natural</button>
+          </div>
+          <p class="qs-explain" data-explain="5"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="final-quiz reveal" id="finalQuiz">
+      <div class="fq-top">
+        <span class="fq-label">EXAMEN FINAL</span>
+        <div class="fq-dots" id="fqDots" aria-hidden="true"></div>
+      </div>
+      <div id="fqActive">
+        <p class="fq-progress" id="fqProgress">Pregunta 1/5</p>
+        <p class="fq-question" id="fqQuestion"></p>
+        <div class="fq-options" id="fqOptions"></div>
+        <p class="fq-explain" id="fqExplain" aria-live="polite"></p>
+        <button class="btn btn-primary fq-next" id="fqNext" style="display:none;">Siguiente →</button>
+      </div>
+      <div class="fq-result" id="fqResult">
+        <p class="fq-result-score" id="fqScore"></p>
+        <p class="fq-result-title" id="fqTitle"></p>
+        <p class="fq-result-note" id="fqNote"></p>
+        <button class="btn fq-next" id="fqRetry" style="margin-top:22px;">Volver a intentar</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span class="brandmark"><span class="dot"></span>GUÍA · FOTO 101</span>
+  <span>Hecha para repasar antes de salir a disparar.</span>
+  <a href="#top">Volver arriba ↑</a>
+  <p class="footer-credit">HECHA POR ANJERODA PHOTO — GUÍA RÁPIDA</p>
+</footer>
+
+<script>
+(function(){
+
+  var lerp = function(a,b,t){ return a + (b-a)*t; };
+  var clamp = function(v,min,max){ return Math.max(min, Math.min(max, v)); };
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ================= NAV + PROGRESS ================= */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+  var navSections = ['equipo','exposicion','composicion','luz','practica'].map(function(id){ return document.getElementById(id); });
+  if ('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          navLinks.forEach(function(a){
+            a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    navSections.forEach(function(s){ if (s) obs.observe(s); });
+
+    var revObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
+    }, { rootMargin:'0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el){ revObs.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  var progress = document.getElementById('progress');
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.transform = 'scaleX(' + (h > 0 ? clamp(window.scrollY / h, 0, 1) : 0) + ')';
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  /* ================= RANGE FILL ================= */
+  function paintRange(el){
+    var p = (el.value - el.min) / (el.max - el.min) * 100;
+    el.style.setProperty('--p', p + '%');
+  }
+
+  /* ================= IRIS (hero) ================= */
+  function buildBlades(group, cx, cy){
+    group.innerHTML = '';
+    for (var i=0;i<8;i++){
+      var line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('data-angle', (360/8)*i);
+      group.appendChild(line);
+    }
+  }
+  function updateBlades(group, cx, cy, rInner, rOuter){
+    group.querySelectorAll('line').forEach(function(line){
+      var a = parseFloat(line.getAttribute('data-angle')) * Math.PI/180;
+      // aspas ligeramente curvadas: desplazamos el ángulo del punto interior
+      var a2 = a + 0.5;
+      line.setAttribute('x1', cx + Math.cos(a2)*rInner); line.setAttribute('y1', cy + Math.sin(a2)*rInner);
+      line.setAttribute('x2', cx + Math.cos(a)*rOuter);  line.setAttribute('y2', cy + Math.sin(a)*rOuter);
+    });
+  }
+
+  var heroHole = document.getElementById('heroIrisHole');
+  var heroBlades = document.getElementById('heroIrisBlades');
+  var heroLabel = document.getElementById('heroIrisLabel');
+  var heroStops = ['f/22','f/16','f/11','f/8','f/5.6','f/4','f/2.8','f/2','f/1.4'];
+  buildBlades(heroBlades, 110, 110);
+  var heroTarget = 62;
+  function setHero(p){
+    var r = lerp(4, heroTarget, p);
+    heroHole.setAttribute('r', r);
+    updateBlades(heroBlades, 110, 110, r, 96);
+    heroLabel.textContent = heroStops[Math.round(p*(heroStops.length-1))];
+  }
+  if (reduced){ setHero(1); }
+  else {
+    var start = null;
+    function animateHero(t){
+      if (start === null) start = t;
+      var p = clamp((t-start-250)/1400, 0, 1);
+      var eased = 1 - Math.pow(1-p, 3);
+      setHero(eased);
+      if (p < 1) requestAnimationFrame(animateHero);
+    }
+    requestAnimationFrame(animateHero);
+  }
+
+  /* ================= MÓDULO 1: EXPOSICIÓN ================= */
+  var apLabels = ['f/1.4','f/2','f/2.8','f/4','f/5.6','f/8','f/11','f/16','f/22'];
+  var shLabels = ['1/2000','1/1000','1/500','1/250','1/125','1/60','1/30','1/15','1/8','1/4','1/2','1'];
+  var isoValues = [100,200,400,800,1600,3200,6400];
+
+  var apRange = document.getElementById('apRange');
+  var shRange = document.getElementById('shRange');
+  var isoRange = document.getElementById('isoRange');
+  var apVal = document.getElementById('apVal');
+  var shVal = document.getElementById('shVal');
+  var isoVal = document.getElementById('isoVal');
+  var roStatus = document.getElementById('roStatus');
+  var roHint = document.getElementById('roHint');
+  var hudLeft = document.getElementById('hudLeft');
+  var hudRight = document.getElementById('hudRight');
+  var meterNeedle = document.getElementById('meterNeedle');
+  var apMiniHole = document.getElementById('apMiniHole');
+
+  var sceneMountains = document.getElementById('sceneMountains');
+  var sceneMover = document.getElementById('sceneMover');
+  var overlayLight = document.getElementById('overlayLight');
+  var overlayDark = document.getElementById('overlayDark');
+  var sceneGrain = document.getElementById('sceneGrain');
+
+  var grainSVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E";
+  sceneGrain.style.backgroundImage = "url(\"" + grainSVG + "\")";
+  sceneGrain.style.backgroundSize = "120px 120px";
+
+  // Punto de partida equilibrado: f/2.8 · 1/125 · ISO 100
+  var BASE_AP = 2, BASE_SH = 4, BASE_ISO = 0;
+
+  function updateExposure(){
+    var ai = parseInt(apRange.value,10);
+    var si = parseInt(shRange.value,10);
+    var ii = parseInt(isoRange.value,10);
+    [apRange, shRange, isoRange].forEach(paintRange);
+
+    apVal.textContent = apLabels[ai];
+    shVal.textContent = shLabels[si] + ' s';
+    isoVal.textContent = isoValues[ii];
+    hudLeft.textContent = apLabels[ai] + ' · ' + shLabels[si];
+    hudRight.textContent = 'ISO ' + isoValues[ii];
+
+    apMiniHole.setAttribute('r', lerp(12, 3, ai/8));
+
+    // profundidad de campo: solo la apertura
+    sceneMountains.style.filter = 'blur(' + lerp(14, 0, ai/8).toFixed(1) + 'px)';
+
+    // estela de movimiento: solo el obturador
+    var trail = lerp(0, 60, si/11);
+    sceneMover.style.boxShadow =
+      (-trail*0.3).toFixed(1) + 'px 0 6px 0 rgba(232,174,92,.45), ' +
+      (-trail*0.65).toFixed(1) + 'px 0 10px 0 rgba(232,174,92,.2), ' +
+      (-trail).toFixed(1) + 'px 0 14px 0 rgba(232,174,92,.08)';
+    sceneMover.style.width = (16 + trail*0.25).toFixed(0) + 'px';
+    sceneMover.style.borderRadius = '999px';
+
+    // grano: solo el ISO
+    sceneGrain.style.opacity = lerp(0, 0.6, ii/6);
+
+    // exposición total en pasos
+    var ev = (BASE_AP - ai) + (si - BASE_SH) + (ii - BASE_ISO);
+    if (ev > 0){
+      overlayLight.style.opacity = clamp(ev/7, 0, 0.9);
+      overlayDark.style.opacity = 0;
+    } else {
+      overlayDark.style.opacity = clamp(-ev/6, 0, 0.88);
+      overlayLight.style.opacity = 0;
+    }
+    meterNeedle.style.left = 'calc(' + ((clamp(ev,-3,3)+3)/6*100) + '% - 1px)';
+    meterNeedle.classList.toggle('warn', ev !== 0);
+
+    var abs = Math.abs(ev), statusText, statusClass, hint;
+    var sign = ev > 0 ? '+' : '';
+    if (ev === 0){
+      statusText = 'Exposición equilibrada · 0 EV'; statusClass = 'status-ok';
+      hint = 'Bien. Ahora prueba cambiar un control y compensar con otro.';
+    } else if (ev > 0){
+      statusText = (abs <= 2 ? 'Ligeramente sobreexpuesta' : 'Sobreexpuesta') + ' · ' + sign + ev + ' EV';
+      statusClass = 'status-warn';
+      hint = 'Entra demasiada luz. Cierra la apertura, acelera el obturador o baja el ISO.';
+    } else {
+      statusText = (abs <= 2 ? 'Ligeramente subexpuesta' : 'Subexpuesta') + ' · ' + ev + ' EV';
+      statusClass = 'status-warn';
+      hint = 'Falta luz. Abre la apertura, baja la velocidad o, como último recurso, sube el ISO.';
+    }
+    roStatus.textContent = statusText;
+    roStatus.className = 'readout-status ' + statusClass;
+    roHint.textContent = hint;
+  }
+
+  [apRange, shRange, isoRange].forEach(function(el){ el.addEventListener('input', updateExposure); });
+  document.getElementById('expReset').addEventListener('click', function(){
+    apRange.value = BASE_AP; shRange.value = BASE_SH; isoRange.value = BASE_ISO;
+    updateExposure();
+  });
+  updateExposure();
+
+  /* ================= MÓDULO 2: REGLA DE TERCIOS ================= */
+  var thirdsScene = document.getElementById('thirdsScene');
+  var thirdsSubject = document.getElementById('thirdsSubject');
+  var thirdsGrid = document.getElementById('thirdsGrid');
+  var thirdsToggle = document.getElementById('thirdsToggle');
+  var thirdsFeedback = document.getElementById('thirdsFeedback');
+
+  var gridOn = false;
+  thirdsToggle.addEventListener('click', function(){
+    gridOn = !gridOn;
+    thirdsGrid.classList.toggle('show', gridOn);
+    thirdsToggle.classList.toggle('is-active', gridOn);
+    thirdsToggle.textContent = gridOn ? 'Ocultar cuadrícula' : 'Mostrar cuadrícula';
+  });
+
+  var thirdsPos = { xPct: 50, yPct: 50 };
+  function setSubjectPos(xPct, yPct){
+    xPct = clamp(xPct, 6, 94); yPct = clamp(yPct, 6, 94);
+    thirdsPos.xPct = xPct; thirdsPos.yPct = yPct;
+    thirdsSubject.style.left = xPct + '%';
+    thirdsSubject.style.top = yPct + '%';
+
+    var points = [[33.333,33.333],[66.666,33.333],[33.333,66.666],[66.666,66.666]];
+    var minDist = Infinity;
+    points.forEach(function(p){ minDist = Math.min(minDist, Math.hypot(xPct - p[0], yPct - p[1])); });
+
+    var hit = minDist < 7, txt;
+    if (hit) txt = 'Sobre un punto de fuerza — aquí la mirada se detiene primero.';
+    else if (Math.abs(xPct-50) < 6 && Math.abs(yPct-50) < 6) txt = 'Centrado. Es estable, pero suele sentirse más plano. Prueba una intersección.';
+    else if (minDist < 16) txt = 'Casi. Acércalo un poco más a un cruce de la cuadrícula.';
+    else txt = 'Busca uno de los cuatro cruces. Activa la cuadrícula si te ayuda.';
+    thirdsFeedback.textContent = txt;
+    thirdsFeedback.classList.toggle('hit', hit);
+    thirdsSubject.classList.toggle('hit', hit);
+    thirdsSubject.setAttribute('aria-valuetext', hit ? 'sobre una intersección' : 'fuera de las intersecciones');
+  }
+  setSubjectPos(50,50);
+  thirdsFeedback.textContent = 'Arrastra el punto ámbar sobre la escena.';
+
+  function scenePct(e){
+    var rect = thirdsScene.getBoundingClientRect();
+    return { x: ((e.clientX - rect.left) / rect.width) * 100, y: ((e.clientY - rect.top) / rect.height) * 100 };
+  }
+  var tDragging = false;
+  thirdsSubject.addEventListener('pointerdown', function(e){ tDragging = true; thirdsSubject.setPointerCapture(e.pointerId); });
+  thirdsSubject.addEventListener('pointermove', function(e){ if (!tDragging) return; var p = scenePct(e); setSubjectPos(p.x, p.y); });
+  thirdsSubject.addEventListener('pointerup', function(){ tDragging = false; });
+  thirdsSubject.addEventListener('pointercancel', function(){ tDragging = false; });
+  // clic en cualquier parte de la escena mueve el sujeto
+  thirdsScene.addEventListener('pointerdown', function(e){
+    if (e.target === thirdsSubject) return;
+    var p = scenePct(e); setSubjectPos(p.x, p.y);
+  });
+  thirdsSubject.addEventListener('keydown', function(e){
+    var step = 4;
+    if (e.key === 'ArrowLeft') setSubjectPos(thirdsPos.xPct - step, thirdsPos.yPct);
+    else if (e.key === 'ArrowRight') setSubjectPos(thirdsPos.xPct + step, thirdsPos.yPct);
+    else if (e.key === 'ArrowUp') setSubjectPos(thirdsPos.xPct, thirdsPos.yPct - step);
+    else if (e.key === 'ArrowDown') setSubjectPos(thirdsPos.xPct, thirdsPos.yPct + step);
+    else return;
+    e.preventDefault();
+  });
+
+  /* ================= MÓDULO 2: MINI QUIZ ================= */
+  var compExplain = {
+    '1': 'Las líneas guía usan bordes o caminos que convergen para llevar la mirada hacia el punto de interés.',
+    '2': 'El encuadre natural usa un elemento en primer plano (un arco, una ventana, ramas) como marco dentro del marco.',
+    '3': 'La simetría busca equilibrio visual: mitades que se reflejan o se repiten.',
+    '4': 'La regla de tercios coloca al sujeto sobre una intersección, no en el centro.',
+    '5': 'El espacio negativo es el área vacía alrededor del sujeto: ese vacío no es un descuido, le da lugar para "respirar" y refuerza la sensación de escala, soledad o calma.'
+  };
+  var qsCorrect = 0;
+  var qsScoreEl = document.getElementById('qsScore');
+  document.querySelectorAll('.qs-options').forEach(function(group){
+    var answer = group.getAttribute('data-answer');
+    var qid = group.getAttribute('data-q');
+    var explainEl = document.querySelector('[data-explain="' + qid + '"]');
+    var item = group.closest('.qs-item');
+    group.querySelectorAll('.qs-opt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var isCorrect = btn.textContent.trim() === answer;
+        group.querySelectorAll('.qs-opt').forEach(function(b){
+          b.disabled = true;
+          if (b.textContent.trim() === answer) b.classList.add('correct');
+          else if (b === btn) b.classList.add('wrong');
+        });
+        if (isCorrect){ qsCorrect++; item.classList.add('done-ok'); }
+        qsScoreEl.innerHTML = '<b>' + qsCorrect + '</b> / 5 correctas';
+        explainEl.textContent = (isCorrect ? '¡Correcto! ' : 'Era “' + answer + '”. ') + compExplain[qid];
+      });
+    });
+  });
+
+  /* ================= MÓDULO 3: DIRECCIÓN DE LA LUZ ================= */
+  var lightDial = document.getElementById('lightDial');
+  var dialHandle = document.getElementById('dialHandle');
+  var dialShadow = document.getElementById('dialShadow');
+  var dialGlow = document.getElementById('dialGlow');
+  var lightTitle = document.getElementById('lightTitle');
+  var lightBody = document.getElementById('lightBody');
+  var lightElev = document.getElementById('lightElev');
+
+  var DIAL_R = 104;
+
+  var lightBuckets = [
+    { label:'Contraluz', body:'La luz viene de detrás del sujeto. Crea siluetas y un halo en el borde. Cuidado con el destello (flare) directo al lente.' },
+    { label:'Contraluz lateral (der.)', body:'Luz desde atrás y a un lado. Bordes iluminados con mucho contraste; el resto del sujeto queda en sombra.' },
+    { label:'Luz lateral (der.)', body:'Resalta textura y volumen. Sombras marcadas en un lado del rostro: ideal para retratos con carácter.' },
+    { label:'Luz ¾ frontal (der.)', body:'Buen volumen sin sombras duras. El ángulo más cómodo para retrato general.' },
+    { label:'Luz frontal', body:'La luz viene del mismo lado que la cámara. Aplana el rostro y elimina casi todas las sombras — segura, pero poco dramática.' },
+    { label:'Luz ¾ frontal (izq.)', body:'Buen volumen sin sombras duras, desde el lado opuesto. El ángulo más cómodo para retrato general.' },
+    { label:'Luz lateral (izq.)', body:'Resalta textura y volumen desde el otro costado. Sombras marcadas del lado derecho del sujeto.' },
+    { label:'Contraluz lateral (izq.)', body:'Luz desde atrás y al lado izquierdo. Contraste fuerte en el contorno del sujeto.' }
+  ];
+
+  var curDx = 0, curDy = 80;
+  function updateLight(dx, dy){
+    var dist = Math.hypot(dx,dy);
+    var r = clamp(dist / DIAL_R, 0, 1);
+    var compass = (Math.atan2(dx, -dy) * 180/Math.PI + 360) % 360;
+    var bucket = lightBuckets[Math.round(compass/45) % 8];
+
+    var elev, elevLabel;
+    if (r < 0.3){ elev = ' Al estar tan alta (mediodía), la dirección casi no importa: sombra corta y dura bajo los ojos.'; elevLabel = 'Altura: cenital · mediodía'; }
+    else if (r < 0.7){ elev = ' Altura media: sombra de largo moderado.'; elevLabel = 'Altura: media'; }
+    else { elev = ' Luz rasante, tipo hora dorada: sombra larga y suave.'; elevLabel = 'Altura: rasante · hora dorada'; }
+
+    lightTitle.textContent = r < 0.3 ? 'Luz cenital' : bucket.label;
+    lightBody.textContent = (r < 0.3 ? 'El sol está casi encima del sujeto.' : bucket.body) + elev;
+    lightElev.textContent = elevLabel;
+
+    var shadowLen = lerp(4, 50, r);
+    var ux = dist < 4 ? 0 : -dx/dist, uy = dist < 4 ? 1 : -dy/dist;
+    var sx = ux * shadowLen, sy = uy * shadowLen * 0.45;
+    dialShadow.style.transform = 'translate(calc(-50% + ' + sx.toFixed(1) + 'px), calc(-50% + ' + (18+sy).toFixed(1) + 'px)) scaleX(' + lerp(0.7,1.4,r).toFixed(2) + ')';
+
+    var gx = 50 + dx/2.4, gy = 50 + dy/2.4;
+    var warm = lerp(0.10, 0.22, r);
+    dialGlow.style.background = 'radial-gradient(circle at ' + gx + '% ' + gy + '%, rgba(232,174,92,' + warm.toFixed(2) + '), transparent 60%)';
+  }
+  function setHandle(dx, dy){
+    var d = Math.hypot(dx,dy);
+    if (d > DIAL_R){ dx = dx/d*DIAL_R; dy = dy/d*DIAL_R; }
+    curDx = dx; curDy = dy;
+    dialHandle.style.left = 'calc(50% + ' + dx.toFixed(1) + 'px)';
+    dialHandle.style.top = 'calc(50% + ' + dy.toFixed(1) + 'px)';
+    updateLight(dx, dy);
+  }
+  setHandle(0, 80);
+
+  function dialPoint(e){
+    var rect = lightDial.getBoundingClientRect();
+    return { dx: e.clientX - (rect.left + rect.width/2), dy: e.clientY - (rect.top + rect.height/2) };
+  }
+  var dialDragging = false;
+  dialHandle.addEventListener('pointerdown', function(e){ dialDragging = true; dialHandle.setPointerCapture(e.pointerId); });
+  dialHandle.addEventListener('pointermove', function(e){ if (!dialDragging) return; var p = dialPoint(e); setHandle(p.dx, p.dy); });
+  dialHandle.addEventListener('pointerup', function(){ dialDragging = false; });
+  dialHandle.addEventListener('pointercancel', function(){ dialDragging = false; });
+  lightDial.addEventListener('pointerdown', function(e){
+    if (e.target === dialHandle) return;
+    var p = dialPoint(e); setHandle(p.dx, p.dy);
+  });
+  dialHandle.addEventListener('keydown', function(e){
+    var step = 12;
+    if (e.key === 'ArrowLeft') setHandle(curDx - step, curDy);
+    else if (e.key === 'ArrowRight') setHandle(curDx + step, curDy);
+    else if (e.key === 'ArrowUp') setHandle(curDx, curDy - step);
+    else if (e.key === 'ArrowDown') setHandle(curDx, curDy + step);
+    else return;
+    e.preventDefault();
+  });
+  document.querySelectorAll('[data-light]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var v = b.getAttribute('data-light').split(',').map(Number);
+      setHandle(v[0], v[1]);
+    });
+  });
+
+  /* ================= MÓDULO 3: TEMPERATURA DE COLOR ================= */
+  var kelvinRange = document.getElementById('kelvinRange');
+  var kelvinSwatch = document.getElementById('kelvinSwatch');
+  var kelvinReadout = document.getElementById('kelvinReadout');
+  var kelvinName = document.getElementById('kelvinName');
+
+  var kStops = [
+    { k:2000, rgb:[255,147,41] }, { k:3000, rgb:[255,197,143] }, { k:4000, rgb:[255,214,170] },
+    { k:5000, rgb:[255,228,206] }, { k:5600, rgb:[255,241,232] }, { k:6500, rgb:[250,247,255] },
+    { k:8000, rgb:[214,225,255] }, { k:10000,rgb:[172,196,255] }
+  ];
+  function kelvinColor(k){
+    for (var i=0;i<kStops.length-1;i++){
+      var a = kStops[i], b = kStops[i+1];
+      if (k >= a.k && k <= b.k){
+        var t = (k - a.k)/(b.k - a.k);
+        return [0,1,2].map(function(j){ return Math.round(lerp(a.rgb[j], b.rgb[j], t)); });
+      }
+    }
+    return k < kStops[0].k ? kStops[0].rgb : kStops[kStops.length-1].rgb;
+  }
+  function kelvinLabel(k){
+    if (k < 2400) return 'Luz de vela — muy cálida';
+    if (k < 3500) return 'Bombilla de tungsteno — interior cálido';
+    if (k < 4500) return 'Fluorescente / amanecer';
+    if (k < 5800) return 'Luz de día directa (mediodía) · flash';
+    if (k < 7000) return 'Día nublado';
+    if (k < 8500) return 'Sombra abierta';
+    return 'Sombra profunda / cielo azul';
+  }
+  function updateKelvin(){
+    var k = parseInt(kelvinRange.value,10);
+    kelvinSwatch.style.background = 'rgb(' + kelvinColor(k).join(',') + ')';
+    kelvinReadout.innerHTML = k.toLocaleString('es') + '<small>K</small>';
+    kelvinName.textContent = kelvinLabel(k);
+  }
+  kelvinRange.addEventListener('input', updateKelvin);
+  updateKelvin();
+
+  /* ================= MÓDULO 4: EXAMEN FINAL ================= */
+  var fqQuestions = [
+    { q:'¿Qué controla principalmente la profundidad de campo (qué tan borroso se ve el fondo)?',
+      options:['La apertura (f/stop)','El ISO','La velocidad de obturación','El balance de blancos'], correct:0,
+      explain:'La apertura controla la profundidad de campo: números f bajos desenfocan más el fondo.' },
+    { q:'Si bajas el número f (por ejemplo, de f/8 a f/1.8), ¿qué sucede?',
+      options:['Entra menos luz y todo se ve más nítido','Entra más luz y el fondo se desenfoca más','Cambia solo el color de la imagen','La foto se ve más ruidosa automáticamente'], correct:1,
+      explain:'Un número f más bajo abre más el diafragma: entra más luz y el fondo pierde nitidez.' },
+    { q:'¿Qué técnica de composición usa un elemento en primer plano para “enmarcar” al sujeto?',
+      options:['Simetría','Regla de tercios','Encuadre natural','Líneas guía'], correct:2,
+      explain:'El encuadre natural usa arcos, ventanas o ramas en primer plano como marco dentro del marco.' },
+    { q:'¿Para qué sirve el espacio negativo en una foto?',
+      options:['Le da al sujeto lugar para "respirar" y lo refuerza por contraste','Sirve para tapar errores de enfoque','Solo funciona en fotos en blanco y negro','Reduce automáticamente el ruido de la imagen'], correct:0,
+      explain:'El espacio negativo es el área vacía alrededor del sujeto: ese vacío no es un descuido, refuerza la sensación de escala, soledad o calma.' },
+    { q:'La “hora dorada” se caracteriza por…',
+      options:['Luz dura y cenital, sin sombras','Luz cálida y rasante, con sombras largas','Ausencia total de sombras','Solo ocurre en interiores'], correct:1,
+      explain:'En la hora dorada el sol está bajo: luz rasante, cálida y con sombras largas y suaves.' },
+    { q:'Subir el ISO principalmente…',
+      options:['Cambia el punto de enfoque','Aumenta la velocidad de obturación automáticamente','Ilumina la imagen pero agrega ruido/grano','Desenfoca el fondo'], correct:2,
+      explain:'El ISO aumenta la sensibilidad del sensor: ayuda en poca luz, a costa de más ruido visible.' }
+  ];
+
+  var fqIndex = 0, fqScore = 0, fqAnswered = false, fqHistory = [];
+  var $ = function(id){ return document.getElementById(id); };
+  var fqProgress = $('fqProgress'), fqQuestionEl = $('fqQuestion'), fqOptionsEl = $('fqOptions'),
+      fqExplainEl = $('fqExplain'), fqNextBtn = $('fqNext'), fqActive = $('fqActive'),
+      fqResult = $('fqResult'), fqScoreEl = $('fqScore'), fqTitleEl = $('fqTitle'),
+      fqNoteEl = $('fqNote'), fqRetryBtn = $('fqRetry'), fqDots = $('fqDots');
+
+  function renderDots(){
+    fqDots.innerHTML = '';
+    fqQuestions.forEach(function(_, i){
+      var d = document.createElement('i');
+      if (fqHistory[i] === true) d.className = 'ok';
+      else if (fqHistory[i] === false) d.className = 'bad';
+      else if (i === fqIndex) d.className = 'cur';
+      fqDots.appendChild(d);
+    });
+  }
+
+  function renderFQ(){
+    fqAnswered = false;
+    var item = fqQuestions[fqIndex];
+    fqProgress.textContent = 'Pregunta ' + (fqIndex+1) + ' de ' + fqQuestions.length;
+    fqQuestionEl.textContent = item.q;
+    fqExplainEl.textContent = '';
+    fqNextBtn.style.display = 'none';
+    fqOptionsEl.innerHTML = '';
+    item.options.forEach(function(opt, i){
+      var b = document.createElement('button');
+      b.className = 'fq-opt';
+      b.innerHTML = '<span class="k">' + 'ABCD'[i] + '</span><span></span>';
+      b.lastChild.textContent = opt;
+      b.addEventListener('click', function(){
+        if (fqAnswered) return;
+        fqAnswered = true;
+        var correct = i === item.correct;
+        if (correct) fqScore++;
+        fqHistory[fqIndex] = correct;
+        Array.prototype.forEach.call(fqOptionsEl.children, function(el, idx){
+          el.disabled = true;
+          if (idx === item.correct) el.classList.add('correct');
+          else if (idx === i) el.classList.add('wrong');
+        });
+        fqExplainEl.textContent = (correct ? '¡Correcto! ' : 'No exactamente. ') + item.explain;
+        fqNextBtn.style.display = 'inline-block';
+        fqNextBtn.textContent = (fqIndex === fqQuestions.length-1) ? 'Ver resultado →' : 'Siguiente →';
+        renderDots();
+        fqNextBtn.focus({ preventScroll:true });
+      });
+      fqOptionsEl.appendChild(b);
+    });
+    renderDots();
+  }
+
+  fqNextBtn.addEventListener('click', function(){
+    if (fqIndex < fqQuestions.length-1){ fqIndex++; renderFQ(); return; }
+    fqActive.style.display = 'none';
+    fqResult.style.display = 'block';
+    fqScoreEl.innerHTML = fqScore + '<small> / ' + fqQuestions.length + '</small>';
+    var title, note;
+    if (fqScore === fqQuestions.length){ title = '¡Perfecto!'; note = 'Los tres módulos están claros. Ahora toca practicar con la cámara en mano.'; }
+    else if (fqScore >= 3){ title = 'Bien encaminado'; note = 'Repasa las preguntas que fallaste antes de salir a disparar.'; }
+    else { title = 'Vale la pena repasar'; note = 'Vuelve a los módulos de exposición y composición y juega un rato con los simuladores.'; }
+    fqTitleEl.textContent = title;
+    fqNoteEl.textContent = note;
+  });
+
+  fqRetryBtn.addEventListener('click', function(){
+    fqIndex = 0; fqScore = 0; fqHistory = [];
+    fqResult.style.display = 'none';
+    fqActive.style.display = 'block';
+    renderFQ();
+  });
+
+  renderFQ();
+
+  var modes=[["Auto","Tú: nada. Cámara: todo.","Para recuerdos rápidos."],["P","Tú: ISO y compensación. Cámara: apertura y velocidad.","Para aprender sin presión."],["Av / A","Tú: apertura. Cámara: velocidad.","Retrato con fondo borroso."],["Tv / S","Tú: velocidad. Cámara: apertura.","Deporte o agua en movimiento."],["M","Tú: todo.","Estudio, flash, control total."]];
+  var mb=document.getElementById('modeBtns'),mi=document.getElementById('modeInfo');
+  modes.forEach(function(m,i){var b=document.createElement('button');b.className='btn';b.textContent=m[0];b.onclick=function(){Array.prototype.forEach.call(mb.children,function(x){x.classList.remove('on')});b.classList.add('on');mi.textContent=m[1]+' '+m[2]};mb.appendChild(b);if(i===0)b.onclick()});
+  var cs=document.getElementById('cropSel'),cm=document.getElementById('cropMm'),cr=document.getElementById('cropRes');
+  function crop(){var f=parseFloat(cs.value),m=parseFloat(cm.value)||0;cr.textContent=m+' mm × '+String(f).replace('.',',')+' = '+Math.round(m*f)+' mm equivalentes'}
+  cs.onchange=crop;cm.oninput=crop;crop();
+})();
+</script>
+</body>
+</html>
