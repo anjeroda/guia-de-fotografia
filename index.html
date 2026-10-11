@@ -668,6 +668,9 @@
   .fx-tab.on{ border-color:var(--amber); background:var(--amber-wash); }
   .fx-desc{ margin:10px 0 0; font-size:14px; color:var(--text-muted); }
   .fx-desc b{ color:var(--text); font-weight:500; }
+
+  .vid{ position:relative; aspect-ratio:16/9; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:#000; }
+  .vid iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
 </style>
 </head>
 <body>
@@ -716,6 +719,15 @@
 <main>
 
   <!-- ============ MÓDULO 0: EQUIPO E HISTORIA ============ -->
+  <section class="wrap" id="video" style="padding-top:8px;padding-bottom:8px">
+    <p class="eyebrow reveal">VIDEO · ANTES DE EMPEZAR</p>
+    <h2 class="reveal">Historia de la fotografía</h2>
+    <div class="vid reveal">
+      <iframe src="https://drive.google.com/file/d/1OTZz4dr2iVg2Af0RPRI0JNX63ecRcjuh/preview" title="Video: historia de la fotografía" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+    <p class="gx-start" style="margin-top:10px">Si el video no carga aquí, <a href="https://drive.google.com/file/d/1OTZz4dr2iVg2Af0RPRI0JNX63ecRcjuh/view?usp=sharing" target="_blank" rel="noopener" style="color:var(--amber)">ábrelo en Google Drive</a>.</p>
+  </section>
+
   <section class="module wrap" id="equipo">
     <span class="module-num" aria-hidden="true">00</span>
     <p class="eyebrow reveal">F.00 — ANTES DE DISPARAR</p>
