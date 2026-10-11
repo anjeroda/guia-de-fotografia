@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>try{var _t=localStorage.getItem("guia-theme");if(_t)document.documentElement.setAttribute("data-theme",_t);}catch(e){}</script>
 <style>
   :root{
     --bg:#13110E;
@@ -31,6 +32,7 @@
     --font-body:'IBM Plex Sans', -apple-system, 'Segoe UI', sans-serif;
     --font-mono:'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
     --maxw:980px;
+    --nav-bg:rgba(19,17,14,0.82); --hover:rgba(255,255,255,0.04); --panel-wash:var(--panel-wash); --dial-bg:#26211b; --on-amber:#13110E;
   }
 
   *{ box-sizing:border-box; }
@@ -68,7 +70,7 @@
   /* ---------- NAV ---------- */
   .topnav{
     position:sticky; top:0; z-index:50;
-    background:rgba(19,17,14,0.82);
+    background:var(--nav-bg);
     backdrop-filter:blur(12px) saturate(140%);
     -webkit-backdrop-filter:blur(12px) saturate(140%);
     border-bottom:1px solid var(--line-soft);
@@ -92,8 +94,8 @@
     transition:color .2s ease, background .2s ease;
   }
   .navlinks a span{ opacity:.55; margin-right:4px; }
-  .navlinks a:hover{ color:var(--text); background:rgba(255,255,255,0.04); }
-  .navlinks a.active{ color:#13110E; background:var(--amber); }
+  .navlinks a:hover{ color:var(--text); background:var(--hover); }
+  .navlinks a.active{ color:var(--on-amber); background:var(--amber); }
   .navlinks a.active span{ opacity:.6; }
   .progress{
     position:absolute; left:0; bottom:-1px; height:2px; width:100%;
@@ -117,7 +119,7 @@
   .hero-stats{
     margin-top:32px; display:flex; flex-wrap:wrap; gap:0;
     border:1px solid var(--line-soft); border-radius:var(--radius);
-    background:rgba(27,24,20,.6); width:fit-content; max-width:100%;
+    background:var(--panel-wash); width:fit-content; max-width:100%;
   }
   .hero-stats div{ padding:12px 18px; border-left:1px solid var(--line-soft); }
   .hero-stats div:first-child{ border-left:none; }
@@ -130,7 +132,7 @@
   .hero-cta{
     margin-top:28px; display:inline-flex; align-items:center; gap:10px;
     font-family:var(--font-mono); font-size:12.5px; letter-spacing:.04em;
-    color:#13110E; background:var(--amber); text-decoration:none;
+    color:var(--on-amber); background:var(--amber); text-decoration:none;
     padding:11px 18px; border-radius:999px; transition:transform .2s ease, box-shadow .2s ease;
   }
   .hero-cta:hover{ transform:translateY(-1px); box-shadow:0 10px 24px -10px rgba(232,174,92,.6); }
@@ -192,7 +194,7 @@
   }
   .tip-tag{
     flex:none; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.12em;
-    color:#13110E; background:var(--amber); border-radius:4px; padding:3px 7px; margin-top:2px;
+    color:var(--on-amber); background:var(--amber); border-radius:4px; padding:3px 7px; margin-top:2px;
   }
   .tip p{ color:var(--text-muted); }
   .tip p b{ color:var(--text); font-weight:600; }
@@ -212,7 +214,7 @@
 
   .panel{
     margin-top:20px; padding:20px;
-    background:rgba(27,24,20,.55); border:1px solid var(--line-soft);
+    background:var(--panel-wash); border:1px solid var(--line-soft);
     border-radius:calc(var(--radius) + 4px); box-shadow:var(--shadow);
   }
 
@@ -337,7 +339,7 @@
   }
   .btn:hover{ border-color:var(--amber-soft); }
   .btn.is-active{ border-color:var(--amber); color:var(--amber); background:var(--amber-wash); }
-  .btn-primary{ background:var(--amber); color:#13110E; border-color:var(--amber); }
+  .btn-primary{ background:var(--amber); color:var(--on-amber); border-color:var(--amber); }
   .btn-primary:hover{ background:#f0bb70; }
   .btn-ghost{ background:transparent; color:var(--text-muted); font-weight:500; }
 
@@ -419,7 +421,7 @@
   .dial{
     position:relative; width:240px; height:240px; border-radius:50%;
     border:1px solid var(--line);
-    background:radial-gradient(circle, #26211b 0%, var(--bg-elevated) 70%);
+    background:radial-gradient(circle, var(--dial-bg) 0%, var(--bg-elevated) 70%);
     touch-action:none;
   }
   .dial-ring{ position:absolute; inset:14px; border-radius:50%; border:1px dashed var(--line); }
@@ -594,6 +596,78 @@
   .eqcalc select, .eqcalc input{ background:var(--bg-elevated); color:var(--text); border:1px solid var(--line); border-radius:6px; padding:8px 10px; font:inherit; }
   .eqres{ font-family:var(--font-mono); color:var(--amber); font-size:18px; margin-top:12px; }
   @media (max-width:860px){ .tl{ grid-template-columns:1fr; } }
+
+  /* ===== MODO CLARO ===== */
+  :root[data-theme="light"]{
+    --bg:#F6F1E7; --bg-elevated:#FFFDF8; --line:#D8CDB8; --line-soft:#E6DCC8;
+    --text:#1F1A14; --text-muted:#5E5446; --text-faint:#8A7E6D;
+    --amber:#B8741A; --amber-soft:#D9A862; --amber-wash:rgba(184,116,26,.10);
+    --blue:#3F6A8C; --blue-soft:#9DB6CC; --blue-wash:rgba(63,106,140,.10);
+    --shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 14px 30px -22px rgba(60,40,10,.35);
+    --bg-elevated-2:#F8F1E1; --nav-bg:rgba(246,241,231,.88); --hover:rgba(0,0,0,.05); --panel-wash:rgba(255,253,248,.7); --dial-bg:#EFE6D3; --on-amber:#fff;
+  }
+  :root[data-theme="light"] body::before{ opacity:.02; mix-blend-mode:multiply; }
+  .theme-btn{ position:relative; margin-left:8px; flex:none; width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:transparent; color:var(--text); cursor:pointer; font-size:15px; line-height:1; transition:background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease; }
+  .theme-btn:hover,.theme-btn:focus-visible{ background:var(--amber); border-color:var(--amber); color:var(--on-amber); transform:scale(1.08); outline:none; }
+  .theme-btn::after{ content:attr(data-tip); position:absolute; top:calc(100% + 8px); right:0; white-space:nowrap; pointer-events:none; opacity:0; transform:translateY(-4px); transition:opacity .15s ease, transform .15s ease; background:var(--text); color:var(--bg); font:500 12px var(--font-body); padding:6px 10px; border-radius:6px; z-index:200; }
+  .theme-btn:hover::after,.theme-btn:focus-visible::after{ opacity:1; transform:none; }
+
+  /* ===== ÁNGULOS Y MITOS ===== */
+  .ag{ padding:18px; }
+  .ag-btns{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .ag-btns button,.myth-btn{ font:inherit; font-size:13px; padding:7px 12px; border-radius:999px; border:1px solid var(--line); background:transparent; color:var(--text-muted); cursor:pointer; }
+  .ag-btns button:hover,.myth-btn:hover{ border-color:var(--amber); color:var(--text); }
+  .ag-btns button.on{ background:var(--amber); border-color:var(--amber); color:var(--on-amber); }
+  .ag-body{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.3fr); gap:20px; align-items:start; }
+  .ag-vis{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .ag-vis svg{ width:100%; height:auto; background:var(--bg-elevated); border:1px solid var(--line-soft); border-radius:var(--radius-sm); }
+  .ag-txt h4{ font-family:var(--font-display); font-size:22px; font-weight:500; margin:0 0 6px; }
+  .ag-txt p{ margin:0 0 10px; color:var(--text-muted); }
+  .ag-txt ul{ margin:0; padding:0; list-style:none; display:grid; gap:8px; }
+  .ag-txt li{ font-size:14px; color:var(--text-muted); padding-left:12px; border-left:2px solid var(--amber-soft); }
+  .ag-txt li b{ color:var(--text); font-weight:500; }
+  .myth-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+  .myth{ background:var(--bg-elevated); border:1px solid var(--line-soft); border-radius:var(--radius); padding:18px; display:flex; flex-direction:column; gap:10px; }
+  .myth .tag{ font:500 11px var(--font-mono); letter-spacing:.12em; color:var(--blue); }
+  .myth h3{ font-family:var(--font-display); font-size:19px; font-weight:500; line-height:1.3; margin:0; }
+  .myth .ans{ display:none; font-size:14px; color:var(--text-muted); }
+  .myth .ans b{ color:var(--text); font-weight:500; }
+  .myth.open .ans{ display:block; } .myth.open .tag{ color:var(--amber); } .myth.open{ border-color:var(--amber-soft); }
+  .myth-btn{ align-self:flex-start; margin-top:auto; }
+  @media(max-width:720px){ .ag-body{ grid-template-columns:1fr; } }
+
+  .gx-start{ font-size:14px; color:var(--text-muted); margin:0 0 12px; }
+  .gx-start b{ color:var(--amber); font-weight:500; }
+  .gx-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+  .gx-cell{ border:1px solid var(--line-soft); border-radius:var(--radius-sm); padding:12px; background:var(--bg); }
+  .gx-cell .k{ font:500 11px var(--font-mono); letter-spacing:.1em; color:var(--blue); }
+  .gx-cell .v{ font-family:var(--font-display); font-size:19px; margin:4px 0 6px; }
+  .gx-cell p{ margin:0; font-size:13.5px; color:var(--text-muted); }
+  .gx-err{ margin:12px 0 0; padding:10px 12px; border-left:2px solid var(--blue); background:var(--blue-wash); font-size:13.5px; color:var(--text-muted); }
+  .gx-err b{ color:var(--text); font-weight:500; }
+  @media(max-width:720px){ .gx-grid{ grid-template-columns:1fr; } }
+
+  .soft-wrap{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); gap:20px; align-items:center; }
+  .soft-stage{ position:relative; height:170px; border-radius:var(--radius-sm); border:1px solid var(--line-soft); background:var(--bg-elevated); overflow:hidden; }
+  .soft-obj{ position:absolute; left:calc(50% - 32px); bottom:36px; width:64px; height:64px; border-radius:50%; background:var(--amber); }
+  .soft-shadow{ position:absolute; left:calc(50% - 20px); bottom:26px; width:110px; height:16px; border-radius:50%; background:#000; transition:filter .1s, opacity .1s; }
+  @media(max-width:720px){ .soft-wrap{ grid-template-columns:1fr; } }
+
+  .st-row{ display:flex; flex-wrap:wrap; gap:6px; }
+  .st-chip{ font:500 12px var(--font-mono); padding:6px 9px; border:1px solid var(--line); border-radius:6px; color:var(--text-muted); background:var(--bg); }
+  .st-chip.on{ background:var(--amber); border-color:var(--amber); color:var(--on-amber); }
+  .st-chip.from{ border-color:var(--amber); color:var(--amber); }
+
+  .tip-bulb{ border:1px solid var(--amber); border-left-width:6px; background:var(--amber-wash); box-shadow:var(--shadow); padding:22px 26px; }
+  .tip-bulb p{ font-size:15px; color:var(--text); }
+  .fx{ margin-top:16px; padding-top:16px; border-top:1px solid var(--line-soft); width:100%; }
+  .fx-tabs{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
+  .fx-tab{ font:inherit; text-align:left; cursor:pointer; min-width:0; border:1px solid var(--line-soft); border-radius:var(--radius-sm); padding:7px 9px; background:var(--bg); color:inherit; }
+  .fx-tab .k{ display:block; font:500 10px var(--font-mono); letter-spacing:.08em; color:var(--blue); }
+  .fx-tab b{ display:block; margin-top:2px; font-family:var(--font-display); font-weight:500; font-size:16px; line-height:1.2; color:var(--amber); }
+  .fx-tab.on{ border-color:var(--amber); background:var(--amber-wash); }
+  .fx-desc{ margin:10px 0 0; font-size:14px; color:var(--text-muted); }
+  .fx-desc b{ color:var(--text); font-weight:500; }
 </style>
 </head>
 <body>
@@ -606,8 +680,10 @@
       <a href="#exposicion" data-nav><span>01</span>Exposición</a>
       <a href="#composicion" data-nav><span>02</span>Composición</a>
       <a href="#luz" data-nav><span>03</span>Luz</a>
-      <a href="#practica" data-nav><span>04</span>Repaso</a>
+      <a href="#mitos" data-nav><span>04</span>Mitos</a>
+      <a href="#practica" data-nav><span>05</span>Repaso</a>
     </div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Cambiar entre modo oscuro y claro">☀</button>
   </div>
   <div class="progress" id="progress"></div>
 </nav>
@@ -618,7 +694,7 @@
     <h1>Fotografía: de cero a <em>control total</em></h1>
     <p class="hero-sub">Entiende exposición, composición y luz jugando con simuladores — y empieza a decidir tú, en vez de dejarlo en modo automático.</p>
     <div class="hero-stats" aria-label="Contenido de la guía">
-      <div><b>4</b><span>MÓDULOS</span></div>
+      <div><b>5</b><span>MÓDULOS</span></div>
       <div><b>5</b><span>SIMULADORES</span></div>
       <div><b>9</b><span>PREGUNTAS</span></div>
       <div><b>~15</b><span>MINUTOS</span></div>
@@ -628,10 +704,10 @@
   </div>
   <div class="hero-iris-box">
     <svg id="heroIris" width="240" height="240" viewBox="0 0 220 220" aria-hidden="true">
-      <circle cx="110" cy="110" r="104" fill="none" stroke="#3A342B" stroke-width="1"/>
-      <circle cx="110" cy="110" r="96" fill="none" stroke="#27231D" stroke-width="6"/>
-      <circle id="heroIrisHole" cx="110" cy="110" r="2" fill="#13110E" stroke="#E8AE5C" stroke-width="1.5"/>
-      <g id="heroIrisBlades" stroke="#3A342B" stroke-width="1"></g>
+      <circle cx="110" cy="110" r="104" fill="none" style="stroke:var(--line)" stroke-width="1"/>
+      <circle cx="110" cy="110" r="96" fill="none" style="stroke:var(--line-soft)" stroke-width="6"/>
+      <circle id="heroIrisHole" cx="110" cy="110" r="2" style="fill:var(--bg)" stroke="#E8AE5C" stroke-width="1.5"/>
+      <g id="heroIrisBlades" style="stroke:var(--line)" stroke-width="1"></g>
     </svg>
     <span class="iris-label" id="heroIrisLabel">f/22</span>
   </div>
@@ -668,6 +744,14 @@
       <input id="cropMm" type="number" min="8" max="800" value="50" aria-label="Distancia focal en mm"> mm
     </div>
     <p class="eqres" id="cropRes"></p>
+  
+    <div class="simhead reveal"><h3>Qué lente y qué modo usar en cada tipo de foto</h3><span class="chip">EJEMPLOS · elige un género</span></div>
+    <p class="sub-intro">La distancia focal cambia cómo se ve el sujeto y el fondo. En sensores más pequeños que el full frame, multiplica por el factor de recorte (ver calculadora): un 56 mm en APS-C (×1,5) equivale a unos 85 mm.</p>
+    <div class="panel reveal ag">
+      <div class="ag-btns" id="eqBtns"></div>
+      <div class="gx-grid" id="eqGrid"></div>
+      <p class="gx-err" id="eqErr"></p>
+    </div>
   </section>
 
   <!-- ============ MÓDULO 1: EXPOSICIÓN ============ -->
@@ -704,6 +788,40 @@
     <div class="tip reveal">
       <span class="tip-tag">CLAVE</span>
       <p><b>Cada paso es un “stop”:</b> duplica o reduce a la mitad la luz. Si abres un paso la apertura (f/4 → f/2.8), puedes compensar cerrando un paso el obturador (1/125 → 1/250) y la foto quedará igual de clara, pero con otro aspecto.</p>
+    </div>
+
+    <div class="simhead reveal"><h3>Cómo se cuentan los pasos (stops)</h3><span class="chip">CALCULADORA · ISO, velocidad y apertura</span></div>
+    <p class="sub-intro">Un <b>paso</b> es duplicar o reducir a la mitad la luz, y los tres controles se cuentan así. En el <b>ISO</b>, cada paso multiplica la sensibilidad por 2. En la <b>velocidad</b>, cada paso duplica o divide a la mitad el tiempo. En la <b>apertura</b>, cada paso multiplica o divide el número f por 1,4, porque así se duplica o reduce a la mitad el área del orificio. 1 paso = ×2, 2 pasos = ×4, 3 pasos = ×8, 4 pasos = ×16 (fórmula: <b>factor = 2<sup>pasos</sup></b>).</p>
+    <div class="panel reveal ag">
+      <div class="ag-btns" id="stModes"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:14px">
+        <label style="font-size:13px;color:var(--text-muted)"><span id="stLbl">ISO inicial</span>
+          <select id="stSel" style="display:block;margin-top:6px;width:100%;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit"></select></label>
+        <label style="font-size:13px;color:var(--text-muted)">Pasos de luz: <b id="stN" style="color:var(--amber)">+3</b> <span style="color:var(--text-faint)">(+ = más luz, − = menos luz)</span>
+          <input type="range" id="stRange" min="-3" max="5" step="1" value="3" style="display:block;width:100%;margin-top:12px;accent-color:var(--amber)"></label>
+      </div>
+      <p class="gx-err" id="stOut" style="margin-top:0"></p>
+      <p class="gx-start" style="margin:16px 0 6px" id="stCap"></p>
+      <div class="st-row" id="stLadder"></div>
+      <details style="margin-top:16px"><summary style="cursor:pointer;font-size:13px;color:var(--text-muted)">Ver las tres escalas juntas</summary>
+        <p class="gx-start" style="margin:12px 0 6px"><b>ISO</b> · cada casilla a la derecha es un paso más (×2)</p>
+        <div class="st-row"><span class="st-chip">100</span><span class="st-chip">200</span><span class="st-chip">400</span><span class="st-chip">800</span><span class="st-chip">1600</span><span class="st-chip">3200</span><span class="st-chip">6400</span><span class="st-chip">12800</span></div>
+        <p class="gx-start" style="margin:12px 0 6px"><b>Velocidad</b> · cada casilla a la derecha es un paso menos de luz (la mitad del tiempo)</p>
+        <div class="st-row"><span class="st-chip">1/30</span><span class="st-chip">1/60</span><span class="st-chip">1/125</span><span class="st-chip">1/250</span><span class="st-chip">1/500</span><span class="st-chip">1/1000</span><span class="st-chip">1/2000</span></div>
+        <p class="gx-start" style="margin:12px 0 6px"><b>Apertura</b> · cada casilla a la derecha es un paso menos de luz (el número se multiplica por 1,4)</p>
+        <div class="st-row"><span class="st-chip">f/1.4</span><span class="st-chip">f/2</span><span class="st-chip">f/2.8</span><span class="st-chip">f/4</span><span class="st-chip">f/5.6</span><span class="st-chip">f/8</span><span class="st-chip">f/11</span><span class="st-chip">f/16</span></div>
+      </details>
+      <p class="gx-err"><b>Ejemplo:</b> con f/2.8 · 1/125 s · ISO 100 la foto sale bien. Cierras la apertura a f/5.6 (2 pasos menos de luz) para ganar profundidad: subes el ISO 2 pasos, de 100 a 400, y la foto queda igual de clara. O dejas el ISO y alargas el obturador a 1/30 s, que también son 2 pasos.</p>
+      <p class="gx-err"><b>En un evento oscuro:</b> pasar de ISO 100 a 800 son 3 pasos (800 ÷ 100 = 8 = 2×2×2). Eso te permite disparar a 1/250 s en lugar de 1/30 s y congelar el movimiento. También hay pasos intermedios de un tercio (100, 125, 160, 200, 250, 320, 400…): tres tercios suman un paso completo.</p>
+    </div>
+
+    <div class="simhead reveal"><h3>Cómo se usa en cada tipo de foto</h3><span class="chip">EJEMPLOS · elige un género</span></div>
+    <p class="sub-intro">Los mismos tres controles se manejan distinto según qué fotografíes. Son puntos de partida, no reglas: ajusta según tu luz.</p>
+    <div class="panel reveal ag">
+      <div class="ag-btns" id="gxBtns"></div>
+      <p class="gx-start" id="gxStart"></p>
+      <div class="gx-grid" id="gxGrid"></div>
+      <p class="gx-err" id="gxErr"></p>
     </div>
 
     <div class="simhead">
@@ -766,8 +884,8 @@
               <span class="control-label">Obturador <small>· movimiento</small></span>
               <span class="control-value" id="shVal">1/125 s</span>
             </div>
-            <input type="range" id="shRange" min="0" max="11" step="1" value="4" aria-label="Velocidad de obturación">
-            <div class="ticks"><span>1/2000</span><span>1/30</span><span>1 s</span></div>
+            <input type="range" id="shRange" min="0" max="11" step="1" value="7" aria-label="Velocidad de obturación">
+            <div class="ticks"><span>1 s</span><span>1/30</span><span>1/2000</span></div>
           </div>
 
           <div class="control">
@@ -783,11 +901,24 @@
             <div class="readout-status status-ok" id="roStatus">Exposición equilibrada</div>
             <p class="readout-hint" id="roHint">Punto de partida: f/2.8 · 1/125 s · ISO 100.</p>
           </div>
-          <div class="row-actions">
+                    <div class="row-actions">
             <button class="btn btn-ghost" id="expReset">Restablecer</button>
           </div>
         </div>
       </div>
+      <div class="fx" id="fxBox">
+        <div class="fx-tabs">
+          <button type="button" class="fx-tab on" data-k="ap"><span class="k">APERTURA</span><b id="fxApL"></b></button>
+          <button type="button" class="fx-tab" data-k="sh"><span class="k">OBTURADOR</span><b id="fxShL"></b></button>
+          <button type="button" class="fx-tab" data-k="iso"><span class="k">ISO</span><b id="fxIsoL"></b></button>
+        </div>
+        <p class="fx-desc" id="fxDesc" aria-live="polite"></p>
+      </div>
+    </div>
+  
+    <div class="tip tip-bulb reveal">
+      <span class="tip-tag">DATO</span>
+      <p><b>Exposiciones sin límite: modo Bulb (B).</b> Muchas cámaras llegan a 30 s en el selector de velocidad. Para ir más allá existe el modo <b>Bulb</b>: el obturador queda abierto mientras mantienes presionado el botón y se cierra cuando lo sueltas. Sirve para cielo estrellado, fuegos artificiales, estelas de luces y <i>light painting</i>. Usa trípode y, mejor, un disparador remoto para no mover la cámara. Algunas cámaras tienen también el modo <b>Time (T)</b>: presionas una vez para abrir el obturador y otra para cerrarlo.</p>
     </div>
   </section>
 
@@ -861,6 +992,27 @@
       <span class="tip-tag">CONSEJO</span>
       <p><b>Activa la cuadrícula en tu cámara o celular.</b> Casi todos la traen en los ajustes de cámara. Pon el horizonte sobre una línea, no en el medio, y los ojos del retratado en el tercio superior.</p>
     </div>
+  
+    <div class="simhead reveal"><h3>Composición en cada tipo de foto</h3><span class="chip">EJEMPLOS · elige un género</span></div>
+    <p class="sub-intro">Las mismas reglas se aplican distinto según lo que fotografíes. Estos son los recursos que más rinden en cada caso.</p>
+    <div class="panel reveal ag">
+      <div class="ag-btns" id="cxBtns"></div>
+      <div class="gx-grid" id="cxGrid"></div>
+      <p class="gx-err" id="cxErr"></p>
+    </div>
+
+    <div class="simhead reveal"><h3>Ángulos de cámara</h3><span class="chip">INTERACTIVO · elige un ángulo</span></div>
+    <p class="sub-intro">El ángulo es desde dónde miras al sujeto: arriba, abajo o a su altura. No es la dirección de la luz: aquí cambias la posición de la cámara, no de dónde llega la luz.</p>
+    <div class="panel reveal ag">
+      <div class="ag-btns" id="agBtns"></div>
+      <div class="ag-body">
+        <div class="ag-vis">
+          <svg viewBox="0 0 200 200" id="agSide" role="img" aria-label="Vista lateral: posición de la cámara"></svg>
+          <svg viewBox="0 0 200 200" id="agView" role="img" aria-label="Cómo se ve el sujeto desde ese ángulo"></svg>
+        </div>
+        <div class="ag-txt"><h4 id="agName"></h4><p id="agWhat"></p><p id="agEff"></p><ul id="agEx"></ul></div>
+      </div>
+    </div>
   </section>
 
   <!-- ============ MÓDULO 3: LUZ ============ -->
@@ -932,12 +1084,42 @@
       <span class="tip-tag">CONSEJO</span>
       <p><b>¿Los tonos de piel salen naranjas en interiores?</b> Cambia el balance de blancos a “Tungsteno” (≈3200 K). ¿Salen azulados a la sombra? Usa “Sombra” (≈7500 K). En RAW puedes corregirlo después sin perder calidad.</p>
     </div>
+  
+    <div class="simhead reveal"><h3>Luz dura y luz suave</h3><span class="chip">SIMULADOR · tamaño de la fuente</span></div>
+    <p class="sub-intro">Además de la dirección y el color, la luz tiene una calidad. Depende de qué tan grande se ve la fuente desde el sujeto: cuanto más grande y cercana, más suave es la sombra.</p>
+    <div class="panel reveal ag">
+      <div class="soft-wrap">
+        <div class="soft-stage" aria-hidden="true"><div class="soft-shadow" id="softSh"></div><div class="soft-obj"></div></div>
+        <div>
+          <label for="softR" style="font-size:13px;color:var(--text-muted)">Tamaño de la fuente de luz</label>
+          <input type="range" id="softR" min="0" max="100" value="15" style="width:100%;accent-color:var(--amber);margin:8px 0 6px">
+          <div style="display:flex;justify-content:space-between;font:500 11px var(--font-mono);color:var(--text-faint)"><span>PEQUEÑA / LEJANA</span><span>GRANDE / CERCANA</span></div>
+          <p class="gx-err" id="softTxt" style="margin-top:14px"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="simhead reveal"><h3>La luz en cada tipo de foto</h3><span class="chip">EJEMPLOS · elige un género</span></div>
+    <p class="sub-intro">Dirección, calidad y color se combinan distinto según lo que fotografíes. Estos son los recursos que más rinden en cada caso.</p>
+    <div class="panel reveal ag">
+      <div class="ag-btns" id="lxBtns"></div>
+      <div class="gx-grid" id="lxGrid"></div>
+      <p class="gx-err" id="lxErr"></p>
+    </div>
   </section>
 
   <!-- ============ MÓDULO 4: REPASO ============ -->
-  <section class="module wrap" id="practica">
+    <section class="module wrap" id="mitos">
     <span class="module-num" aria-hidden="true">04</span>
-    <p class="eyebrow reveal">F.04 — REPASO</p>
+    <p class="eyebrow reveal">F.04 — MITOS</p>
+    <h2 class="reveal">Mitos de la fotografía</h2>
+    <p class="module-intro reveal">Frases que se repiten en cursos y grupos de fotografía y que, tal cual, te hacen decidir mal. Piensa tu respuesta y toca cada tarjeta para ver qué hay de cierto.</p>
+    <div class="myth-grid reveal" id="mythGrid"></div>
+  </section>
+
+  <section class="module wrap" id="practica">
+    <span class="module-num" aria-hidden="true">05</span>
+    <p class="eyebrow reveal">F.05 — REPASO</p>
     <h2 class="reveal">Apuntes rápidos</h2>
     <p class="module-intro reveal">Para tener a mano antes de salir a disparar. Captura de pantalla y listo.</p>
 
@@ -1236,9 +1418,37 @@
   // Punto de partida equilibrado: f/2.8 · 1/125 · ISO 100
   var BASE_AP = 2, BASE_SH = 4, BASE_ISO = 0;
 
+  var fxData={}, fxSel="ap";
+  function renderFx(){
+    var d=fxData[fxSel]; if(!d) return;
+    document.getElementById("fxDesc").innerHTML="<b>"+d[1]+":</b> "+d[2];
+    Array.prototype.forEach.call(document.querySelectorAll(".fx-tab"),function(b){ b.classList.toggle("on",b.getAttribute("data-k")===fxSel); });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".fx-tab"),function(b){ b.addEventListener("click",function(){ fxSel=b.getAttribute("data-k"); renderFx(); }); });
+  apRange.addEventListener("input",function(){ fxSel="ap"; renderFx(); });
+  shRange.addEventListener("input",function(){ fxSel="sh"; renderFx(); });
+  isoRange.addEventListener("input",function(){ fxSel="iso"; renderFx(); });
+  function updateFx(ai,si,ii){
+    var A=[["Máxima · abierta", "mínima", "Entra el máximo de luz y solo un plano queda nítido; el fondo es una mancha suave. Retrato y detalles de comida. Enfoca con cuidado: un error de milímetros se nota."], ["Muy abierta", "muy reducida", "Entra mucha luz y el fondo se desenfoca mucho. Ideal para un retrato con fondo muy suave."], ["Abierta", "reducida", "El sujeto se separa bien del fondo, que queda suave. Es el punto de partida de muchos retratos."], ["Intermedia", "media", "El fondo sigue reconocible y el sujeto está nítido. Sirve para grupos y escenas con contexto."], ["Cerrada", "amplia", "Casi todo se ve nítido, del primer plano al fondo, y entra menos luz. Paisaje, producto y arquitectura. Desde f/16 empieza a notarse la difracción."], ["Mínima · cerrada", "máxima", "Todo nítido, pero entra muy poca luz y la difracción le resta nitidez a la imagen. Úsalo solo si lo necesitas."]];
+    var ax = ai===0?0 : ai===1?1 : ai<=3?2 : ai<=5?3 : ai<=7?4 : 5;
+    var S=[["Congela","Acción congelada: deportes, niños, agua salpicando."],
+           ["Movimiento normal","Congela personas caminando y sirve para retratos a mano."],
+           ["Riesgo de movimiento","Lo que se mueve sale con estela, y a mano la foto puede salir temblada. Apóyate o usa trípode."],
+           ["Estela marcada","Estela clara en lo que se mueve. Con trípode sirve para agua sedosa o luces de coches; a mano saldrá movida."]];
+    var sx = si<=2?0 : si<=4?1 : si<=6?2 : 3;
+    var I=[["Imagen limpia","Máxima calidad: colores y sombras limpios."],
+           ["Grano leve","Casi no se nota en pantalla. Aceptable en la mayoría de trabajos."],
+           ["Grano visible","Se nota en sombras y zonas lisas. Úsalo si así evitas una foto movida."],
+           ["Mucho ruido","Pierde detalle y color en las sombras. Solo si no queda otra opción."]];
+    var ix = ii<=1?0 : ii<=3?1 : ii===4?2 : 3;
+    fxData={ap:[A[ax][0],"Profundidad de campo "+A[ax][1],A[ax][2]+" El enfoque, sobre la figura oscura, fija el plano nítido."],sh:[S[sx][0],"Movimiento",S[sx][1]],iso:[I[ix][0],"Ruido",I[ix][1]]};
+    document.getElementById("fxApL").textContent=fxData.ap[0]; document.getElementById("fxShL").textContent=fxData.sh[0]; document.getElementById("fxIsoL").textContent=fxData.iso[0];
+    renderFx();
+  }
+
   function updateExposure(){
     var ai = parseInt(apRange.value,10);
-    var si = parseInt(shRange.value,10);
+    var si = 11 - parseInt(shRange.value,10); // el control va de lento (izq.) a rápido (der.)
     var ii = parseInt(isoRange.value,10);
     [apRange, shRange, isoRange].forEach(paintRange);
 
@@ -1294,11 +1504,12 @@
     roStatus.textContent = statusText;
     roStatus.className = 'readout-status ' + statusClass;
     roHint.textContent = hint;
+    updateFx(ai,si,ii);
   }
 
   [apRange, shRange, isoRange].forEach(function(el){ el.addEventListener('input', updateExposure); });
   document.getElementById('expReset').addEventListener('click', function(){
-    apRange.value = BASE_AP; shRange.value = BASE_SH; isoRange.value = BASE_ISO;
+    apRange.value = BASE_AP; shRange.value = 11 - BASE_SH; isoRange.value = BASE_ISO;
     updateExposure();
   });
   updateExposure();
@@ -1624,6 +1835,280 @@
   var cs=document.getElementById('cropSel'),cm=document.getElementById('cropMm'),cr=document.getElementById('cropRes');
   function crop(){var f=parseFloat(cs.value),m=parseFloat(cm.value)||0;cr.textContent=m+' mm × '+String(f).replace('.',',')+' = '+Math.round(m*f)+' mm equivalentes'}
   cs.onchange=crop;cm.oninput=crop;crop();
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById("themeBtn");
+  function paint(){ var l=root.getAttribute("data-theme")==="light"; btn.textContent = l ? "☾" : "☀"; var t=l?"Cambiar a modo oscuro":"Cambiar a modo claro"; btn.setAttribute("data-tip",t); btn.setAttribute("aria-label",t); btn.title=t; }
+  paint();
+  btn.addEventListener("click",function(){
+    var n = root.getAttribute("data-theme")==="light" ? "dark" : "light";
+    root.setAttribute("data-theme",n); paint();
+    try{ localStorage.setItem("guia-theme",n); }catch(e){}
+  });
+
+  var A=[
+   {n:"Nivel de ojos",e:0,r:0,w:"La cámara queda a la altura del sujeto y mira recto.",f:"Neutro y cercano. El sujeto se siente de tú a tú, sin dominar ni achicarse.",
+    x:[["Retrato","Cámara a la altura de los ojos: el ángulo base para foto de perfil y marca personal."],["Paisaje","Horizonte recto y vista tal como la verías caminando."],["Gastronomía","Bebidas y capas (cóctel, batido, sándwich cortado) de frente, a la altura del vaso."],["Producto","Botellas y envases de frente: la etiqueta se lee sin deformarse."]]},
+   {n:"Picado suave",e:30,r:0,w:"La cámara está arriba del sujeto y mira un poco hacia abajo.",f:"Favorece y da contexto. Con más inclinación, el sujeto se ve más pequeño.",
+    x:[["Retrato","Un picado leve agranda los ojos y estiliza la mandíbula; por eso se usa tanto."],["Paisaje","Desde un mirador se separan las capas: primer plano, valle y montañas."],["Gastronomía","Mesas con varios platos: se ve qué hay y cómo se reparte."],["Producto","Cajas y packaging: se muestran la tapa y la cara frontal a la vez."]]},
+   {n:"Tres cuartos (45°)",e:45,r:0,w:"Punto medio entre mirar de frente y mirar desde arriba.",f:"Muestra la parte de arriba y también la altura del plato. Es lo que ve el comensal.",
+    x:[["Gastronomía","El ángulo estrella en restaurantes: hamburguesas, pastas y postres con volumen."],["Producto","Calzado, cosméticos y tecnología: se ven frente y superficie superior."],["Retrato","Poco usado, salvo en retratos en mesa o escritorio."],["Paisaje","Rara vez; sirve para detalles en el suelo (rocas, flores)."]]},
+   {n:"Cenital (90°)",e:90,r:0,w:"La cámara está justo encima y mira hacia abajo, en vertical.",f:"Aplana la escena: desaparece la profundidad y mandan la forma, el color y el orden.",
+    x:[["Gastronomía","Flat lay de mesas completas, pizzas, bowls y tablas. Es lo más usado en redes."],["Producto","Kits y colecciones ordenados, con sombras limpias para tienda online."],["Paisaje","Con dron: cultivos, playas y ríos se convierten en patrones."],["Retrato","Raro: funciona para una persona tendida o para manos trabajando."]]},
+   {n:"Contrapicado",e:-25,r:0,w:"La cámara está por debajo del sujeto y mira hacia arriba.",f:"Da poder, altura y presencia. En personas puede acentuar papada y fosas nasales.",
+    x:[["Retrato","Imponente para deportistas o líderes. Cuida el ángulo del cuello."],["Paisaje","Árboles y cañones parecen más altos, y el cielo gana peso."],["Gastronomía","Torres de hamburguesa, helados y bebidas altas se ven heroicos."],["Producto","Botellas y zapatillas estilo campaña: parecen grandes y aspiracionales."]]},
+   {n:"Holandés (inclinado)",e:0,r:15,w:"La cámara se inclina de lado, de modo que el horizonte queda en diagonal.",f:"Mete tensión y movimiento. Si inclinas muy poco (2–3°), parece un error.",
+    x:[["Retrato","Moda y músicos: da actitud y energía, usado con intención."],["Paisaje","Casi nunca: un horizonte torcido en un paisaje suele leerse como falla."],["Gastronomía","Escenas de acción como salsa cayendo o un brindis, con la inclinación bien marcada."],["Producto","Campañas deportivas y energéticas, donde se busca dinamismo."]]}
+  ];
+  var bx=document.getElementById("agBtns"), side=document.getElementById("agSide"), view=document.getElementById("agView");
+  var rad=function(d){return d*Math.PI/180;};
+  function pick(i){
+    var d=A[i], C=[80,110], R=70, P=[C[0]+R*Math.cos(rad(d.e)), C[1]-R*Math.sin(rad(d.e))];
+    var dir=Math.atan2(C[1]-P[1],C[0]-P[0])*180/Math.PI;
+    var a0=[C[0]+R*Math.cos(rad(-35)), C[1]-R*Math.sin(rad(-35))], a1=[C[0], C[1]-R];
+    side.innerHTML='<line x1="20" y1="132" x2="180" y2="132" style="stroke:var(--line)"/>'+
+      '<path d="M'+a0[0]+' '+a0[1]+' A'+R+' '+R+' 0 0 0 '+a1[0]+' '+a1[1]+'" fill="none" stroke-dasharray="3 4" style="stroke:var(--line)"/>'+
+      '<rect x="72" y="88" width="16" height="44" rx="5" style="fill:var(--amber)"/>'+
+      '<line x1="'+P[0]+'" y1="'+P[1]+'" x2="'+C[0]+'" y2="'+C[1]+'" stroke-dasharray="4 3" style="stroke:var(--text-faint)"/>'+
+      '<g transform="translate('+P[0]+' '+P[1]+') rotate('+dir+')"><rect x="-9" y="-6" width="18" height="12" rx="2" style="fill:var(--blue)"/><path d="M9 -4 L16 0 L9 4Z" style="fill:var(--blue)"/></g>'+
+      '<text x="100" y="188" text-anchor="middle" font-size="11" style="fill:var(--text-muted);font-family:var(--font-mono)">'+(d.r?'inclinación '+d.r+'°':'elevación '+d.e+'°')+'</text>';
+    var shape;
+    if(d.e>=80){ shape='<circle cx="100" cy="100" r="48" style="fill:var(--amber-wash);stroke:var(--amber)"/><circle cx="100" cy="100" r="30" style="fill:var(--amber);opacity:.7"/>'; }
+    else{ var tw=64*(1+d.e/120)/2; shape='<polygon points="'+(100-32)+',150 '+(100+32)+',150 '+(100+tw)+',60 '+(100-tw)+',60" style="fill:var(--amber);opacity:.85"/><line x1="0" y1="150" x2="200" y2="150" style="stroke:var(--line)"/>'; }
+    view.innerHTML='<defs><clipPath id="agClip"><rect x="20" y="30" width="160" height="140" rx="6"/></clipPath></defs>'+
+      '<g clip-path="url(#agClip)"><g transform="rotate('+d.r+' 100 100)">'+shape+'</g></g>'+
+      '<rect x="20" y="30" width="160" height="140" rx="6" fill="none" stroke-width="1.5" style="stroke:var(--text-faint)"/>'+
+      '<text x="100" y="188" text-anchor="middle" font-size="11" style="fill:var(--text-muted);font-family:var(--font-mono)">lo que ve la cámara</text>';
+    document.getElementById("agName").textContent=d.n;
+    document.getElementById("agWhat").textContent=d.w;
+    document.getElementById("agEff").textContent=d.f;
+    document.getElementById("agEx").innerHTML=d.x.map(function(t){return "<li><b>"+t[0]+":</b> "+t[1]+"</li>";}).join("");
+    Array.prototype.forEach.call(bx.children,function(b,k){ b.classList.toggle("on",k===i); });
+  }
+  A.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){pick(i);}); bx.appendChild(b); });
+  pick(1);
+
+  var M=[
+   ["Más megapíxeles = mejores fotos","Casi nunca. Los megapíxeles solo definen el tamaño del archivo. <b>Entre 12 y 24 MP sobra</b> para redes, pantallas y impresos grandes vistos a distancia normal. Lo que cambia la calidad es la luz, el enfoque y el tamaño del sensor. <b>Ejemplo:</b> un plato bien iluminado con ventana a 12 MP se ve mejor que uno mal iluminado a 50 MP."],
+   ["La mejor luz siempre es la hora dorada","Es bonita, pero no es la única. Comida y producto suelen verse mejor con <b>luz suave de ventana</b> (sin sol directo). El retrato funciona muy bien en <b>sombra abierta</b> o con cielo nublado, que regalan una luz pareja. <b>Ejemplo:</b> una sesión de brunch a las 11 am junto a una ventana grande."],
+   ["Un ISO alto arruina la foto","Lo que arruina la foto es la <b>subexposición</b>. Una imagen bien expuesta a ISO 3200 suele verse mejor que una oscura a ISO 400 que levantas en edición. <b>Ejemplo:</b> en un evento con poca luz, sube el ISO y congela el movimiento; una foto movida no se arregla."],
+   ["Siempre hay que aplicar la regla de tercios","Es una guía, no una ley. La <b>simetría y el centro</b> también funcionan: arquitectura, retrato frontal, productos sobre fondo limpio, platos en cenital. <b>Ejemplo:</b> una pizza cenital centrada se ve más fuerte que una desplazada a un tercio."],
+   ["Eso se arregla en edición","La edición mejora, pero <b>no rescata lo que no se capturó</b>: un enfoque fallado, un movimiento borroso o unas altas luces totalmente quemadas no se recuperan. Disparar en RAW da margen, no milagros. <b>Ejemplo:</b> el cielo blanco de un paisaje sobreexpuesto no vuelve."],
+   ["Para el fondo borroso necesitas un lente caro","Depende de tres cosas: <b>apertura, distancia al fondo y focal</b> (lo viste en el simulador de profundidad de campo). <b>Ejemplo:</b> en un retrato, aleja al modelo de la pared y acércate a él; el fondo se desenfoca mucho más, incluso con un lente básico."],
+   ["El modo manual siempre es mejor que el automático","Lo mejor es el modo que te deja <b>decidir lo que importa</b> sin perder el momento. Muchos fotógrafos de bodas y eventos usan prioridad de apertura o manual con ISO automático. <b>Ejemplo:</b> en una fiesta donde la luz cambia, ISO automático evita que se te escape la foto."]
+  ];
+  var g=document.getElementById("mythGrid");
+  M.forEach(function(m,i){
+    var d=document.createElement("div"); d.className="myth";
+    d.innerHTML='<span class="tag">MITO '+(i+1)+'</span><h3>“'+m[0]+'”</h3><div class="ans">'+m[1]+'</div><button class="myth-btn" type="button">Ver la verdad</button>';
+    d.querySelector("button").addEventListener("click",function(){ var o=d.classList.toggle("open"); this.textContent=o?"Ocultar":"Ver la verdad"; });
+    g.appendChild(d);
+  });
+})();
+</script>
+<script>
+(function(){
+  var G=[
+   {n:"Retrato",s:"la apertura: define cuánto se separa la persona del fondo.",
+    a:["f/2 – f/2.8","Con un 85 mm separa a la persona del fondo y suaviza el entorno. Con dos o más personas, cierra a f/4 para que todas salgan nítidas."],
+    v:["1/160 – 1/250 s","Alcanza para congelar un parpadeo o un gesto sin que se note movimiento."],
+    i:["100 – 400","La luz de ventana o de estudio rinde sin ruido. Sube a 800 en interiores oscuros."],
+    e:"Abrir a f/1.4 y enfocar mal. Con tan poca profundidad, la nariz nítida y los ojos borrosos arruinan el retrato. Enfoca al ojo más cercano."},
+   {n:"Paisaje",s:"la apertura y el ISO bajo, sobre trípode si puedes.",
+    a:["f/8 – f/11","Muchos lentes rinden más nítidos en este rango y la profundidad de campo cubre desde el primer plano hasta el fondo."],
+    v:["1/250 s a mano · 1/2 s o más con trípode","Con trípode puedes alargar el obturador para que el agua o las nubes se vean sedosas. Con mucha luz necesitarás un filtro ND."],
+    i:["100","Con trípode no necesitas subirlo: obtienes la máxima calidad."],
+    e:"Cerrar a f/22 pensando que así sale todo más nítido. La difracción resta nitidez en vez de ganarla."},
+   {n:"Gastronomía",s:"la apertura y un trípode: la comida no se mueve, así que puedes ganar luz alargando el tiempo.",
+    a:["f/2.8 – f/4 en ángulo bajo · f/5.6 – f/8 en cenital","A 45° o de frente conviene un foco en lo principal con fondo suave. En cenital todo está más o menos en el mismo plano, así que puedes cerrar un poco más."],
+    v:["1/60 – 1/125 s · 1/500 s o más para vapor o salsa","Con trípode puedes bajar hasta 1/15 s. Para congelar vapor, salsa o líquidos cayendo, sube la velocidad."],
+    i:["100 – 200","Con luz de ventana y trípode mantienes colores limpios y sin grano."],
+    e:"Disparar a mano a 1/30 s con luz de ventana tenue. La foto sale levemente movida y el plato se ve blando."},
+   {n:"Producto",s:"la apertura: la etiqueta y los bordes deben verse nítidos de punta a punta.",
+    a:["f/8 – f/11","Etiqueta, bordes y textura salen nítidos. En productos con mucha profundidad puedes unir varias tomas enfocadas a distintas distancias (focus stacking)."],
+    v:["1/125 s o más lenta con trípode","El producto está quieto. Si usas flash, la velocidad de sincronización (suele estar entre 1/160 y 1/250 s) limita el obturador."],
+    i:["100","Una foto de catálogo debe estar limpia para recortarla y editarla."],
+    e:"Usar f/2.8 para que se vea bonito. Solo una franja de la etiqueta queda nítida y el cliente lo nota."}
+  ];
+  var bx=document.getElementById("gxBtns"), gr=document.getElementById("gxGrid");
+  function show(i){
+    var d=G[i];
+    document.getElementById("gxStart").innerHTML="<b>Empieza por</b> "+d.s;
+    gr.innerHTML=[["APERTURA",d.a],["VELOCIDAD",d.v],["ISO",d.i]].map(function(c){
+      return '<div class="gx-cell"><span class="k">'+c[0]+'</span><div class="v">'+c[1][0]+'</div><p>'+c[1][1]+'</p></div>';
+    }).join("");
+    document.getElementById("gxErr").innerHTML="<b>Error común:</b> "+d.e;
+    Array.prototype.forEach.call(bx.children,function(b,k){ b.classList.toggle("on",k===i); });
+  }
+  G.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){show(i);}); bx.appendChild(b); });
+  show(0);
+})();
+</script>
+<script>
+(function(){
+  var C=[
+   {n:"Retrato",
+    r:[["Tercios y mirada","Pon los ojos en el tercio superior y deja un poco más de espacio hacia donde mira la persona. Así la foto no se siente apretada."],
+       ["Encuadre natural","Una ventana, una puerta o el follaje enmarcan a la persona y la separan del fondo. Funciona en retratos ambientales (cocina, taller, local)."],
+       ["Espacio negativo","Una pared limpia junto al rostro deja lugar para texto en portadas, banners y redes de la marca."]],
+    e:"Cortar a la persona en las articulaciones (tobillos, rodillas, codos) o dejar un poste o rama que parece salir de su cabeza. Recorta a mitad de muslo o de antebrazo y revisa el fondo antes de disparar."},
+   {n:"Paisaje",
+    r:[["Líneas guía","Un camino, un río o una cerca llevan la mirada del primer plano al horizonte y dan sensación de profundidad."],
+       ["Tercios y horizonte","Horizonte en el tercio inferior si el cielo es lo mejor de la escena; en el superior si lo es el suelo (reflejos, flores). Evita partirlo por la mitad sin intención."],
+       ["Primer plano","Una roca, flores o ramas cerca de la cámara dan escala y capas: primer plano, plano medio y fondo."]],
+    e:"Horizonte torcido o varios puntos de interés compitiendo. Activa la cuadrícula y elige un protagonista."},
+   {n:"Gastronomía",
+    r:[["Orden en cenital","En flat lay, agrupa elementos en números impares (3 o 5), repite colores o formas y deja espacios vacíos para que no se vea saturado."],
+       ["Diagonales y tercios","A 45°, ubica el plato en un tercio y haz que cubiertos, servilletas o ingredientes apunten hacia él en diagonal."],
+       ["Espacio negativo","Un fondo limpio de madera, mármol o tela deja lugar para el menú, el precio o el logo del restaurante."]],
+    e:"Poner el plato exactamente al centro con la mesa llena de objetos al azar. Elige un protagonista y quita lo que no suma."},
+   {n:"Producto",
+    r:[["Simetría y centro","Un producto frontal y centrado sobre fondo limpio se ve sólido y se recorta fácil para catálogo."],
+       ["Espacio negativo","Deja espacio a un lado para el texto de la campaña o la oferta (banners, historias, anuncios)."],
+       ["Escala y contexto","Una superficie con líneas (mesa, repisa) o un objeto de referencia (una mano, una planta) dan escala y sensación de uso."]],
+    e:"Un fondo cargado que compite con el producto y reflejos del propio fotógrafo en superficies brillantes. Limpia el fondo y revisa los brillos."}
+  ];
+  var bx=document.getElementById("cxBtns"), gr=document.getElementById("cxGrid");
+  function show(i){
+    var d=C[i];
+    gr.innerHTML=d.r.map(function(c){ return '<div class="gx-cell"><span class="k">'+c[0].toUpperCase()+'</span><p style="margin-top:6px">'+c[1]+'</p></div>'; }).join("");
+    document.getElementById("cxErr").innerHTML="<b>Error común:</b> "+d.e;
+    Array.prototype.forEach.call(bx.children,function(b,k){ b.classList.toggle("on",k===i); });
+  }
+  C.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){show(i);}); bx.appendChild(b); });
+  show(0);
+})();
+</script>
+<script>
+(function(){
+  var r=document.getElementById("softR"), sh=document.getElementById("softSh"), tx=document.getElementById("softTxt");
+  function soft(){
+    var v=+r.value;
+    sh.style.filter="blur("+(1+v*0.22)+"px)"; sh.style.opacity=(0.75-v*0.0045).toFixed(2);
+    tx.innerHTML = v<34 ? "<b>Luz dura:</b> borde de sombra marcado. Es el sol directo o un flash pequeño. Resalta texturas, pero marca arrugas, poros e imperfecciones."
+      : v<67 ? "<b>Intermedia:</b> la sombra empieza a difuminarse. Ocurre con sol velado por nubes finas o una ventana lejana."
+      : "<b>Luz suave:</b> sombras difusas y transiciones graduales. Es una ventana grande cerca, un cielo nublado o un difusor. Favorece la piel y la comida.";
+  }
+  r.addEventListener("input",soft); soft();
+
+  var L=[
+   {n:"Retrato",
+    r:[["Dirección","Luz lateral a unos 45° (de un lado y un poco arriba) da volumen al rostro. De frente se ve plana; muy desde arriba o desde abajo crea sombras duras en ojos o barbilla."],
+       ["Calidad","Suave: una ventana grande, sombra abierta o un difusor. Favorece la piel y atenúa las imperfecciones."],
+       ["Color","Usa una sola fuente en el rostro. Si mezclas ventana (fría) con una lámpara cálida, la piel sale con dos tonos."]],
+    e:"Sol directo del mediodía sobre el rostro: sombras duras en ojos, nariz y barbilla. Muévete a la sombra o usa un difusor."},
+   {n:"Paisaje",
+    r:[["Dirección","La luz lateral y baja (amanecer, atardecer) marca texturas y relieves. La de frente aplana; el contraluz da siluetas y bordes brillantes."],
+       ["Calidad","Dura al mediodía y suave con nubes. Un cielo nublado conviene para bosques y cascadas porque evita contrastes extremos."],
+       ["Color","En hora dorada y hora azul, el balance de blancos automático tiende a neutralizar la calidez. Prueba “Luz de día” o “Nublado” para conservarla."]],
+    e:"Fotografiar a las 12 del día con sol directo: cielo quemado, sombras muy oscuras y colores planos."},
+   {n:"Gastronomía",
+    r:[["Dirección","Contraluz o luz lateral desde atrás: resalta texturas, brillos y vapor. La luz de frente aplana el plato."],
+       ["Calidad","Suave: ventana con cortina o un difusor, sin sol directo. Una cartulina blanca al lado opuesto rebota luz y aclara las sombras."],
+       ["Color","Apaga las luces cálidas del techo cuando uses ventana. Al mezclar fuentes, los alimentos se tiñen de naranja."]],
+    e:"Usar el flash del celular de frente: brillos duros, sombras pegadas al plato y colores lavados."},
+   {n:"Producto",
+    r:[["Dirección","Una luz grande a un lado da forma, y un rebote o una segunda luz marca el borde. En superficies brillantes, ubica la luz a un lado para evitar reflejos."],
+       ["Calidad","Muy suave (softbox o difusor) para metal y vidrio. Más dura si quieres resaltar la textura del cuero o la madera."],
+       ["Color","Fija el balance de blancos y usa una tarjeta gris de referencia. El color del producto debe ser fiel a la realidad, clave en tiendas online."]],
+    e:"Que el color cambie entre fotos del mismo catálogo. El cliente recibe un producto distinto al que vio."}
+  ];
+  var bx=document.getElementById("lxBtns"), gr=document.getElementById("lxGrid");
+  function show(i){
+    var d=L[i];
+    gr.innerHTML=d.r.map(function(c){ return '<div class="gx-cell"><span class="k">'+c[0].toUpperCase()+'</span><p style="margin-top:6px">'+c[1]+'</p></div>'; }).join("");
+    document.getElementById("lxErr").innerHTML="<b>Error común:</b> "+d.e;
+    Array.prototype.forEach.call(bx.children,function(b,k){ b.classList.toggle("on",k===i); });
+  }
+  L.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){show(i);}); bx.appendChild(b); });
+  show(0);
+})();
+</script>
+<script>
+(function(){
+  var Q=[
+   {n:"Retrato",
+    r:[["Lente","85 mm es el clásico (o 50 mm si el espacio es chico). Comprime los rasgos del rostro y desenfoca bien el fondo."],
+       ["Modo","Prioridad de apertura (A o Av) a f/2 – f/2.8: tú controlas el fondo y la cámara ajusta la velocidad. Pasa a manual si la luz es estable."],
+       ["Celular","Usa el lente 2x o 3x en lugar del gran angular. Acércate poco; el modo retrato ayuda con el desenfoque del fondo."]],
+    e:"Retratar de cerca con un gran angular. Deforma el rostro: la nariz se agranda y las orejas se achican."},
+   {n:"Paisaje",
+    r:[["Lente","Gran angular de 16 a 35 mm para abarcar la escena y dar profundidad. Un tele de 70 a 200 mm sirve para aislar montañas lejanas."],
+       ["Modo","Manual o prioridad de apertura a f/8 – f/11, con ISO 100 y trípode."],
+       ["Celular","Usa la cámara principal o el gran angular, con trípode o apoyado, y el modo noche para el atardecer. Evita el zoom digital."]],
+    e:"Usar el zoom digital del celular: pierde detalle y se ve pastoso. Mejor acércate o recorta después."},
+   {n:"Gastronomía",
+    r:[["Lente","50 mm o un macro de 90 a 105 mm para detalles. En cenital, un 35 o 50 mm a buena altura evita estirar el plato."],
+       ["Modo","Manual con trípode: la luz y el plato no cambian, así que fijas los valores una vez y repites."],
+       ["Celular","Usa el lente 2x o la cámara principal, con luz de ventana y sin flash. Limpia el lente: una huella vela toda la foto."]],
+    e:"Usar un gran angular muy cerca del plato. Los bordes se estiran y la comida se ve deformada."},
+   {n:"Producto",
+    r:[["Lente","Macro de 90 a 105 mm o un 50 mm. Mantienen rectas las líneas del envase y permiten detalles de textura y etiqueta."],
+       ["Modo","Manual con trípode y luz constante o flash de estudio, para que todas las fotos del catálogo tengan la misma exposición."],
+       ["Celular","Activa el modo Pro o manual si lo tiene: fija ISO bajo y enfoque en la etiqueta, y usa trípode."]],
+    e:"Dejar el modo automático en una serie de fotos. La exposición y el color cambian entre una y otra, y el catálogo se ve desparejo."}
+  ];
+  var bx=document.getElementById("eqBtns"), gr=document.getElementById("eqGrid");
+  function show(i){
+    var d=Q[i];
+    gr.innerHTML=d.r.map(function(c){ return '<div class="gx-cell"><span class="k">'+c[0].toUpperCase()+'</span><p style="margin-top:6px">'+c[1]+'</p></div>'; }).join("");
+    document.getElementById("eqErr").innerHTML="<b>Error común:</b> "+d.e;
+    Array.prototype.forEach.call(bx.children,function(b,k){ b.classList.toggle("on",k===i); });
+  }
+  Q.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){show(i);}); bx.appendChild(b); });
+  show(0);
+})();
+</script>
+<script>
+(function(){
+  var sel=document.getElementById("stSel"), rg=document.getElementById("stRange"), out=document.getElementById("stOut"), n=document.getElementById("stN"), row=document.getElementById("stLadder"), cap=document.getElementById("stCap"), lbl=document.getElementById("stLbl"), bx=document.getElementById("stModes");
+  var M=[
+   {n:"ISO",l:"ISO inicial",L:["100","200","400","800","1600","3200","6400","12800"],o:["100","200","400","800","1600"],d:0,
+    c:"<b>ISO</b> · cada casilla a la derecha es un paso más de sensibilidad (×2)"},
+   {n:"Velocidad",l:"Velocidad inicial",L:["1/4000","1/2000","1/1000","1/500","1/250","1/125","1/60","1/30","1/15","1/8","1/4","1/2","1 s","2 s"],o:["1/1000","1/500","1/250","1/125","1/60","1/30"],d:3,
+    c:"<b>Velocidad</b> · cada casilla a la izquierda deja entrar el doble de luz (el tiempo se duplica)"},
+   {n:"Apertura",l:"Apertura inicial",L:["f/22","f/16","f/11","f/8","f/5.6","f/4","f/2.8","f/2","f/1.4","f/1"],o:["f/8","f/5.6","f/4","f/2.8","f/2","f/1.4"],d:3,
+    c:"<b>Apertura</b> · cada casilla a la izquierda deja entrar el doble de luz (el número f se divide por 1,4)"}
+  ];
+  var cur=0;
+  function times(m){ return m===2 ? "el doble de" : m+" veces más"; }
+  function calc(){
+    var d=M[cur], k=+rg.value, a=sel.value, ia=d.L.indexOf(a), m=Math.pow(2,Math.abs(k));
+    n.textContent=(k>0?"+":"")+k;
+    var f, t;
+    var pasos=Math.abs(k)+(Math.abs(k)===1?" paso":" pasos");
+    if(cur===0){
+      var v=(+a)*Math.pow(2,k); f=String(v);
+      if(k===0) t="Sin cambios: sigues en <b>ISO "+a+"</b>.";
+      else if(k>0) t="<b>ISO "+a+" + "+pasos+" = ISO "+v+"</b>. Es ×"+m+": la cámara es "+(m===2?"el doble de sensible":m+" veces más sensible")+", y el ruido aumenta.";
+      else t="<b>ISO "+a+" − "+pasos+" = ISO "+v+"</b>. Es ×1/"+m+": la cámara es "+(m===2?"la mitad de sensible":m+" veces menos sensible")+", así que necesitas más luz, pero la imagen sale más limpia."+(v<100?" Muchas cámaras no bajan de ISO 100.":"");
+    }else{
+      var ib=ia+k;
+      if(k===0){ f=a; t="Sin cambios: sigues en <b>"+a+"</b>."; }
+      else if(ib<0||ib>=d.L.length){ f=null; t="<b>"+a+" "+(k>0?"+":"−")+" "+pasos+"</b> queda fuera de la escala que muestra este ejemplo (cada lente y cámara tiene sus límites)."; }
+      else{
+        f=d.L[ib];
+        var luz = k>0 ? "entra "+times(m)+" luz" : "entra "+(m===2?"la mitad de":"1/"+m+" de")+" la luz";
+        var extra = cur===1 ? (k>0 ? " El obturador queda abierto más tiempo: hay más riesgo de que el movimiento salga borroso." : " El obturador queda abierto menos tiempo: congelas mejor el movimiento.")
+                            : (k>0 ? " La apertura está más abierta (número f más bajo): el fondo se desenfoca más." : " La apertura está más cerrada (número f más alto): hay más profundidad de campo y más nitidez de punta a punta.");
+        t="<b>"+a+" "+(k>0?"+":"−")+" "+pasos+" = "+f+"</b>. Con ese cambio "+luz+"."+extra;
+      }
+    }
+    out.innerHTML=t;
+    row.innerHTML=(cur===0?d.L:d.L.slice().reverse()).map(function(v){ return '<span class="st-chip'+(v===f?" on":(v===a?" from":""))+'">'+v+'</span>'; }).join("");
+  }
+  function mode(i){
+    cur=i; var d=M[i];
+    lbl.textContent=d.l; cap.innerHTML=d.c;
+    sel.innerHTML=d.o.map(function(v,k){ return "<option"+(k===d.d?" selected":"")+">"+v+"</option>"; }).join("");
+    Array.prototype.forEach.call(bx.children,function(b,k){ b.classList.toggle("on",k===i); });
+    calc();
+  }
+  M.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){mode(i);}); bx.appendChild(b); });
+  sel.addEventListener("change",calc); rg.addEventListener("input",calc);
+  mode(0);
 })();
 </script>
 </body>
