@@ -671,6 +671,33 @@
 
   .vid{ position:relative; aspect-ratio:16/9; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:#000; }
   .vid iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+
+  .md{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:20px; margin-top:14px; padding:18px; }
+  .md svg{ width:100%; height:auto; border:1px solid var(--line-soft); border-radius:var(--radius-sm); }
+  .md-row{ display:grid; grid-template-columns:78px 1fr 92px; gap:10px; align-items:center; margin-top:10px; font-size:13px; color:var(--text-muted); }
+  .md-row input{ width:100%; accent-color:var(--amber); }
+  .md-row input:disabled{ opacity:.4; }
+  .md-row .v{ font:500 12px var(--font-mono); color:var(--text-faint); }
+  .md-row .v.u{ color:var(--amber); }
+  .md-right p{ margin:0 0 8px; } .md-right b{ color:var(--text); font-weight:500; } .md-right ul{ margin:8px 0 10px; }
+  @media(max-width:720px){ .md{ grid-template-columns:1fr; } }
+
+  .cc{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:20px; margin-bottom:10px; }
+  .cc-fig svg{ width:100%; height:auto; display:block; border:1px solid var(--line-soft); border-radius:var(--radius-sm); }
+  .cc-fig .ov{ opacity:0; transition:opacity .25s; } .cc-fig.on .ov{ opacity:1; }
+  .cc-fig .off{ transition:opacity .25s; } .cc-fig.on .off{ opacity:0; }
+  .cc-tg{ margin-top:10px; font:inherit; font-size:13px; padding:8px 14px; border-radius:999px; border:1px solid var(--amber); background:transparent; color:var(--amber); cursor:pointer; }
+  .cc-tg:hover{ background:var(--amber); color:var(--on-amber); }
+  .cc .ag-txt h4{ font-size:16px; margin:12px 0 4px; } .cc .ag-txt h4:first-child{ margin-top:0; }
+  @media(max-width:720px){ .cc{ grid-template-columns:1fr; } }
+
+  .hp .p{ opacity:.3; transition:opacity .2s; }
+  .hp.sel-sen .p-sen,.hp.sel-shu .p-shu,.hp.sel-vis .p-vis,.hp.sel-lens .p-lens,.hp.sel-dia .p-dia,.hp.sel-ring .p-ring{ opacity:1; stroke:var(--amber); stroke-width:2; }
+  .hp{ width:100%; height:auto; display:block; border:1px solid var(--line-soft); border-radius:var(--radius-sm); background:var(--bg-elevated); }
+  #fcSvg{ width:100%; height:auto; display:block; border:1px solid var(--line-soft); border-radius:var(--radius-sm); }
+
+
 </style>
 </head>
 <body>
@@ -693,17 +720,16 @@
 
 <header class="hero wrap" id="top">
   <div>
-    <p class="hero-kicker">GUÍA INTERACTIVA</p>
+    <p class="hero-kicker">GUÍA PARA APRENDER FOTOGRAFÍA</p>
     <h1>Fotografía: de cero a <em>control total</em></h1>
-    <p class="hero-sub">Entiende exposición, composición y luz jugando con simuladores — y empieza a decidir tú, en vez de dejarlo en modo automático.</p>
+    <p class="hero-sub">Esta guía explica los fundamentos de la fotografía (exposición, composición y luz) con simuladores en los que puedes modificar cada ajuste y observar su efecto. El objetivo es que dejes el modo automático y tomes tú las decisiones.</p>
+    <p class="hero-sub" style="margin-top:10px">Cómo usarla: lee cada concepto, experimenta con la ilustración o el simulador y revisa los ejemplos de retrato, paisaje, gastronomía y producto.</p>
     <div class="hero-stats" aria-label="Contenido de la guía">
-      <div><b>5</b><span>MÓDULOS</span></div>
-      <div><b>5</b><span>SIMULADORES</span></div>
-      <div><b>9</b><span>PREGUNTAS</span></div>
-      <div><b>~15</b><span>MINUTOS</span></div>
+      <div><b>6</b><span>MÓDULOS</span></div>
+      <div><b>10</b><span>SIMULADORES</span></div>
+      <div><b>6</b><span>PREGUNTAS DEL EXAMEN</span></div>
+      <div><b>~60</b><span>MINUTOS</span></div>
     </div>
-    <a class="hero-cta" href="#exposicion">Empezar por la exposición ↓</a>
-    <p class="hero-note">Asume que ya tienes una cámara o un celular con modo manual/pro. No cubre qué equipo comprar.</p>
   </div>
   <div class="hero-iris-box">
     <svg id="heroIris" width="240" height="240" viewBox="0 0 220 220" aria-hidden="true">
@@ -740,28 +766,103 @@
       <div><b>1975</b>Primera cámara digital (Kodak): 0,01 megapíxeles.</div>
       <div><b>Hoy</b>El celular: sensor diminuto, software potente, miles de fotos al día.</div>
     </div>
-    <div class="cardgrid">
-      <div class="card reveal"><h3>Cuerpo</h3><p><b>Sensor:</b> registra la luz (más grande = mejor con poca luz). <b>Obturador:</b> cuánto tiempo entra. <b>Visor/pantalla:</b> donde encuadras.</p></div>
-      <div class="card reveal"><h3>Lente (objetivo)</h3><p><b>Diafragma:</b> cuánta luz pasa (f/). <b>Distancia focal:</b> gran angular 14–35 mm, normal 50 mm, tele 85–200 mm. Fijo = más luz y nitidez; zoom = versatilidad.</p></div>
-      <div class="card reveal"><h3>Celular vs cámara</h3><p>El celular tiene sensor pequeño y diafragma casi fijo; compensa con software. Una cámara te da control físico de cada parte.</p></div>
+        <div class="simhead reveal"><h3>Las partes de la cámara</h3><span class="chip">TOCA UNA PARTE</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg id="hpCam" class="hp" viewBox="0 0 240 150" role="img" aria-label="Recorrido de la luz dentro de la cámara"><rect x="8" y="30" width="224" height="90" rx="10" fill="none" style="stroke:var(--line);stroke-width:2"/><rect x="8" y="44" width="84" height="62" rx="6" style="fill:var(--line-soft)"/><polyline points="0,60 40,68 90,72 152,75" fill="none" style="stroke:var(--amber);opacity:.5"/><polyline points="0,90 40,82 90,78 152,75" fill="none" style="stroke:var(--amber);opacity:.5"/><polyline points="0,75 152,75" fill="none" style="stroke:var(--amber);opacity:.5"/><g class="p p-lens"><ellipse cx="24" cy="75" rx="7" ry="26" style="fill:var(--blue-soft)"/><ellipse cx="44" cy="75" rx="6" ry="20" style="fill:var(--blue-soft)"/></g><g class="p p-dia"><rect x="62" y="46" width="5" height="22" style="fill:var(--text)"/><rect x="62" y="82" width="5" height="22" style="fill:var(--text)"/></g><g class="p p-ring"><rect x="72" y="42" width="6" height="66" style="fill:var(--text)"/><rect x="82" y="42" width="6" height="66" style="fill:var(--text)"/></g><g class="p p-shu"><rect x="116" y="48" width="4" height="22" style="fill:var(--text)"/><rect x="116" y="80" width="4" height="22" style="fill:var(--text)"/></g><rect class="p p-sen" x="150" y="46" width="7" height="58" style="fill:var(--blue)"/><g class="p p-vis"><path d="M178 30 L188 16 H212 L222 30Z" style="fill:var(--text)"/><rect x="224" y="50" width="6" height="50" style="fill:var(--text)"/></g></svg><div class="ag-btns" id="hpCamB" style="margin-top:10px"></div><p class="gx-start" style="margin:6px 0 0">La luz entra por la izquierda y viaja hasta el sensor.</p></div>
+      <div class="ag-txt" id="hpCamT"></div>
     </div>
+
+    <div class="simhead reveal"><h3>Las partes del lente</h3><span class="chip">TOCA UNA PARTE</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg id="hpLen" class="hp" viewBox="0 0 240 150" role="img" aria-label="Recorrido de la luz dentro de la cámara"><rect x="8" y="30" width="224" height="90" rx="10" fill="none" style="stroke:var(--line);stroke-width:2"/><rect x="8" y="44" width="84" height="62" rx="6" style="fill:var(--line-soft)"/><polyline points="0,60 40,68 90,72 152,75" fill="none" style="stroke:var(--amber);opacity:.5"/><polyline points="0,90 40,82 90,78 152,75" fill="none" style="stroke:var(--amber);opacity:.5"/><polyline points="0,75 152,75" fill="none" style="stroke:var(--amber);opacity:.5"/><g class="p p-lens"><ellipse cx="24" cy="75" rx="7" ry="26" style="fill:var(--blue-soft)"/><ellipse cx="44" cy="75" rx="6" ry="20" style="fill:var(--blue-soft)"/></g><g class="p p-dia"><rect x="62" y="46" width="5" height="22" style="fill:var(--text)"/><rect x="62" y="82" width="5" height="22" style="fill:var(--text)"/></g><g class="p p-ring"><rect x="72" y="42" width="6" height="66" style="fill:var(--text)"/><rect x="82" y="42" width="6" height="66" style="fill:var(--text)"/></g><g class="p p-shu"><rect x="116" y="48" width="4" height="22" style="fill:var(--text)"/><rect x="116" y="80" width="4" height="22" style="fill:var(--text)"/></g><rect class="p p-sen" x="150" y="46" width="7" height="58" style="fill:var(--blue)"/><g class="p p-vis"><path d="M178 30 L188 16 H212 L222 30Z" style="fill:var(--text)"/><rect x="224" y="50" width="6" height="50" style="fill:var(--text)"/></g></svg><div class="ag-btns" id="hpLenB" style="margin-top:10px"></div><p class="gx-start" style="margin:6px 0 0">La luz entra por la izquierda y viaja hasta el sensor.</p></div>
+      <div class="ag-txt" id="hpLenT"></div>
+    </div>
+
+    <div class="simhead reveal"><h3>Distancia focal: ¿cuánto se ve?</h3><span class="chip">MUEVE EL DESLIZADOR</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg id="fcSvg" viewBox="0 0 240 150" role="img" aria-label="Lo que entra en la foto según la distancia focal"></svg>
+        <input type="range" id="fcR" min="0" max="6" value="3" aria-label="Distancia focal" style="width:100%;accent-color:var(--amber);margin-top:10px"><p class="gx-start" style="margin:4px 0 0" id="fcV"></p></div>
+      <div class="ag-txt" id="fcT"></div>
+    </div>
+
+    <div class="simhead reveal"><h3>Celular o cámara</h3><span class="chip">TOCA EL BOTÓN</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Tamaño del sensor: full frame, APS-C y celular"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><rect x="14" y="20" width="144" height="96" rx="3" style="fill:var(--blue-soft);opacity:.55;stroke:var(--blue)"/><rect x="14" y="20" width="94" height="62" rx="3" style="fill:var(--amber);opacity:.5;stroke:var(--amber)"/><rect x="14" y="20" width="39" height="29" rx="3" style="fill:var(--text);opacity:.85"/><g class="ov" style="font-family:var(--font-mono);font-size:9px"><text x="166" y="38" style="fill:var(--blue)">Full frame</text><text x="166" y="50" style="fill:var(--text-muted)">100 %</text><text x="166" y="76" style="fill:var(--amber)">APS-C</text><text x="166" y="88" style="fill:var(--text-muted)">≈ 42 %</text><text x="166" y="114" style="fill:var(--text)">Celular</text><text x="166" y="126" style="fill:var(--text-muted)">≈ 8 %</text></g></svg>
+        <button type="button" class="cc-tg" data-a="Ver el nombre y el tamaño de cada sensor" data-b="Ocultar los nombres">Ver el nombre y el tamaño de cada sensor</button><p class="gx-start" style="margin:8px 0 0">Los tamaños son una comparación aproximada de área; cada celular y cada cámara cambian un poco.</p></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>Un celular es una cámara muy compacta que realiza casi todo de forma automática. Una cámara profesional es más grande: tiene un <b>sensor</b> más grande y lentes que se pueden cambiar. Una analogía: dos recipientes bajo la lluvia; el más grande recoge más agua, igual que un sensor grande recoge más luz.</p><h4>Cuál usar</h4><ul>
+        <li><b>Retrato:</b> el celular con modo retrato sirve para redes; la cámara da un fondo suave real y más calidad al imprimir.</li>
+        <li><b>Paisaje:</b> el celular es ideal para viajar ligero; la cámara conserva más detalle al ampliar.</li>
+        <li><b>Gastronomía:</b> con luz de ventana, el celular funciona muy bien. Con poca luz, gana la cámara.</li>
+        <li><b>Producto:</b> con trípode, el celular alcanza para tienda online; para un catálogo con color exacto, mejor la cámara.</li></ul>
+        <p class="gx-err" style="margin-top:12px"><b>Error común:</b> creer que una cámara cara hace las fotos por ti. La luz y la composición pesan mucho más que el aparato.</p></div>
+    </div>
+
+        <div class="simhead reveal"><h3>Tipos de obturador</h3><span class="chip">TOCA UN TIPO</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Objeto veloz con obturador de rodillo y con obturador global"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><line x1="0" y1="140" x2="240" y2="140" style="stroke:var(--line)"/><g class="off"><polygon points="96,24 126,24 142,130 112,130" style="fill:var(--amber)"/><text x="120" y="14" text-anchor="middle" font-size="9" style="fill:var(--text-muted);font-family:var(--font-mono)">rodillo: se ve torcido</text></g><g class="ov"><rect x="104" y="24" width="30" height="106" style="fill:var(--amber)"/><text x="120" y="14" text-anchor="middle" font-size="9" style="fill:var(--text-muted);font-family:var(--font-mono)">global: se ve recto</text></g></svg>
+        <button type="button" class="cc-tg" data-a="Ver el obturador global" data-b="Ver el de rodillo">Ver el obturador global</button>
+        <div class="ag-btns" id="tobB" style="margin-top:12px"></div></div>
+      <div class="ag-txt" id="tobT"></div>
+    </div>
+
     <div class="simhead"><h3>Modos de la cámara</h3><span class="chip">INTERACTIVO · elige un modo</span></div>
     <div class="modebtns" id="modeBtns"></div>
-    <p class="sub-intro" id="modeInfo"></p>
+    <div class="panel md" id="mdPanel">
+      <div class="md-left">
+        <svg viewBox="0 0 240 150" id="mdScene" role="img" aria-label="Escena de ejemplo: fondo, sujeto y pelota en movimiento">
+          <defs>
+            <filter id="mdBlur"><feGaussianBlur id="mdBlurN" stdDeviation="2"/></filter>
+            <filter id="mdNoise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/><feColorMatrix type="saturate" values="0"/></filter>
+          </defs>
+          <rect width="240" height="150" style="fill:var(--bg-elevated)"/>
+          <g filter="url(#mdBlur)">
+            <circle cx="36" cy="92" r="34" style="fill:var(--blue-soft);opacity:.55"/><circle cx="206" cy="86" r="40" style="fill:var(--blue-soft);opacity:.45"/>
+            <rect x="0" y="112" width="240" height="38" style="fill:var(--line-soft)"/>
+            <circle cx="60" cy="40" r="5" style="fill:var(--amber)"/><circle cx="96" cy="26" r="4" style="fill:var(--amber)"/><circle cx="178" cy="34" r="6" style="fill:var(--amber)"/><circle cx="214" cy="52" r="4" style="fill:var(--amber)"/>
+          </g>
+          <circle cx="104" cy="66" r="12" style="fill:var(--text)"/><path d="M84 124 Q86 88 104 84 Q122 88 124 124Z" style="fill:var(--text)"/>
+          <g id="mdBall"></g>
+          <rect width="240" height="150" filter="url(#mdNoise)" id="mdGrain" style="opacity:0;mix-blend-mode:multiply;pointer-events:none"/>
+        </svg>
+        <div class="md-row"><span>Apertura</span><input type="range" id="mdAp" min="0" max="6" value="2" aria-label="Apertura"><span class="v" id="mdApV"></span></div>
+        <div class="md-row"><span>Velocidad</span><input type="range" id="mdSp" min="0" max="6" value="1" aria-label="Velocidad"><span class="v" id="mdSpV"></span></div>
+        <div class="md-row"><span>ISO</span><input type="range" id="mdIs" min="0" max="3" value="0" aria-label="ISO"><span class="v" id="mdIsV"></span></div>
+        <p class="gx-start" style="margin:10px 0 0">Mueve lo que el modo te deja controlar. Lo demás lo mueve la cámara sola.</p>
+      </div>
+      <div class="ag-txt md-right" id="mdTxt"></div>
+    </div>
     <div class="simhead"><h3>Factor de recorte</h3><span class="chip">CALCULADORA</span></div>
-    <p class="sub-intro">Factor = diagonal del full frame (43,3 mm) ÷ diagonal de tu sensor. Un APS-C mide ≈ 28,3 mm → 43,3 ÷ 28,3 ≈ 1,5. Se multiplica la distancia focal porque el sensor pequeño solo capta el centro de la imagen que proyecta el lente: el mismo lente se ve más "cerrado", como si fuera un tele más largo. No cambia el lente, cambia el encuadre.</p>
+    <p class="sub-intro">Piensa en el sensor como una <b>ventana</b> por donde la cámara recibe la imagen que dibuja el lente. Un sensor <b>grande</b> (full frame) es una ventana grande: deja pasar casi toda la escena. Un sensor <b>más chico</b> (como el APS-C) es una ventana más pequeña: solo toma el centro. Es como recortar con tijeras el medio de una foto y estirarlo al tamaño original: lo que queda se ve más cerca.</p>
+      <p class="sub-intro">Entonces, ¿cuánto más cerca se ve? Eso lo indica el <b>factor de recorte</b>. En la mayoría de las cámaras APS-C es de <b>1,5</b> (en las Canon, de 1,6). La cuenta es sencilla. Se multiplican los milímetros del lente por ese número. Así descubres qué lente necesitarías en una cámara full frame para lograr el mismo encuadre. <b>Por ejemplo:</b> si pones un lente de 50 mm en una APS-C, tu foto se verá como la de un lente de 75 mm en una full frame. La cuenta: 50 × 1,5 = 75.</p>
+      <p class="sub-intro">Importante: el lente sigue siendo exactamente el mismo; lo único que cambia es cuánta escena cabe en la foto. <b>Si te da curiosidad de dónde sale el número:</b> factor = 43,3 mm (la diagonal del full frame) ÷ la diagonal de tu sensor. En un APS-C: 43,3 ÷ 28,3 ≈ 1,5.</p>
     <div class="eqcalc">
       <select id="cropSel"><option value="1">Full frame (×1)</option><option value="1.5" selected>APS-C Sony/Nikon (×1,5)</option><option value="1.6">APS-C Canon (×1,6)</option><option value="2">Micro 4/3 (×2)</option></select>
       <input id="cropMm" type="number" min="8" max="800" value="50" aria-label="Distancia focal en mm"> mm
     </div>
     <p class="eqres" id="cropRes"></p>
   
-    <div class="simhead reveal"><h3>Qué lente y qué modo usar en cada tipo de foto</h3><span class="chip">EJEMPLOS · elige un género</span></div>
-    <p class="sub-intro">La distancia focal cambia cómo se ve el sujeto y el fondo. En sensores más pequeños que el full frame, multiplica por el factor de recorte (ver calculadora): un 56 mm en APS-C (×1,5) equivale a unos 85 mm.</p>
-    <div class="panel reveal ag">
-      <div class="ag-btns" id="eqBtns"></div>
-      <div class="gx-grid" id="eqGrid"></div>
-      <p class="gx-err" id="eqErr"></p>
+        <div class="simhead reveal"><h3>Lente y modo en retrato</h3><span class="chip">GÉNERO 1 DE 4 · toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Error común y versión corregida en retrato"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><g class="off"><circle cx="120" cy="75" r="36" style="fill:var(--line-soft);stroke:var(--text-faint)"/><circle cx="106" cy="66" r="3.5" style="fill:var(--text)"/><circle cx="134" cy="66" r="3.5" style="fill:var(--text)"/><circle cx="120" cy="82" r="12" style="fill:var(--amber)"/><circle cx="82" cy="76" r="3" style="fill:var(--line-soft);stroke:var(--text-faint)"/><circle cx="158" cy="76" r="3" style="fill:var(--line-soft);stroke:var(--text-faint)"/><path d="M108 94 Q120 102 132 94" fill="none" style="stroke:var(--text)"/></g><g class="ov"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><circle cx="120" cy="75" r="36" style="fill:var(--line-soft);stroke:var(--text-faint)"/><circle cx="106" cy="66" r="3.5" style="fill:var(--text)"/><circle cx="134" cy="66" r="3.5" style="fill:var(--text)"/><circle cx="120" cy="82" r="5" style="fill:var(--amber)"/><circle cx="82" cy="76" r="8" style="fill:var(--line-soft);stroke:var(--text-faint)"/><circle cx="158" cy="76" r="8" style="fill:var(--line-soft);stroke:var(--text-faint)"/><path d="M108 94 Q120 102 132 94" fill="none" style="stroke:var(--text)"/></g></svg><button type="button" class="cc-tg" data-a="Ver cómo se corrige" data-b="Ver el error">Ver cómo se corrige</button><p class="gx-start" style="margin:8px 0 0">Ahora ves el error común. Toca el botón para ver la foto bien hecha.</p></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>En el retrato, el objetivo es que el rostro se vea natural y favorecido.</p><h4>Qué usar</h4><ul><li><b>Lente:</b> El de 85 mm es el clásico (o un 50 mm si el lugar es chico). Equivale a mirar a la persona desde cierta distancia: el rostro conserva sus proporciones y el fondo se suaviza.</li><li><b>Modo:</b> Prioridad de apertura (A o Av) con f/2 a f/2.8. Tú eliges qué tan borroso quieres el fondo y la cámara se encarga de la velocidad. Si la luz no cambia, pasa a manual.</li><li><b>Celular:</b> Usa el lente 2x o 3x en vez del gran angular y no te acerques mucho. El modo retrato ayuda a borrar el fondo.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> Acercarte mucho con un gran angular: la nariz se ve desproporcionada y las orejas más pequeñas.</p></div>
+    </div>
+
+    <div class="simhead reveal"><h3>Lente y modo en paisaje</h3><span class="chip">GÉNERO 2 DE 4 · toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Error común y versión corregida en paisaje"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><polygon points="0,110 50,60 100,110" style="fill:var(--blue-soft);opacity:.6"/><polygon points="70,110 140,40 210,110" style="fill:var(--blue-soft);opacity:.85"/><rect y="110" width="240" height="40" style="fill:var(--line-soft)"/><circle cx="206" cy="28" r="10" style="fill:var(--amber)"/><circle cx="30" cy="128" r="5" style="fill:var(--amber)"/><rect class="off" x="104" y="38" width="64" height="40" fill="none" style="stroke:var(--amber);stroke-width:3"/><rect class="ov" x="8" y="8" width="224" height="134" fill="none" style="stroke:var(--amber);stroke-width:3"/></svg><button type="button" class="cc-tg" data-a="Ver cómo se corrige" data-b="Ver el error">Ver cómo se corrige</button><p class="gx-start" style="margin:8px 0 0">Ahora ves el error común. Toca el botón para ver la foto bien hecha.</p></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>En un paisaje quieres que quepa el lugar entero, o mostrar un detalle que está lejos.</p><h4>Qué usar</h4><ul><li><b>Lente:</b> Un gran angular (de 16 a 35 mm) amplía el campo de visión: entra mucho paisaje. Un tele (de 70 a 200 mm) sirve para acercar una montaña lejana.</li><li><b>Modo:</b> Manual, o prioridad de apertura con f/8 a f/11 y ISO 100, con la cámara en trípode. Así todo sale nítido y limpio.</li><li><b>Celular:</b> Usa la cámara principal o el gran angular, con el celular apoyado o en un trípode. El modo noche ayuda en el atardecer. Evita el zoom digital.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> Usar el zoom digital del celular: la foto pierde detalle. Mejor acércate caminando o recorta después.</p></div>
+    </div>
+
+    <div class="simhead reveal"><h3>Lente y modo en gastronomía</h3><span class="chip">GÉNERO 3 DE 4 · toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Error común y versión corregida en gastronomía"><g class="off"><rect width="240" height="150" style="fill:var(--line-soft)"/><ellipse cx="120" cy="75" rx="78" ry="40" style="fill:var(--bg-elevated);stroke:var(--line)"/><circle cx="120" cy="75" r="14" style="fill:var(--amber)"/><line x1="20" y1="140" x2="70" y2="40" style="stroke:var(--text);stroke-width:7;stroke-linecap:round"/></g><g class="ov"><rect width="240" height="150" style="fill:var(--line-soft)"/><ellipse cx="120" cy="75" rx="36" ry="36" style="fill:var(--bg-elevated);stroke:var(--line)"/><circle cx="120" cy="75" r="14" style="fill:var(--amber)"/><line x1="176" y1="120" x2="150" y2="84" style="stroke:var(--text);stroke-width:3;stroke-linecap:round"/></g></svg><button type="button" class="cc-tg" data-a="Ver cómo se corrige" data-b="Ver el error">Ver cómo se corrige</button><p class="gx-start" style="margin:8px 0 0">Ahora ves el error común. Toca el botón para ver la foto bien hecha.</p></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>En comida, el plato es el protagonista y debe verse apetitoso y con su forma real.</p><h4>Qué usar</h4><ul><li><b>Lente:</b> Un 50 mm o un macro de 90 a 105 mm. Si miras desde arriba, un 35 o 50 mm a buena altura evita que el plato se estire.</li><li><b>Modo:</b> Manual con trípode. Como la comida no se mueve, eliges los valores una vez y los repites en todas las fotos.</li><li><b>Celular:</b> Usa el lente 2x o la cámara principal con luz de ventana, sin flash. Limpia el lente: una huella vela toda la foto.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> Poner un gran angular muy cerca del plato: los bordes se estiran y la comida se ve deformada.</p></div>
+    </div>
+
+    <div class="simhead reveal"><h3>Lente y modo en producto</h3><span class="chip">GÉNERO 4 DE 4 · toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Error común y versión corregida en producto"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><g class="off"><path d="M112 30 H128 V46 Q160 56 156 86 Q154 120 140 128 H100 Q86 120 84 86 Q80 56 112 46Z" style="fill:var(--text)"/><rect x="104" y="76" width="32" height="26" style="fill:var(--amber)"/></g><g class="ov"><rect x="114" y="30" width="12" height="20" style="fill:var(--text)"/><rect x="100" y="48" width="40" height="76" rx="8" style="fill:var(--text)"/><rect x="104" y="76" width="32" height="26" style="fill:var(--amber)"/></g></svg><button type="button" class="cc-tg" data-a="Ver cómo se corrige" data-b="Ver el error">Ver cómo se corrige</button><p class="gx-start" style="margin:8px 0 0">Ahora ves el error común. Toca el botón para ver la foto bien hecha.</p></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>Aquí la gente tiene que ver cómo es el producto de verdad, con sus líneas derechas y sus colores.</p><h4>Qué usar</h4><ul><li><b>Lente:</b> Un macro de 90 a 105 mm o un 50 mm. Mantienen derechas las líneas del envase y muestran bien las letras pequeñas.</li><li><b>Modo:</b> Manual con trípode y luz constante o flash de estudio. Así todas las fotos del catálogo salen con la misma luz.</li><li><b>Celular:</b> Activa el modo Pro o manual si lo tiene: pon el ISO bajo y enfoca en la etiqueta, con el celular en un trípode.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> Dejar el modo automático en una serie de fotos: la luz y el color cambian entre una y otra, y el catálogo se ve disparejo.</p></div>
     </div>
   </section>
 
@@ -772,33 +873,16 @@
     <h2 class="reveal">El triángulo de exposición</h2>
     <p class="module-intro reveal">Toda foto es una negociación entre tres controles. Cada uno deja entrar más o menos luz, pero cada uno también cambia otra cosa en la imagen. Ese es el trato que hay que aprender a hacer.</p>
 
-    <div class="cardgrid">
-      <div class="card reveal">
-        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/></svg></div>
-        <h3>Apertura (f/stop)</h3>
-        <p>Cuánta luz entra por el lente y qué tan desenfocado se ve el fondo.</p>
-        <div class="rule"><span><b>f/1.8</b> más luz, fondo borroso</span></div>
-        <div class="rule" style="margin-top:0;border-top:none;padding-top:4px;"><span><b>f/16</b> menos luz, todo nítido</span></div>
-      </div>
-      <div class="card reveal">
-        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
-        <h3>Velocidad de obturación</h3>
-        <p>Cuánto tiempo recibe luz el sensor, y si el movimiento se congela o deja estela.</p>
-        <div class="rule"><span><b>1/1000</b> congela la acción</span></div>
-        <div class="rule" style="margin-top:0;border-top:none;padding-top:4px;"><span><b>1/15</b> arrastra el movimiento</span></div>
-      </div>
-      <div class="card reveal">
-        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 20v-5M10 20v-9M15 20V6M20 20V3"/></svg></div>
-        <h3>ISO</h3>
-        <p>La sensibilidad del sensor. Sube el brillo en poca luz, pero agrega ruido. Es el último recurso, no el primero.</p>
-        <div class="rule"><span><b>100</b> imagen limpia</span></div>
-        <div class="rule" style="margin-top:0;border-top:none;padding-top:4px;"><span><b>6400</b> más brillo, más grano</span></div>
-      </div>
+        <div class="gx-grid reveal" style="margin-top:18px">
+      <div class="gx-cell ag-txt"><span class="k">APERTURA (F/STOP)</span><p style="margin-top:8px">Es la pupila del lente: una abertura que se abre o se cierra. Grande: entra mucha luz y el fondo se desenfoca. Pequeña: entra poca luz y todo se ve nítido. El número f funciona al revés: f/1.8 es un agujero grande y f/16 uno muy pequeño.</p><h4 style="margin:10px 0 4px;font-size:15px">Ejemplos</h4><ul><li><b>f/1.8:</b> más luz y fondo borroso: retrato con el fondo suave.</li><li><b>f/16:</b> menos luz y todo nítido: paisaje de punta a punta.</li></ul></div>
+      <div class="gx-cell ag-txt"><span class="k">VELOCIDAD DE OBTURACIÓN</span><p style="margin-top:8px">Es el tiempo durante el cual el obturador deja entrar la luz. Muy rápida (1/1000) congela el movimiento, como una foto de alguien saltando en el aire. Lenta (1/15) deja estela, como cuando mueves una linterna en la oscuridad.</p><h4 style="margin:10px 0 4px;font-size:15px">Ejemplos</h4><ul><li><b>1/1000:</b> congela la acción: un niño corriendo o una salsa cayendo.</li><li><b>1/15:</b> arrastra el movimiento: el agua se ve como seda (con trípode).</li></ul></div>
+      <div class="gx-cell ag-txt"><span class="k">ISO</span><p style="margin-top:8px">Es qué tan sensible se vuelve la cámara a la luz, como subir el volumen de la radio. Con ISO bajo (100) la foto sale limpia. Con ISO alto (6400) se ve más clara, pero aparecen puntitos, el grano. Es el último recurso, no el primero.</p><h4 style="margin:10px 0 4px;font-size:15px">Ejemplos</h4><ul><li><b>100:</b> imagen limpia: casi siempre que haya buena luz.</li><li><b>6400:</b> más brillo y más grano: un evento de noche, donde lo importante es que no salga movida.</li></ul></div>
     </div>
+
 
     <div class="tip reveal">
       <span class="tip-tag">CLAVE</span>
-      <p><b>Cada paso es un “stop”:</b> duplica o reduce a la mitad la luz. Si abres un paso la apertura (f/4 → f/2.8), puedes compensar cerrando un paso el obturador (1/125 → 1/250) y la foto quedará igual de clara, pero con otro aspecto.</p>
+      <p><b>Cada paso es un “stop”:</b> duplica o reduce a la mitad la luz. Si abres la apertura un paso (f/4 → f/2.8), entra más luz. Puedes compensar con el obturador, un paso más rápido (1/125 → 1/250), y la foto quedará igual de clara, pero con otro aspecto.</p>
     </div>
 
     <div class="simhead reveal"><h3>Cómo se cuentan los pasos (stops)</h3><span class="chip">CALCULADORA · ISO, velocidad y apertura</span></div>
@@ -822,18 +906,22 @@
         <p class="gx-start" style="margin:12px 0 6px"><b>Apertura</b> · cada casilla a la derecha es un paso menos de luz (el número se multiplica por 1,4)</p>
         <div class="st-row"><span class="st-chip">f/1.4</span><span class="st-chip">f/2</span><span class="st-chip">f/2.8</span><span class="st-chip">f/4</span><span class="st-chip">f/5.6</span><span class="st-chip">f/8</span><span class="st-chip">f/11</span><span class="st-chip">f/16</span></div>
       </details>
-      <p class="gx-err"><b>Ejemplo:</b> con f/2.8 · 1/125 s · ISO 100 la foto sale bien. Cierras la apertura a f/5.6 (2 pasos menos de luz) para ganar profundidad: subes el ISO 2 pasos, de 100 a 400, y la foto queda igual de clara. O dejas el ISO y alargas el obturador a 1/30 s, que también son 2 pasos.</p>
+      <p class="gx-err"><b>Ejemplo:</b> con f/2.8 · 1/125 s · ISO 100 la foto sale bien. Cierras la apertura a f/5.6 (2 pasos menos de luz) para ganar profundidad. Subes el ISO 2 pasos, de 100 a 400, y la foto queda igual de clara. O dejas el ISO y alargas el obturador a 1/30 s, que también son 2 pasos.</p>
       <p class="gx-err"><b>En un evento oscuro:</b> pasar de ISO 100 a 800 son 3 pasos (800 ÷ 100 = 8 = 2×2×2). Eso te permite disparar a 1/250 s en lugar de 1/30 s y congelar el movimiento. También hay pasos intermedios de un tercio (100, 125, 160, 200, 250, 320, 400…): tres tercios suman un paso completo.</p>
     </div>
 
-    <div class="simhead reveal"><h3>Cómo se usa en cada tipo de foto</h3><span class="chip">EJEMPLOS · elige un género</span></div>
-    <p class="sub-intro">Los mismos tres controles se manejan distinto según qué fotografíes. Son puntos de partida, no reglas: ajusta según tu luz.</p>
-    <div class="panel reveal ag">
-      <div class="ag-btns" id="gxBtns"></div>
-      <p class="gx-start" id="gxStart"></p>
-      <div class="gx-grid" id="gxGrid"></div>
-      <p class="gx-err" id="gxErr"></p>
-    </div>
+        <div class="simhead reveal"><h3>Exposición en retrato</h3><span class="chip">GÉNERO 1 DE 4</span></div>
+    <div class="panel reveal ag" style="padding:22px 26px"><div class="ag-txt"><h4>Idea clave</h4><p>En un retrato queremos que la persona destaque y que el fondo no moleste.</p><h4>Qué usar</h4><ul><li><b>Apertura:</b> f/2 a f/2.8: el agujero bien abierto, entra mucha luz y el fondo se borra. Con dos o más personas, cierra a f/4 para que todas salgan nítidas.</li><li><b>Velocidad:</b> 1/160 a 1/250 s: una velocidad alta, para que ni un gesto salga movido.</li><li><b>ISO:</b> 100 a 400: con buena luz la foto sale limpia. En interiores oscuros puedes llegar a 800.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> abrir a f/1.4 y enfocar mal. Con tan poco enfoque, la nariz sale nítida y los ojos borrosos. Enfoca siempre el ojo más cercano.</p></div></div>
+
+    <div class="simhead reveal"><h3>Exposición en paisaje</h3><span class="chip">GÉNERO 2 DE 4</span></div>
+    <div class="panel reveal ag" style="padding:22px 26px"><div class="ag-txt"><h4>Idea clave</h4><p>En un paisaje queremos que todo salga nítido, de lo más cercano a lo más lejano.</p><h4>Qué usar</h4><ul><li><b>Apertura:</b> f/8 a f/11: el agujero se cierra y todo se ve nítido.</li><li><b>Velocidad:</b> 1/250 s a mano. Con trípode puedes ir lento (medio segundo o más) para que el agua se vea como seda; con mucha luz necesitarás un filtro ND.</li><li><b>ISO:</b> 100: con trípode no necesitas subirlo, y la foto sale lo más limpia posible.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> cerrar hasta f/22 pensando que sale más nítido. Al revés: la imagen se suaviza por un efecto llamado difracción.</p></div></div>
+
+    <div class="simhead reveal"><h3>Exposición en gastronomía</h3><span class="chip">GÉNERO 3 DE 4</span></div>
+    <div class="panel reveal ag" style="padding:22px 26px"><div class="ag-txt"><h4>Idea clave</h4><p>Con la comida, el plato no se mueve, así que puedes tomarte tu tiempo.</p><h4>Qué usar</h4><ul><li><b>Apertura:</b> f/2.8 a f/4 si miras de lado, para destacar un ingrediente; f/5.6 a f/8 si miras desde arriba.</li><li><b>Velocidad:</b> 1/60 a 1/125 s con trípode. Para congelar vapor o salsa cayendo, 1/500 s o más.</li><li><b>ISO:</b> 100 a 200: con luz de ventana y trípode, los colores salen limpios y sin grano.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> disparar a mano a 1/30 s con luz tenue. El plato sale blando y movido.</p></div></div>
+
+    <div class="simhead reveal"><h3>Exposición en producto</h3><span class="chip">GÉNERO 4 DE 4</span></div>
+    <div class="panel reveal ag" style="padding:22px 26px"><div class="ag-txt"><h4>Idea clave</h4><p>En un producto todo debe verse nítido y las fotos deben salir siempre iguales.</p><h4>Qué usar</h4><ul><li><b>Apertura:</b> f/8 a f/11: la etiqueta y los bordes salen nítidos de punta a punta.</li><li><b>Velocidad:</b> 1/125 s o más lenta, con trípode. Si usas flash, la velocidad máxima de sincronización suele estar entre 1/160 y 1/250 s.</li><li><b>ISO:</b> 100: una foto de catálogo debe estar limpia para poder recortarla y editarla.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> usar f/2.8 para que se vea atractivo. Solo una franja de la etiqueta queda nítida y el cliente lo nota.</p></div></div>
+
 
     <div class="simhead">
       <h3>Pruébalo tú mismo</h3>
@@ -938,34 +1026,44 @@
     <span class="module-num" aria-hidden="true">02</span>
     <p class="eyebrow reveal">F.02 — COMPOSICIÓN</p>
     <h2 class="reveal">Dónde poner las cosas</h2>
-    <p class="module-intro reveal">La composición es decidir qué entra en el cuadro y en qué lugar. Estas son las reglas que más rápido mejoran una foto — y también cuándo tiene sentido romperlas.</p>
-
-    <div class="cardgrid cardgrid-2col">
-      <div class="card reveal">
-        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20L12 4L20 20"/></svg></div>
-        <h3>Líneas guía</h3>
-        <p>Caminos, rieles o bordes que convergen y llevan la mirada hacia el sujeto.</p>
-        <div class="rule"><span><b>Busca:</b> líneas que apuntan hacia el punto de interés</span></div>
-      </div>
-      <div class="card reveal">
-        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg></div>
-        <h3>Encuadre natural</h3>
-        <p>Un elemento en primer plano — un arco, una ventana, ramas — que rodea al sujeto como un marco dentro del marco.</p>
-        <div class="rule"><span><b>Busca:</b> algo que "abraza" al sujeto desde los bordes</span></div>
-      </div>
-      <div class="card reveal">
-        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v18M4 12l5-4v8z"/><path d="M20 12l-5-4v8z"/></svg></div>
-        <h3>Simetría</h3>
-        <p>Equilibrio visual: mitades que se reflejan o patrones que se repiten a ambos lados del cuadro.</p>
-        <div class="rule"><span><b>Busca:</b> un eje central con dos mitades parecidas</span></div>
-      </div>
-      <div class="card reveal">
-        <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="7.5" cy="15.5" r="1.5" fill="currentColor" stroke="none"/></svg></div>
-        <h3>Espacio negativo</h3>
-        <p>El área vacía alrededor del sujeto. No es un descuido: le da lugar para "respirar" y refuerza el contraste y la escala.</p>
-        <div class="rule"><span><b>Busca:</b> mucho vacío, un sujeto pequeño</span></div>
-      </div>
+    <p class="module-intro reveal">Al ordenar objetos en una repisa se decide cuáles se muestran, cuáles se guardan y dónde va cada uno. En una fotografía ocurre lo mismo: la <b>composición</b> es decidir qué entra en el cuadro y en qué lugar lo pones.</p>
+    <p class="module-intro reveal">Una fotografía bien compuesta se entiende con rapidez: la mirada sabe adónde dirigirse y nada distrae. No requiere una cámara costosa, sino observación y algunos recursos sencillos, que se explican a continuación. Más adelante podrás romperlos a propósito, pero primero conviene conocerlos.</p>
+    <div class="gx-grid reveal">
+      <div class="gx-cell"><span class="k">1 · ¿QUÉ QUIERO MOSTRAR?</span><p style="margin-top:6px">Elige un protagonista, la cosa más importante de la foto: tu amigo, el plato, el producto.</p></div>
+      <div class="gx-cell"><span class="k">2 · ¿QUÉ DISTRAE?</span><p style="margin-top:6px">Mira los bordes y el fondo. Si hay algo que no aporta (un cable, un basurero, alguien de paso), muévete o quítalo.</p></div>
+      <div class="gx-cell"><span class="k">3 · ¿DÓNDE LO PONGO?</span><p style="margin-top:6px">Decide el lugar del protagonista en el cuadro: en el centro, a un lado, con espacio alrededor. Para eso sirven las reglas que vienen ahora.</p></div>
     </div>
+    <p class="gx-start reveal" style="margin-top:14px">En este módulo: líneas guía, encuadre natural, simetría, espacio negativo, regla de tercios y ángulos de cámara.</p>
+    <div class="simhead reveal"><h3>Del desorden a una buena foto</h3><span class="chip">toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Misma escena desordenada y ordenada"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><g class="off"><circle cx="30" cy="30" r="16" style="fill:var(--blue-soft);opacity:.7"/><rect x="170" y="14" width="46" height="30" style="fill:var(--line)"/><circle cx="200" cy="110" r="20" style="fill:var(--blue-soft);opacity:.6"/><rect x="96" y="96" width="30" height="40" style="fill:var(--line)"/><polygon points="20,140 50,100 70,140" style="fill:var(--line-soft)"/><circle cx="140" cy="30" r="10" style="fill:var(--amber);opacity:.5"/><rect x="0" y="62" width="40" height="10" style="fill:var(--line)"/><circle cx="62" cy="118" r="9" style="fill:var(--amber)"/></g><g class="ov"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><line x1="80" y1="0" x2="80" y2="150" style="stroke:var(--line-soft)"/><line x1="160" y1="0" x2="160" y2="150" style="stroke:var(--line-soft)"/><line x1="0" y1="50" x2="240" y2="50" style="stroke:var(--line-soft)"/><line x1="0" y1="100" x2="240" y2="100" style="stroke:var(--line-soft)"/><circle cx="160" cy="50" r="17" style="fill:var(--amber)"/></g></svg><button type="button" class="cc-tg" data-a="Ordenar la foto" data-b="Volver al desorden">Ordenar la foto</button></div>
+      <div class="ag-txt"><h4>Mira la diferencia</h4><p>Al principio varios elementos compiten por la atención y el círculo naranja (el protagonista) se pierde. Al ordenar, se elimina lo que distrae y se ubica en un punto fuerte del cuadro, a un tercio del borde. Ahora la mirada va directamente a él.</p><p class="gx-err" style="margin-top:12px"><b>Truco rápido:</b> antes de disparar, pregúntate «¿qué es lo más importante?» y revisa que nada compita con eso.</p></div>
+    </div>
+
+        <div class="simhead reveal"><h3>Líneas guía</h3><span class="chip">CONCEPTO 1 DE 4 · toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Ejemplo de líneas guía"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><line x1="0" y1="72" x2="240" y2="72" style="stroke:var(--line)"/><polygon points="20,150 220,150 126,72 114,72" style="fill:var(--line)"/><line x1="120" y1="150" x2="120" y2="76" stroke-dasharray="7 7" style="stroke:var(--bg-elevated);stroke-width:2"/><circle cx="120" cy="58" r="4" style="fill:var(--text)"/><path d="M115 72 Q116 63 120 62 Q124 63 125 72Z" style="fill:var(--text)"/><circle cx="196" cy="26" r="9" style="fill:var(--amber);opacity:.8"/><g class="ov"><line x1="20" y1="150" x2="113" y2="73" style="stroke:var(--amber);stroke-width:3.5"/><line x1="220" y1="150" x2="127" y2="73" style="stroke:var(--amber);stroke-width:3.5"/><circle cx="120" cy="62" r="13" fill="none" stroke-dasharray="3 3" style="stroke:var(--amber);stroke-width:2"/></g></svg><button type="button" class="cc-tg" data-a="Mostrar las líneas" data-b="Ocultar las líneas">Mostrar las líneas</button></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>Un camino que se va estrechando hacia el fondo lleva la mirada hasta lo que hay al final. Eso es una <b>línea guía</b>: una línea (un camino, un río, una cerca, las vías del tren) que dirige la atención del espectador hacia un punto de la imagen.</p><h4>Ejemplos</h4><ul><li><b>Retrato:</b> Un pasillo o una calle que lleva hasta la persona.</li><li><b>Paisaje:</b> Un río o un sendero que va desde tus pies hasta la montaña.</li><li><b>Gastronomía:</b> Los cubiertos o una línea de salsa que apuntan al plato.</li><li><b>Producto:</b> El borde de una mesa o una repisa que lleva hasta el producto.</li></ul><p class="gx-err" style="margin-top:12px"><b>Busca:</b> líneas que apuntan hacia lo que quieres mostrar.</p><p class="gx-err"><b>Error común:</b> líneas que se escapan hacia una esquina o que cortan la foto sin llevar a ningún lado.</p></div>
+    </div>
+
+    <div class="simhead reveal"><h3>Encuadre natural</h3><span class="chip">CONCEPTO 2 DE 4 · toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Ejemplo de encuadre natural"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><circle cx="50" cy="104" r="40" style="fill:var(--blue-soft);opacity:.5"/><circle cx="190" cy="100" r="46" style="fill:var(--blue-soft);opacity:.4"/><rect y="104" width="240" height="46" style="fill:var(--line-soft)"/><circle cx="120" cy="82" r="6" style="fill:var(--text)"/><path d="M112 112 Q113 92 120 90 Q127 92 128 112Z" style="fill:var(--text)"/><circle cx="196" cy="30" r="9" style="fill:var(--amber);opacity:.8"/><g class="ov"><path fill-rule="evenodd" d="M0 0H240V150H0Z M56 150V74Q56 22 120 22Q184 22 184 74V150Z" style="fill:var(--text);opacity:.88"/></g></svg><button type="button" class="cc-tg" data-a="Poner el marco" data-b="Quitar el marco">Poner el marco</button></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>Es como mirar por una ventana: lo que está alrededor hace un marco y lo que queda adentro se ve más importante. Puede ser una puerta, un arco, una ventana o las ramas de un árbol. Es un marco dentro de la foto, sin necesidad de dibujarlo.</p><h4>Ejemplos</h4><ul><li><b>Retrato:</b> Una persona vista por una ventana o por una puerta.</li><li><b>Paisaje:</b> El mar visto entre las ramas o por un arco de piedra.</li><li><b>Gastronomía:</b> Un plato visto entre dos copas o por la ventanilla de la cocina.</li><li><b>Producto:</b> El producto dentro de un estante o de una caja abierta.</li></ul><p class="gx-err" style="margin-top:12px"><b>Busca:</b> algo en primer plano que abrace al sujeto desde los bordes.</p><p class="gx-err"><b>Error común:</b> un marco tan grande o tan brillante que le roba la atención al sujeto.</p></div>
+    </div>
+
+    <div class="simhead reveal"><h3>Simetría</h3><span class="chip">CONCEPTO 3 DE 4 · toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Ejemplo de simetría"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><rect y="75" width="240" height="75" style="fill:var(--blue-wash)"/><line x1="0" y1="75" x2="240" y2="75" style="stroke:var(--line)"/><g id="ccH"><polygon points="88,45 120,20 152,45" style="fill:var(--text)"/><rect x="96" y="45" width="48" height="30" style="fill:var(--text);opacity:.8"/><rect x="114" y="55" width="12" height="20" style="fill:var(--amber)"/></g><g transform="translate(0,150) scale(1,-1)" style="opacity:.4"><polygon points="88,45 120,20 152,45" style="fill:var(--text)"/><rect x="96" y="45" width="48" height="30" style="fill:var(--text)"/><rect x="114" y="55" width="12" height="20" style="fill:var(--amber)"/></g><g class="ov"><line x1="120" y1="0" x2="120" y2="150" stroke-dasharray="5 4" style="stroke:var(--amber);stroke-width:2"/><rect x="0" y="0" width="120" height="150" style="fill:var(--amber);opacity:.12"/></g></svg><button type="button" class="cc-tg" data-a="Mostrar el eje del espejo" data-b="Ocultar el eje">Mostrar el eje del espejo</button></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>Imagina doblar la foto por la mitad: si un lado es igual al otro, como en un espejo, hay <b>simetría</b>. Se ve tranquila y ordenada, igual que las alas de una mariposa.</p><h4>Ejemplos</h4><ul><li><b>Retrato:</b> Una persona de frente, justo en el centro de un pasillo.</li><li><b>Paisaje:</b> Una montaña reflejada en un lago calmado.</li><li><b>Gastronomía:</b> Un plato redondo en el centro de la mesa, visto desde arriba.</li><li><b>Producto:</b> Un envase de frente y centrado sobre un fondo liso.</li></ul><p class="gx-err" style="margin-top:12px"><b>Busca:</b> un eje en el centro con dos mitades parecidas.</p><p class="gx-err"><b>Error común:</b> que quede un poquito torcida: para que funcione, el centro y el horizonte tienen que estar bien derechos.</p></div>
+    </div>
+
+    <div class="simhead reveal"><h3>Espacio negativo</h3><span class="chip">CONCEPTO 4 DE 4 · toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Ejemplo de espacio negativo"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><rect y="118" width="240" height="32" style="fill:var(--line-soft)"/><g class="off"><g transform="translate(172,118)"><rect x="-2" y="-22" width="4" height="22" style="fill:var(--text)"/><circle cx="0" cy="-30" r="12" style="fill:var(--blue)"/></g></g><g class="ov"><g transform="translate(120,165) scale(3.2)"><rect x="-3" y="-30" width="6" height="30" style="fill:var(--text)"/><circle cx="0" cy="-40" r="16" style="fill:var(--blue)"/></g></g></svg><button type="button" class="cc-tg" data-a="Acercar al sujeto (sin espacio)" data-b="Volver a dejar espacio">Acercar al sujeto (sin espacio)</button></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>Es la parte «vacía» de la foto, como el cielo o una pared lisa. No es un descuido: da espacio visual al sujeto y hace que destaque, igual que un objeto aislado en una repisa se nota más que entre muchos otros.</p><h4>Ejemplos</h4><ul><li><b>Retrato:</b> Una persona pequeña frente a una pared lisa, con lugar para escribir un título.</li><li><b>Paisaje:</b> Un árbol aislado en un campo amplio.</li><li><b>Gastronomía:</b> Un solo postre sobre una mesa limpia, con espacio para el nombre del restaurante.</li><li><b>Producto:</b> Un frasco con mucho fondo vacío al lado, para poner el precio o la oferta.</li></ul><p class="gx-err" style="margin-top:12px"><b>Busca:</b> mucho vacío y un sujeto pequeño pero bien claro.</p><p class="gx-err"><b>Error común:</b> dejar un vacío sin motivo: tiene que haber un sujeto claro que lo justifique.</p></div>
+    </div>
+
 
     <div class="simhead">
       <h3>Regla de tercios</h3>
@@ -1004,12 +1102,28 @@
       <p><b>Activa la cuadrícula en tu cámara o celular.</b> Casi todos la traen en los ajustes de cámara. Pon el horizonte sobre una línea, no en el medio, y los ojos del retratado en el tercio superior.</p>
     </div>
   
-    <div class="simhead reveal"><h3>Composición en cada tipo de foto</h3><span class="chip">EJEMPLOS · elige un género</span></div>
-    <p class="sub-intro">Las mismas reglas se aplican distinto según lo que fotografíes. Estos son los recursos que más rinden en cada caso.</p>
-    <div class="panel reveal ag">
-      <div class="ag-btns" id="cxBtns"></div>
-      <div class="gx-grid" id="cxGrid"></div>
-      <p class="gx-err" id="cxErr"></p>
+        <div class="simhead reveal"><h3>Composición en retrato</h3><span class="chip">GÉNERO 1 DE 4 · toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Error común y versión corregida en retrato"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><g class="off"><rect x="130" y="0" width="8" height="150" style="fill:var(--line)"/><circle cx="135" cy="40" r="14" style="fill:var(--text)"/><path d="M105 150 Q108 62 135 56 Q162 62 165 150Z" style="fill:var(--text)"/></g><g class="ov"><line x1="80" y1="0" x2="80" y2="150" style="stroke:var(--line-soft)"/><line x1="160" y1="0" x2="160" y2="150" style="stroke:var(--line-soft)"/><line x1="0" y1="50" x2="240" y2="50" style="stroke:var(--line-soft)"/><line x1="0" y1="100" x2="240" y2="100" style="stroke:var(--line-soft)"/><circle cx="100" cy="50" r="12" style="fill:var(--text)"/><path d="M78 150 Q80 78 100 70 Q120 78 122 150Z" style="fill:var(--text)"/><line x1="122" y1="50" x2="172" y2="50" style="stroke:var(--amber);stroke-width:3"/><polygon points="172,44 184,50 172,56" style="fill:var(--amber)"/></g></svg><button type="button" class="cc-tg" data-a="Ver cómo se corrige" data-b="Ver el error">Ver cómo se corrige</button><p class="gx-start" style="margin:8px 0 0">Ahora ves el error común. Toca el botón para ver la foto bien compuesta.</p></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>Cuando fotografías a una persona, ella es la protagonista. Tu trabajo es ayudarla a verse bien y que nada la distraiga.</p><h4>Tres trucos que funcionan</h4><ul><li><b>Tercios y mirada:</b> Imagina el cuadro dividido en tres partes. Pon los ojos en la línea de arriba y deja un poco más de espacio hacia donde mira la persona; así parece que tiene lugar para mirar.</li><li><b>Encuadre natural:</b> Usa una ventana, una puerta o las hojas de un árbol como marco: la persona queda «adentro» y se ve más importante. Sirve mucho para retratos en su cocina, su taller o su local.</li><li><b>Espacio negativo:</b> Deja una pared lisa al lado de la cara. Así hay lugar para escribir un título o el nombre de la marca.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> Cortar a la persona justo en las articulaciones (tobillos, rodillas, codos) o dejar un poste o una rama que parece salirle de la cabeza. Mejor corta a mitad de muslo o de antebrazo, y revisa el fondo antes de disparar.</p></div>
+    </div>
+
+    <div class="simhead reveal"><h3>Composición en paisaje</h3><span class="chip">GÉNERO 2 DE 4 · toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Error común y versión corregida en paisaje"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><g class="off"><g transform="rotate(6 120 75)"><rect x="-30" y="75" width="300" height="100" style="fill:var(--line-soft)"/><line x1="-30" y1="75" x2="270" y2="75" style="stroke:var(--text-faint)"/></g><circle cx="52" cy="32" r="12" style="fill:var(--amber)"/><polygon points="140,78 168,40 196,78" style="fill:var(--blue-soft);opacity:.7"/></g><g class="ov"><rect y="100" width="240" height="50" style="fill:var(--line-soft)"/><line x1="0" y1="100" x2="240" y2="100" style="stroke:var(--amber);stroke-width:2"/><polygon points="30,100 90,52 150,100" style="fill:var(--blue-soft);opacity:.6"/><polygon points="110,100 170,40 230,100" style="fill:var(--blue-soft);opacity:.85"/><polygon points="100,150 142,150 126,100 116,100" style="fill:var(--line)"/><circle cx="30" cy="134" r="5" style="fill:var(--amber)"/><circle cx="48" cy="142" r="4" style="fill:var(--amber)"/><circle cx="200" cy="138" r="5" style="fill:var(--amber)"/></g></svg><button type="button" class="cc-tg" data-a="Ver cómo se corrige" data-b="Ver el error">Ver cómo se corrige</button><p class="gx-start" style="margin:8px 0 0">Ahora ves el error común. Toca el botón para ver la foto bien compuesta.</p></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>Un paisaje es enorme, y la cámara solo puede mostrar un pedacito. Tu trabajo es elegir qué pedacito mostrar y cómo guiar la mirada por él.</p><h4>Tres trucos que funcionan</h4><ul><li><b>Líneas guía:</b> Un camino, un río o una cerca llevan la mirada desde el primer plano hasta la montaña.</li><li><b>Tercios y horizonte:</b> Si lo más atractivo es el cielo, deja que ocupe dos partes y pon el horizonte abajo. Si lo atractivo es el suelo, al revés. Evita partir la foto justo por la mitad.</li><li><b>Primer plano:</b> Pon una piedra, unas flores o unas ramas cerca de ti. Así la foto tiene capas: primer plano, plano medio y fondo.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> El horizonte torcido, o dos elementos importantes que compiten por la atención. Activa la cuadrícula de tu cámara y elige un solo protagonista.</p></div>
+    </div>
+
+    <div class="simhead reveal"><h3>Composición en gastronomía</h3><span class="chip">GÉNERO 3 DE 4 · toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Error común y versión corregida en gastronomía"><rect width="240" height="150" style="fill:var(--line-soft)"/><g class="off"><rect x="26" y="16" width="22" height="14" style="fill:var(--blue-soft)"/><circle cx="204" cy="28" r="9" style="fill:var(--blue)"/><rect x="188" y="112" width="32" height="10" style="fill:var(--text-faint)"/><circle cx="38" cy="120" r="11" style="fill:var(--amber);opacity:.6"/><polygon points="196,60 214,86 190,86" style="fill:var(--line)"/><circle cx="120" cy="75" r="34" style="fill:var(--bg-elevated);stroke:var(--line)"/><circle cx="120" cy="75" r="14" style="fill:var(--amber)"/></g><g class="ov"><circle cx="80" cy="75" r="34" style="fill:var(--bg-elevated);stroke:var(--line)"/><circle cx="80" cy="75" r="14" style="fill:var(--amber)"/><circle cx="118" cy="30" r="10" style="fill:var(--blue-soft)"/><line x1="176" y1="132" x2="118" y2="100" style="stroke:var(--text);stroke-width:3;stroke-linecap:round"/><rect x="150" y="30" width="76" height="62" rx="4" fill="none" stroke-dasharray="4 4" style="stroke:var(--amber);stroke-width:2"/><text x="188" y="64" text-anchor="middle" font-size="10" style="fill:var(--amber);font-family:var(--font-mono)">menú</text></g></svg><button type="button" class="cc-tg" data-a="Ver cómo se corrige" data-b="Ver el error">Ver cómo se corrige</button><p class="gx-start" style="margin:8px 0 0">Ahora ves el error común. Toca el botón para ver la foto bien compuesta.</p></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>En comida, la protagonista es el plato. El objetivo es que resulte apetitoso, y para eso la mesa debe verse ordenada.</p><h4>Tres trucos que funcionan</h4><ul><li><b>Orden en cenital:</b> Cuando miras desde arriba, junta las cosas de a tres o de a cinco. Repite colores y deja espacios vacíos para que no se vea apretado.</li><li><b>Diagonales y tercios:</b> Pon el plato en un tercio del cuadro y haz que los cubiertos o una servilleta apunten hacia él en diagonal, como flechas.</li><li><b>Espacio negativo:</b> Deja una parte de la mesa limpia, como madera o mármol, para poner el menú, el precio o el logo del restaurante.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> Poner el plato justo en el centro con la mesa llena de cosas al azar. Elige un protagonista y quita lo que no sirve.</p></div>
+    </div>
+
+    <div class="simhead reveal"><h3>Composición en producto</h3><span class="chip">GÉNERO 4 DE 4 · toca el botón</span></div>
+    <div class="panel reveal ag cc">
+      <div class="cc-fig"><svg viewBox="0 0 240 150" role="img" aria-label="Error común y versión corregida en producto"><rect width="240" height="150" style="fill:var(--bg-elevated)"/><g class="off"><circle cx="40" cy="40" r="24" style="fill:var(--blue-soft);opacity:.6"/><rect x="172" y="16" width="52" height="40" style="fill:var(--line)"/><circle cx="204" cy="112" r="26" style="fill:var(--amber);opacity:.35"/><polygon points="20,140 52,104 72,140" style="fill:var(--line-soft)"/><rect x="114" y="34" width="12" height="20" style="fill:var(--text)"/><rect x="100" y="52" width="40" height="70" rx="8" style="fill:var(--text)"/><rect x="104" y="76" width="32" height="26" style="fill:var(--amber)"/><rect x="108" y="56" width="6" height="56" style="fill:#fff;opacity:.85"/></g><g class="ov"><ellipse cx="120" cy="126" rx="30" ry="4" style="fill:var(--line)"/><rect x="114" y="34" width="12" height="20" style="fill:var(--text)"/><rect x="100" y="52" width="40" height="70" rx="8" style="fill:var(--text)"/><rect x="104" y="76" width="32" height="26" style="fill:var(--amber)"/><rect x="168" y="40" width="58" height="62" rx="4" fill="none" stroke-dasharray="4 4" style="stroke:var(--amber);stroke-width:2"/><text x="197" y="74" text-anchor="middle" font-size="10" style="fill:var(--amber);font-family:var(--font-mono)">oferta</text></g></svg><button type="button" class="cc-tg" data-a="Ver cómo se corrige" data-b="Ver el error">Ver cómo se corrige</button><p class="gx-start" style="margin:8px 0 0">Ahora ves el error común. Toca el botón para ver la foto bien compuesta.</p></div>
+      <div class="ag-txt"><h4>Idea clave</h4><p>Aquí el protagonista es el producto, y la gente tiene que ver bien cómo es antes de comprarlo. Por eso todo debe verse claro y limpio.</p><h4>Tres trucos que funcionan</h4><ul><li><b>Simetría y centro:</b> Un producto de frente y en el centro, sobre un fondo liso, se ve firme y es fácil de recortar para un catálogo.</li><li><b>Espacio negativo:</b> Deja un lado vacío para el texto de la oferta, como en un anuncio o una historia de redes.</li><li><b>Escala y contexto:</b> Una mesa con líneas, o una mano o una planta al lado, le dan tamaño al producto y ayudan a entender para qué sirve.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> Un fondo cargado que compite con el producto, y reflejos del propio fotógrafo en las superficies brillantes. Limpia el fondo y revisa los brillos.</p></div>
     </div>
 
     <div class="simhead reveal"><h3>Ángulos de cámara</h3><span class="chip">INTERACTIVO · elige un ángulo</span></div>
@@ -1031,7 +1145,8 @@
     <span class="module-num" aria-hidden="true">03</span>
     <p class="eyebrow reveal">F.03 — LUZ</p>
     <h2 class="reveal">La luz manda</h2>
-    <p class="module-intro reveal">La cámara solo registra luz. De dónde viene y qué tan alta o rasante es determina el volumen, las sombras y el ánimo de la foto — más que cualquier ajuste de exposición.</p>
+    <p class="module-intro reveal">Una cámara no ve objetos: solo guarda luz. Por eso la misma persona puede verse amable, misteriosa o plana, según de dónde provenga la luz. Con una linterna se comprueba: de frente, el rostro se ve plano; de lado, aparecen sombras que le dan forma.</p>
+    <p class="module-intro reveal">De la luz puedes cambiar tres cosas: <b>de dónde viene</b> (la dirección), <b>cómo se siente</b> (dura o suave) y <b>de qué color es</b> (cálida o fría). Eso es lo que vamos a aprender ahora, y verás que cambiar una sola de ellas transforma la foto.</p>
 
     <div class="simhead"><h3>Dirección de la luz</h3><span class="chip">SIMULADOR · arrastra el sol</span></div>
     <p class="sub-intro">Vista desde arriba. Cerca del centro = luz alta, tipo mediodía. Cerca del borde = luz rasante, tipo hora dorada.</p>
@@ -1110,13 +1225,18 @@
       </div>
     </div>
 
-    <div class="simhead reveal"><h3>La luz en cada tipo de foto</h3><span class="chip">EJEMPLOS · elige un género</span></div>
-    <p class="sub-intro">Dirección, calidad y color se combinan distinto según lo que fotografíes. Estos son los recursos que más rinden en cada caso.</p>
-    <div class="panel reveal ag">
-      <div class="ag-btns" id="lxBtns"></div>
-      <div class="gx-grid" id="lxGrid"></div>
-      <p class="gx-err" id="lxErr"></p>
-    </div>
+        <div class="simhead reveal"><h3>Luz en retrato</h3><span class="chip">GÉNERO 1 DE 4</span></div>
+    <div class="panel reveal ag" style="padding:22px 26px"><div class="ag-txt"><h4>Idea clave</h4><p>En un retrato, la luz decide si la cara se ve plana, con volumen o dura.</p><h4>Qué usar</h4><ul><li><b>Dirección:</b> Luz de lado, a unos 45° y un poco arriba, da volumen. De frente se ve plana; muy arriba o muy abajo hace sombras raras.</li><li><b>Calidad:</b> Suave: una ventana grande, la sombra de un edificio o un difusor. Favorece la piel.</li><li><b>Color:</b> Usa una sola luz sobre la cara. Si mezclas ventana y lámpara cálida, la piel sale de dos colores.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> sol directo del mediodía sobre el rostro: sombras duras en ojos, nariz y barbilla. Muévete a la sombra o usa un difusor.</p></div></div>
+
+    <div class="simhead reveal"><h3>Luz en paisaje</h3><span class="chip">GÉNERO 2 DE 4</span></div>
+    <div class="panel reveal ag" style="padding:22px 26px"><div class="ag-txt"><h4>Idea clave</h4><p>En un paisaje, la hora del día cambia por completo cómo se ve el mismo lugar.</p><h4>Qué usar</h4><ul><li><b>Dirección:</b> La luz baja y de lado (amanecer o atardecer) marca texturas. De frente aplana; a contraluz hace siluetas.</li><li><b>Calidad:</b> Dura al mediodía y suave con nubes. Un cielo nublado conviene para bosques y cascadas.</li><li><b>Color:</b> En la hora dorada, el balance de blancos automático puede enfriar los colores. Prueba «Luz de día» o «Nublado».</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> fotografiar a las 12 del día con sol directo: cielo quemado, sombras muy oscuras y colores planos.</p></div></div>
+
+    <div class="simhead reveal"><h3>Luz en gastronomía</h3><span class="chip">GÉNERO 3 DE 4</span></div>
+    <div class="panel reveal ag" style="padding:22px 26px"><div class="ag-txt"><h4>Idea clave</h4><p>En gastronomía, la luz determina si el plato se ve apetitoso o plano.</p><h4>Qué usar</h4><ul><li><b>Dirección:</b> Contraluz o luz lateral desde atrás: resalta texturas, brillos y vapor. De frente aplana el plato.</li><li><b>Calidad:</b> Suave: ventana con cortina o un difusor. Una cartulina blanca al lado opuesto aclara las sombras.</li><li><b>Color:</b> Apaga las luces cálidas del techo si usas ventana. Al mezclar luces, la comida se ve naranja.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> usar el flash del celular de frente: brillos duros, sombras pegadas al plato y colores lavados.</p></div></div>
+
+    <div class="simhead reveal"><h3>Luz en producto</h3><span class="chip">GÉNERO 4 DE 4</span></div>
+    <div class="panel reveal ag" style="padding:22px 26px"><div class="ag-txt"><h4>Idea clave</h4><p>En un producto, la luz tiene que mostrar su forma y su color real.</p><h4>Qué usar</h4><ul><li><b>Dirección:</b> Una luz grande a un lado da forma, y un rebote marca el borde. En superficies brillantes, pon la luz a un lado para evitar reflejos.</li><li><b>Calidad:</b> Muy suave para metal y vidrio. Más dura para resaltar la textura del cuero o la madera.</li><li><b>Color:</b> Fija el balance de blancos y usa una tarjeta gris de referencia, para que el color sea fiel al producto real.</li></ul><p class="gx-err" style="margin-top:12px"><b>Error común:</b> que el color cambie entre fotos del mismo catálogo: el cliente recibe algo distinto de lo que vio.</p></div></div>
+
   </section>
 
   <!-- ============ MÓDULO 4: REPASO ============ -->
@@ -1840,9 +1960,48 @@
 
   renderFQ();
 
-  var modes=[["Auto","Tú: nada. Cámara: todo.","Para recuerdos rápidos."],["P","Tú: ISO y compensación. Cámara: apertura y velocidad.","Para aprender sin presión."],["Av / A","Tú: apertura. Cámara: velocidad.","Retrato con fondo borroso."],["Tv / S","Tú: velocidad. Cámara: apertura.","Deporte o agua en movimiento."],["M","Tú: todo.","Estudio, flash, control total."]];
-  var mb=document.getElementById('modeBtns'),mi=document.getElementById('modeInfo');
-  modes.forEach(function(m,i){var b=document.createElement('button');b.className='btn';b.textContent=m[0];b.onclick=function(){Array.prototype.forEach.call(mb.children,function(x){x.classList.remove('on')});b.classList.add('on');mi.textContent=m[1]+' '+m[2]};mb.appendChild(b);if(i===0)b.onclick()});
+  var AP=["f/1.8","f/2.8","f/4","f/5.6","f/8","f/11","f/16"], SP=["1/1000","1/250","1/60","1/30","1/15","1/8","1/2"], IS=["100","400","1600","6400"];
+  var BL=[5,3.5,2.2,1.2,0.6,0.2,0], TR=[0,0,6,14,26,40,70], GR=[0,0.1,0.25,0.45];
+  var MD=[
+   {n:"Auto",u:[0,0,0],d:[2,1,0],tu:"Solo encuadras y enfocas.",ca:"La apertura, la velocidad, el ISO, el balance de blancos y, muchas veces, el flash.",cu:"Para recuerdos rápidos o cuando le pasas la cámara a otra persona.",
+    ex:[["Retrato","Una foto espontánea en una fiesta, sin tiempo para ajustar."],["Paisaje","Una captura rápida desde un mirador."],["Gastronomía","Mejor evitarlo: la cámara promedia la luz y el plato sale plano."],["Producto","Mejor evitarlo: cada foto sale con una exposición distinta."]],
+    w:"Puede disparar el flash justo cuando no lo quieres."},
+   {n:"P",u:[0,0,1],d:[3,1,0],tu:"El ISO y la compensación de exposición (aclarar u oscurecer la foto). Con la rueda también puedes cambiar entre combinaciones equivalentes de apertura y velocidad.",ca:"La apertura y la velocidad.",cu:"Para caminar, hacer foto de calle o aprender, con rapidez pero pudiendo aclarar u oscurecer.",
+    ex:[["Retrato","Un retrato de calle sin perder el momento."],["Paisaje","Una caminata en la que la luz cambia todo el rato."],["Gastronomía","Una foto rápida en un restaurante con luz suave, ajustando la compensación."],["Producto","Poco usado: mejor Av o M."]],
+    w:"La cámara elige combinaciones promedio: no decide por ti el fondo ni el movimiento."},
+   {n:"Av / A",u:[1,0,1],d:[1,1,0],tu:"La apertura, el ISO y la compensación.",ca:"La velocidad: la ajusta sola para que la foto salga bien expuesta.",cu:"Cuando lo que importa es el fondo: desenfocado o nítido.",
+    ex:[["Retrato","f/2 a f/2.8 para separar a la persona del fondo."],["Paisaje","f/8 a f/11 para que todo salga nítido."],["Gastronomía","f/2.8 a f/4 con el foco en un ingrediente."],["Producto","f/8 para que la etiqueta se vea nítida."]],
+    w:"Con poca luz la cámara baja la velocidad y la foto puede salir movida. Vigila ese número; poner el ISO en automático ayuda."},
+   {n:"Tv / S",u:[0,1,1],d:[2,1,0],tu:"La velocidad y el ISO.",ca:"La apertura.",cu:"Cuando importa el movimiento: congelarlo o dejar estela.",
+    ex:[["Retrato","Un niño corriendo, a 1/500 o más rápido."],["Paisaje","Una cascada sedosa con trípode, a 1/2 s o más lento."],["Gastronomía","Salsa o líquido cayendo, a 1/500 o más rápido."],["Producto","Una bebida salpicando: la velocidad alta congela las gotas."]],
+    w:"Si no hay luz suficiente, la cámara no puede abrir más el diafragma y la foto sale oscura. Sube el ISO."},
+   {n:"M",u:[1,1,1],d:[2,1,0],tu:"La apertura, la velocidad y el ISO.",ca:"Nada: solo te muestra el fotómetro, la escala de exposición.",cu:"Con luz controlada (estudio, flash), en series de fotos iguales y en escenas difíciles como el contraluz o la noche.",
+    ex:[["Retrato","Estudio con flash, donde la luz no cambia."],["Paisaje","Cielo estrellado o larga exposición con trípode."],["Gastronomía","Sesión con trípode y luz de ventana, repitiendo los mismos valores."],["Producto","Catálogo en el que todas las fotos deben salir con la misma exposición."]],
+    w:"Es lento cuando la luz cambia rápido. En eventos, muchos fotógrafos usan M con ISO automático."}
+  ];
+  var mb=document.getElementById('modeBtns'), mdCur=0, apS=document.getElementById("mdAp"), spS=document.getElementById("mdSp"), isS=document.getElementById("mdIs");
+  function mdApply(){
+    var m=MD[mdCur], ap=+apS.value, sp=+spS.value, is=+isS.value;
+    if(!m.u[0]&&!m.u[1]){ ap=m.d[0]; sp=m.d[1]; }
+    else if(m.u[0]&&!m.u[1]){ sp=[0,1,1,2,3,4,5][ap]; }
+    else if(!m.u[0]&&m.u[1]){ ap=[0,2,3,4,5,6,6][sp]; }
+    if(!m.u[2]) is=m.d[2];
+    apS.value=ap; spS.value=sp; isS.value=is;
+    apS.disabled=!m.u[0]; spS.disabled=!m.u[1]; isS.disabled=!m.u[2];
+    [["mdApV",AP[ap],m.u[0]],["mdSpV",SP[sp],m.u[1]],["mdIsV",IS[is],m.u[2]]].forEach(function(r){ var e=document.getElementById(r[0]); e.textContent=r[1]+(r[2]?" · tú":" · cámara"); e.className="v"+(r[2]?" u":""); });
+    document.getElementById("mdBlurN").setAttribute("stdDeviation",BL[ap]);
+    var L=TR[sp], g="";
+    for(var k=5;k>=1;k--){ g+='<circle cx="'+(190-k*L/5)+'" cy="76" r="7" style="fill:var(--amber);opacity:'+(L?(0.5-k*0.07):0)+'"/>'; }
+    g+='<circle cx="190" cy="76" r="7" style="fill:var(--amber)"/>';
+    document.getElementById("mdBall").innerHTML=g;
+    document.getElementById("mdGrain").style.opacity=GR[is];
+  }
+  function mdText(){
+    var m=MD[mdCur];
+    document.getElementById("mdTxt").innerHTML='<p><b>Tú controlas:</b> '+m.tu+'</p><p><b>La cámara decide:</b> '+m.ca+'</p><p><b>Úsalo cuando:</b> '+m.cu+'</p><ul>'+m.ex.map(function(x){return '<li><b>'+x[0]+':</b> '+x[1]+'</li>';}).join("")+'</ul><p class="gx-err" style="margin:0"><b>Cuidado:</b> '+m.w+'</p>';
+  }
+  MD.forEach(function(m,i){var b=document.createElement('button');b.className='btn';b.textContent=m.n;b.onclick=function(){Array.prototype.forEach.call(mb.children,function(x){x.classList.remove('on')});b.classList.add('on');mdCur=i;mdText();mdApply()};mb.appendChild(b);if(i===0)b.onclick()});
+  [apS,spS,isS].forEach(function(e){ e.addEventListener("input",mdApply); });
   var cs=document.getElementById('cropSel'),cm=document.getElementById('cropMm'),cr=document.getElementById('cropRes');
   function crop(){var f=parseFloat(cs.value),m=parseFloat(cm.value)||0;cr.textContent=m+' mm × '+String(f).replace('.',',')+' = '+Math.round(m*f)+' mm equivalentes'}
   cs.onchange=crop;cm.oninput=crop;crop();
@@ -1903,7 +2062,7 @@
 
   var M=[
    ["Más megapíxeles = mejores fotos","Casi nunca. Los megapíxeles solo definen el tamaño del archivo. <b>Entre 12 y 24 MP sobra</b> para redes, pantallas y impresos grandes vistos a distancia normal. Lo que cambia la calidad es la luz, el enfoque y el tamaño del sensor. <b>Ejemplo:</b> un plato bien iluminado con ventana a 12 MP se ve mejor que uno mal iluminado a 50 MP."],
-   ["La mejor luz siempre es la hora dorada","Es bonita, pero no es la única. Comida y producto suelen verse mejor con <b>luz suave de ventana</b> (sin sol directo). El retrato funciona muy bien en <b>sombra abierta</b> o con cielo nublado, que regalan una luz pareja. <b>Ejemplo:</b> una sesión de brunch a las 11 am junto a una ventana grande."],
+   ["La mejor luz siempre es la hora dorada","Es favorecedora, pero no es la única. Comida y producto suelen verse mejor con <b>luz suave de ventana</b> (sin sol directo). El retrato funciona muy bien en <b>sombra abierta</b> o con cielo nublado, que regalan una luz pareja. <b>Ejemplo:</b> una sesión de brunch a las 11 am junto a una ventana grande."],
    ["Un ISO alto arruina la foto","Lo que arruina la foto es la <b>subexposición</b>. Una imagen bien expuesta a ISO 3200 suele verse mejor que una oscura a ISO 400 que levantas en edición. <b>Ejemplo:</b> en un evento con poca luz, sube el ISO y congela el movimiento; una foto movida no se arregla."],
    ["Siempre hay que aplicar la regla de tercios","Es una guía, no una ley. La <b>simetría y el centro</b> también funcionan: arquitectura, retrato frontal, productos sobre fondo limpio, platos en cenital. <b>Ejemplo:</b> una pizza cenital centrada se ve más fuerte que una desplazada a un tercio."],
    ["Eso se arregla en edición","La edición mejora, pero <b>no rescata lo que no se capturó</b>: un enfoque fallado, un movimiento borroso o unas altas luces totalmente quemadas no se recuperan. Disparar en RAW da margen, no milagros. <b>Ejemplo:</b> el cielo blanco de un paisaje sobreexpuesto no vuelve."],
@@ -1921,79 +2080,6 @@
 </script>
 <script>
 (function(){
-  var G=[
-   {n:"Retrato",s:"la apertura: define cuánto se separa la persona del fondo.",
-    a:["f/2 – f/2.8","Con un 85 mm separa a la persona del fondo y suaviza el entorno. Con dos o más personas, cierra a f/4 para que todas salgan nítidas."],
-    v:["1/160 – 1/250 s","Alcanza para congelar un parpadeo o un gesto sin que se note movimiento."],
-    i:["100 – 400","La luz de ventana o de estudio rinde sin ruido. Sube a 800 en interiores oscuros."],
-    e:"Abrir a f/1.4 y enfocar mal. Con tan poca profundidad, la nariz nítida y los ojos borrosos arruinan el retrato. Enfoca al ojo más cercano."},
-   {n:"Paisaje",s:"la apertura y el ISO bajo, sobre trípode si puedes.",
-    a:["f/8 – f/11","Muchos lentes rinden más nítidos en este rango y la profundidad de campo cubre desde el primer plano hasta el fondo."],
-    v:["1/250 s a mano · 1/2 s o más con trípode","Con trípode puedes alargar el obturador para que el agua o las nubes se vean sedosas. Con mucha luz necesitarás un filtro ND."],
-    i:["100","Con trípode no necesitas subirlo: obtienes la máxima calidad."],
-    e:"Cerrar a f/22 pensando que así sale todo más nítido. La difracción resta nitidez en vez de ganarla."},
-   {n:"Gastronomía",s:"la apertura y un trípode: la comida no se mueve, así que puedes ganar luz alargando el tiempo.",
-    a:["f/2.8 – f/4 en ángulo bajo · f/5.6 – f/8 en cenital","A 45° o de frente conviene un foco en lo principal con fondo suave. En cenital todo está más o menos en el mismo plano, así que puedes cerrar un poco más."],
-    v:["1/60 – 1/125 s · 1/500 s o más para vapor o salsa","Con trípode puedes bajar hasta 1/15 s. Para congelar vapor, salsa o líquidos cayendo, sube la velocidad."],
-    i:["100 – 200","Con luz de ventana y trípode mantienes colores limpios y sin grano."],
-    e:"Disparar a mano a 1/30 s con luz de ventana tenue. La foto sale levemente movida y el plato se ve blando."},
-   {n:"Producto",s:"la apertura: la etiqueta y los bordes deben verse nítidos de punta a punta.",
-    a:["f/8 – f/11","Etiqueta, bordes y textura salen nítidos. En productos con mucha profundidad puedes unir varias tomas enfocadas a distintas distancias (focus stacking)."],
-    v:["1/125 s o más lenta con trípode","El producto está quieto. Si usas flash, la velocidad de sincronización (suele estar entre 1/160 y 1/250 s) limita el obturador."],
-    i:["100","Una foto de catálogo debe estar limpia para recortarla y editarla."],
-    e:"Usar f/2.8 para que se vea bonito. Solo una franja de la etiqueta queda nítida y el cliente lo nota."}
-  ];
-  var bx=document.getElementById("gxBtns"), gr=document.getElementById("gxGrid");
-  function show(i){
-    var d=G[i];
-    document.getElementById("gxStart").innerHTML="<b>Empieza por</b> "+d.s;
-    gr.innerHTML=[["APERTURA",d.a],["VELOCIDAD",d.v],["ISO",d.i]].map(function(c){
-      return '<div class="gx-cell"><span class="k">'+c[0]+'</span><div class="v">'+c[1][0]+'</div><p>'+c[1][1]+'</p></div>';
-    }).join("");
-    document.getElementById("gxErr").innerHTML="<b>Error común:</b> "+d.e;
-    Array.prototype.forEach.call(bx.children,function(b,k){ b.classList.toggle("on",k===i); });
-  }
-  G.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){show(i);}); bx.appendChild(b); });
-  show(0);
-})();
-</script>
-<script>
-(function(){
-  var C=[
-   {n:"Retrato",
-    r:[["Tercios y mirada","Pon los ojos en el tercio superior y deja un poco más de espacio hacia donde mira la persona. Así la foto no se siente apretada."],
-       ["Encuadre natural","Una ventana, una puerta o el follaje enmarcan a la persona y la separan del fondo. Funciona en retratos ambientales (cocina, taller, local)."],
-       ["Espacio negativo","Una pared limpia junto al rostro deja lugar para texto en portadas, banners y redes de la marca."]],
-    e:"Cortar a la persona en las articulaciones (tobillos, rodillas, codos) o dejar un poste o rama que parece salir de su cabeza. Recorta a mitad de muslo o de antebrazo y revisa el fondo antes de disparar."},
-   {n:"Paisaje",
-    r:[["Líneas guía","Un camino, un río o una cerca llevan la mirada del primer plano al horizonte y dan sensación de profundidad."],
-       ["Tercios y horizonte","Horizonte en el tercio inferior si el cielo es lo mejor de la escena; en el superior si lo es el suelo (reflejos, flores). Evita partirlo por la mitad sin intención."],
-       ["Primer plano","Una roca, flores o ramas cerca de la cámara dan escala y capas: primer plano, plano medio y fondo."]],
-    e:"Horizonte torcido o varios puntos de interés compitiendo. Activa la cuadrícula y elige un protagonista."},
-   {n:"Gastronomía",
-    r:[["Orden en cenital","En flat lay, agrupa elementos en números impares (3 o 5), repite colores o formas y deja espacios vacíos para que no se vea saturado."],
-       ["Diagonales y tercios","A 45°, ubica el plato en un tercio y haz que cubiertos, servilletas o ingredientes apunten hacia él en diagonal."],
-       ["Espacio negativo","Un fondo limpio de madera, mármol o tela deja lugar para el menú, el precio o el logo del restaurante."]],
-    e:"Poner el plato exactamente al centro con la mesa llena de objetos al azar. Elige un protagonista y quita lo que no suma."},
-   {n:"Producto",
-    r:[["Simetría y centro","Un producto frontal y centrado sobre fondo limpio se ve sólido y se recorta fácil para catálogo."],
-       ["Espacio negativo","Deja espacio a un lado para el texto de la campaña o la oferta (banners, historias, anuncios)."],
-       ["Escala y contexto","Una superficie con líneas (mesa, repisa) o un objeto de referencia (una mano, una planta) dan escala y sensación de uso."]],
-    e:"Un fondo cargado que compite con el producto y reflejos del propio fotógrafo en superficies brillantes. Limpia el fondo y revisa los brillos."}
-  ];
-  var bx=document.getElementById("cxBtns"), gr=document.getElementById("cxGrid");
-  function show(i){
-    var d=C[i];
-    gr.innerHTML=d.r.map(function(c){ return '<div class="gx-cell"><span class="k">'+c[0].toUpperCase()+'</span><p style="margin-top:6px">'+c[1]+'</p></div>'; }).join("");
-    document.getElementById("cxErr").innerHTML="<b>Error común:</b> "+d.e;
-    Array.prototype.forEach.call(bx.children,function(b,k){ b.classList.toggle("on",k===i); });
-  }
-  C.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){show(i);}); bx.appendChild(b); });
-  show(0);
-})();
-</script>
-<script>
-(function(){
   var r=document.getElementById("softR"), sh=document.getElementById("softSh"), tx=document.getElementById("softTxt");
   function soft(){
     var v=+r.value;
@@ -2004,72 +2090,6 @@
   }
   r.addEventListener("input",soft); soft();
 
-  var L=[
-   {n:"Retrato",
-    r:[["Dirección","Luz lateral a unos 45° (de un lado y un poco arriba) da volumen al rostro. De frente se ve plana; muy desde arriba o desde abajo crea sombras duras en ojos o barbilla."],
-       ["Calidad","Suave: una ventana grande, sombra abierta o un difusor. Favorece la piel y atenúa las imperfecciones."],
-       ["Color","Usa una sola fuente en el rostro. Si mezclas ventana (fría) con una lámpara cálida, la piel sale con dos tonos."]],
-    e:"Sol directo del mediodía sobre el rostro: sombras duras en ojos, nariz y barbilla. Muévete a la sombra o usa un difusor."},
-   {n:"Paisaje",
-    r:[["Dirección","La luz lateral y baja (amanecer, atardecer) marca texturas y relieves. La de frente aplana; el contraluz da siluetas y bordes brillantes."],
-       ["Calidad","Dura al mediodía y suave con nubes. Un cielo nublado conviene para bosques y cascadas porque evita contrastes extremos."],
-       ["Color","En hora dorada y hora azul, el balance de blancos automático tiende a neutralizar la calidez. Prueba “Luz de día” o “Nublado” para conservarla."]],
-    e:"Fotografiar a las 12 del día con sol directo: cielo quemado, sombras muy oscuras y colores planos."},
-   {n:"Gastronomía",
-    r:[["Dirección","Contraluz o luz lateral desde atrás: resalta texturas, brillos y vapor. La luz de frente aplana el plato."],
-       ["Calidad","Suave: ventana con cortina o un difusor, sin sol directo. Una cartulina blanca al lado opuesto rebota luz y aclara las sombras."],
-       ["Color","Apaga las luces cálidas del techo cuando uses ventana. Al mezclar fuentes, los alimentos se tiñen de naranja."]],
-    e:"Usar el flash del celular de frente: brillos duros, sombras pegadas al plato y colores lavados."},
-   {n:"Producto",
-    r:[["Dirección","Una luz grande a un lado da forma, y un rebote o una segunda luz marca el borde. En superficies brillantes, ubica la luz a un lado para evitar reflejos."],
-       ["Calidad","Muy suave (softbox o difusor) para metal y vidrio. Más dura si quieres resaltar la textura del cuero o la madera."],
-       ["Color","Fija el balance de blancos y usa una tarjeta gris de referencia. El color del producto debe ser fiel a la realidad, clave en tiendas online."]],
-    e:"Que el color cambie entre fotos del mismo catálogo. El cliente recibe un producto distinto al que vio."}
-  ];
-  var bx=document.getElementById("lxBtns"), gr=document.getElementById("lxGrid");
-  function show(i){
-    var d=L[i];
-    gr.innerHTML=d.r.map(function(c){ return '<div class="gx-cell"><span class="k">'+c[0].toUpperCase()+'</span><p style="margin-top:6px">'+c[1]+'</p></div>'; }).join("");
-    document.getElementById("lxErr").innerHTML="<b>Error común:</b> "+d.e;
-    Array.prototype.forEach.call(bx.children,function(b,k){ b.classList.toggle("on",k===i); });
-  }
-  L.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){show(i);}); bx.appendChild(b); });
-  show(0);
-})();
-</script>
-<script>
-(function(){
-  var Q=[
-   {n:"Retrato",
-    r:[["Lente","85 mm es el clásico (o 50 mm si el espacio es chico). Comprime los rasgos del rostro y desenfoca bien el fondo."],
-       ["Modo","Prioridad de apertura (A o Av) a f/2 – f/2.8: tú controlas el fondo y la cámara ajusta la velocidad. Pasa a manual si la luz es estable."],
-       ["Celular","Usa el lente 2x o 3x en lugar del gran angular. Acércate poco; el modo retrato ayuda con el desenfoque del fondo."]],
-    e:"Retratar de cerca con un gran angular. Deforma el rostro: la nariz se agranda y las orejas se achican."},
-   {n:"Paisaje",
-    r:[["Lente","Gran angular de 16 a 35 mm para abarcar la escena y dar profundidad. Un tele de 70 a 200 mm sirve para aislar montañas lejanas."],
-       ["Modo","Manual o prioridad de apertura a f/8 – f/11, con ISO 100 y trípode."],
-       ["Celular","Usa la cámara principal o el gran angular, con trípode o apoyado, y el modo noche para el atardecer. Evita el zoom digital."]],
-    e:"Usar el zoom digital del celular: pierde detalle y se ve pastoso. Mejor acércate o recorta después."},
-   {n:"Gastronomía",
-    r:[["Lente","50 mm o un macro de 90 a 105 mm para detalles. En cenital, un 35 o 50 mm a buena altura evita estirar el plato."],
-       ["Modo","Manual con trípode: la luz y el plato no cambian, así que fijas los valores una vez y repites."],
-       ["Celular","Usa el lente 2x o la cámara principal, con luz de ventana y sin flash. Limpia el lente: una huella vela toda la foto."]],
-    e:"Usar un gran angular muy cerca del plato. Los bordes se estiran y la comida se ve deformada."},
-   {n:"Producto",
-    r:[["Lente","Macro de 90 a 105 mm o un 50 mm. Mantienen rectas las líneas del envase y permiten detalles de textura y etiqueta."],
-       ["Modo","Manual con trípode y luz constante o flash de estudio, para que todas las fotos del catálogo tengan la misma exposición."],
-       ["Celular","Activa el modo Pro o manual si lo tiene: fija ISO bajo y enfoque en la etiqueta, y usa trípode."]],
-    e:"Dejar el modo automático en una serie de fotos. La exposición y el color cambian entre una y otra, y el catálogo se ve desparejo."}
-  ];
-  var bx=document.getElementById("eqBtns"), gr=document.getElementById("eqGrid");
-  function show(i){
-    var d=Q[i];
-    gr.innerHTML=d.r.map(function(c){ return '<div class="gx-cell"><span class="k">'+c[0].toUpperCase()+'</span><p style="margin-top:6px">'+c[1]+'</p></div>'; }).join("");
-    document.getElementById("eqErr").innerHTML="<b>Error común:</b> "+d.e;
-    Array.prototype.forEach.call(bx.children,function(b,k){ b.classList.toggle("on",k===i); });
-  }
-  Q.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){show(i);}); bx.appendChild(b); });
-  show(0);
 })();
 </script>
 <script>
@@ -2120,6 +2140,49 @@
   M.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){mode(i);}); bx.appendChild(b); });
   sel.addEventListener("change",calc); rg.addEventListener("input",calc);
   mode(0);
+})();
+</script>
+<script>
+document.addEventListener("click",function(e){
+  var b=e.target.closest&&e.target.closest(".cc-tg"); if(!b) return;
+  var f=b.closest(".cc-fig"), on=f.classList.toggle("on");
+  b.textContent=on?b.getAttribute("data-b"):b.getAttribute("data-a");
+});
+</script>
+<script>
+(function(){
+  function hs(id,D){
+    var svg=document.getElementById(id), btns=document.getElementById(id+"B"), txt=document.getElementById(id+"T");
+    function sel(i){
+      var d=D[i]; svg.setAttribute("class","hp sel-"+d.k);
+      Array.prototype.forEach.call(btns.children,function(b,k){ b.classList.toggle("on",k===i); });
+      txt.innerHTML="<h4>"+d.n+"</h4><p>"+d.kid+"</p><h4>Ejemplos</h4><ul>"+d.ex.map(function(x){return "<li><b>"+x[0]+":</b> "+x[1]+"</li>";}).join("")+"</ul>";
+    }
+    D.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){sel(i);}); btns.appendChild(b); });
+    sel(0);
+  }
+  hs("hpCam",[{"k": "sen", "n": "Sensor", "kid": "Es como la hoja donde se dibuja la foto. La luz llega y el sensor la anota en millones de puntitos. Un sensor grande recoge más luz, igual que una mano grande llena más agua.", "ex": [["Retrato", "Con un sensor grande la piel sale suave aunque haya poca luz en el interior."], ["Paisaje", "Los cielos y las sombras conservan más detalle."], ["Gastronomía", "En un restaurante con luz tenue sale menos grano."], ["Producto", "Los colores salen más fieles al original."]]}, {"k": "shu", "n": "Obturador", "kid": "Es una cortinilla que se abre y se cierra muy rápido. Si el tiempo de apertura es muy corto, congela el movimiento. Si es largo, deja entrar mucha luz y lo que se mueve sale borroso.", "ex": [["Retrato", "Velocidad alta (1/250 s) para que la persona no salga movida."], ["Paisaje", "Velocidad baja, con trípode, para que el agua se vea suave."], ["Gastronomía", "Rápido para congelar la salsa que cae."], ["Producto", "Normal, con trípode, porque el producto está quieto."]]}, {"k": "vis", "n": "Visor y pantalla", "kid": "Son tus ojos dentro de la cámara: ahí ves cómo va a quedar la foto antes de disparar, y la revisas después para saber si salió bien.", "ex": [["Retrato", "Amplía la foto para comprobar que los ojos estén nítidos."], ["Paisaje", "Activa la cuadrícula para que el horizonte quede derecho."], ["Gastronomía", "Con la cámara en trípode, usa la pantalla para ver todo el plato."], ["Producto", "Amplía para revisar los reflejos y que la etiqueta esté enfocada."]]}]); hs("hpLen",[{"k": "lens", "n": "Vidrios del lente", "kid": "Son vidrios curvos que juntan la luz, como una lupa, y la mandan al sensor. Con vidrios de buena calidad la foto sale más nítida.", "ex": [["Retrato", "Un buen lente da una piel natural y bordes limpios."], ["Paisaje", "Los detalles lejanos, como hojas y rocas, se ven definidos."], ["Gastronomía", "Las texturas del plato se notan más."], ["Producto", "Las letras y los bordes salen bien claros."]]}, {"k": "dia", "n": "Diafragma", "kid": "Es la pupila del lente: una abertura que se hace más grande o más pequeña. Grande: entra mucha luz y el fondo se desenfoca. Pequeña: entra poca luz y todo se ve nítido. Se mide con el número f: cuanto más bajo el número, más grande el agujero.", "ex": [["Retrato", "f/2 para que el fondo se suavice."], ["Paisaje", "f/11 para que todo salga nítido."], ["Gastronomía", "f/2.8 a f/4 para destacar un ingrediente."], ["Producto", "f/8 para que la etiqueta se vea completa."]]}, {"k": "ring", "n": "Anillos de enfoque y zoom", "kid": "Son anillos que giras con la mano. Uno hace que la imagen se vea nítida (el enfoque). En los lentes zoom, otro acerca o aleja la imagen. Muchos lentes hacen el enfoque solos con un motor, pero el anillo te deja afinarlo.", "ex": [["Retrato", "Enfoca el ojo más cercano a la cámara."], ["Paisaje", "Enfoca algo lejano; con gran angular casi todo sale nítido."], ["Gastronomía", "Enfoca la parte del plato que quieres destacar."], ["Producto", "Enfoca la etiqueta o el borde de adelante."]]}]);
+  var FC=[[14, 114, "Gran angular"], [24, 84, "Gran angular"], [35, 63, "Normal"], [50, 47, "Normal"], [85, 28, "Tele"], [135, 18, "Tele"], [200, 12, "Tele"]], FT={"Gran angular": ["Abarca mucha escena: amplía el campo de visión. Sirve cuando quieres mostrar un espacio completo, pero si te acercas mucho a una cara, la deforma.", [["Retrato", "Retratos de cuerpo entero en un lugar, a buena distancia."], ["Paisaje", "El mejor amigo del paisaje: montañas, playas y cielos grandes."], ["Gastronomía", "Para mostrar una mesa completa, sin acercar demasiado el lente."], ["Producto", "Poco usado: puede deformar las líneas rectas del envase."]]], "Normal": ["Se parece a lo que ve tu ojo, sin estirar ni apretar. Es muy versátil para todo el día.", [["Retrato", "Retratos con algo de entorno, como en su taller o su local."], ["Paisaje", "Escenas tranquilas con aire natural."], ["Gastronomía", "Un plato y su mesa, con proporciones naturales."], ["Producto", "Fotos de catálogo con formas naturales."]]], "Tele": ["Acerca lo lejano y deja ver solo un pedacito: es como mirar por unos binoculares. Aplasta la distancia y suaviza el fondo.", [["Retrato", "El 85 mm es el favorito: rostros naturales y fondo suave."], ["Paisaje", "Aísla una montaña lejana o un detalle del paisaje."], ["Gastronomía", "Detalles de un plato, como el brillo de una salsa."], ["Producto", "Un macro de 90 a 105 mm muestra texturas y letras pequeñas."]]]}, r=document.getElementById("fcR"), sv=document.getElementById("fcSvg");
+  function foc(){
+    var f=FC[+r.value], hw=Math.tan(f[1]/2*Math.PI/180), w=224*hw/Math.tan(57*Math.PI/180), x0=120-w/2;
+    sv.innerHTML='<rect width="240" height="150" style="fill:var(--bg-elevated)"/><rect x="8" y="14" width="224" height="62" rx="4" style="fill:var(--line-soft)"/><circle cx="40" cy="62" r="8" style="fill:var(--text)"/><circle cx="90" cy="58" r="8" style="fill:var(--text)"/><polygon points="120,76 150,36 180,76" style="fill:var(--blue-soft)"/><polygon points="168,76 200,30 232,76" style="fill:var(--blue)"/><circle cx="24" cy="26" r="6" style="fill:var(--amber)"/>'
+     +'<rect x="'+x0+'" y="14" width="'+w+'" height="62" fill="none" style="stroke:var(--amber);stroke-width:3"/>'
+     +'<polygon points="120,140 '+x0+',76 '+(x0+w)+',76" style="fill:var(--amber);opacity:.25"/><circle cx="120" cy="140" r="5" style="fill:var(--text)"/>';
+    document.getElementById("fcV").innerHTML="<b>"+f[0]+" mm</b> · ángulo ≈ "+f[1]+"° · "+f[2];
+    var t=FT[f[2]];
+    document.getElementById("fcT").innerHTML="<h4>"+f[2]+"</h4><p>"+t[0]+"</p><h4>Ejemplos</h4><ul>"+t[1].map(function(x){return "<li><b>"+x[0]+":</b> "+x[1]+"</li>";}).join("")+"</ul><p class=\"gx-err\" style=\"margin-top:12px\"><b>Dato:</b> el recuadro naranja es lo que entra en la foto. Los ángulos son para una cámara full frame; en APS-C, multiplica por el factor de recorte.</p>";
+  }
+  r.addEventListener("input",foc); foc();
+})();
+</script>
+<script>
+(function(){
+  var D=[{"n": "Mecánico", "t": "Son dos cortinillas físicas, delante del sensor, que se abren y se cierran. Es el obturador clásico. Hace ruido y tiene piezas que se desgastan con el uso. Al usar flash, la velocidad máxima de sincronización suele estar entre 1/160 y 1/250 s.", "e": "Fotografía con flash de estudio y situaciones donde el ruido no molesta."}, {"n": "Electrónico", "t": "No tiene piezas móviles: el propio sensor empieza y termina de captar la luz. Es silencioso y permite velocidades muy altas. Como lee la imagen línea por línea (efecto rodillo), puede torcer objetos muy veloces y mostrar bandas con luces artificiales.", "e": "Ceremonias, teatro, conciertos y otros lugares donde hay que ser silencioso."}, {"n": "Global", "t": "Es un obturador electrónico que lee todos los píxeles al mismo tiempo, no línea por línea. Por eso no hay distorsión en objetos veloces. Sony lo incorporó en la α9 III, a fines de 2023.", "e": "Deportes, aves en vuelo y escenas con mucho movimiento."}], bx=document.getElementById("tobB"), tx=document.getElementById("tobT");
+  function go(i){ var d=D[i];
+    Array.prototype.forEach.call(bx.children,function(b,k){ b.classList.toggle("on",k===i); });
+    tx.innerHTML="<h4>Obturador "+d.n.toLowerCase()+"</h4><p>"+d.t+'</p><p class="gx-err"><b>Se usa en:</b> '+d.e+"</p>"; }
+  D.forEach(function(d,i){ var b=document.createElement("button"); b.type="button"; b.textContent=d.n; b.addEventListener("click",function(){go(i);}); bx.appendChild(b); });
+  go(0);
 })();
 </script>
 </body>
